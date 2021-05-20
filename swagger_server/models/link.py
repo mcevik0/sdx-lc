@@ -15,7 +15,7 @@ class Link(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: str=None, name: str=None, short_name: str=None, ports: List[Port]=None):  # noqa: E501
+    def __init__(self, id: str=None, name: str=None, short_name: str=None, ports: List[Port]=None, total_bandwidth: float=None, available_bandwidth: float=None, latency: float=None, packet_loss: float=None, availability: float=None):  # noqa: E501
         """Link - a model defined in Swagger
 
         :param id: The id of this Link.  # noqa: E501
@@ -26,24 +26,49 @@ class Link(Model):
         :type short_name: str
         :param ports: The ports of this Link.  # noqa: E501
         :type ports: List[Port]
+        :param total_bandwidth: The total_bandwidth of this Link.  # noqa: E501
+        :type total_bandwidth: float
+        :param available_bandwidth: The available_bandwidth of this Link.  # noqa: E501
+        :type available_bandwidth: float
+        :param latency: The latency of this Link.  # noqa: E501
+        :type latency: float
+        :param packet_loss: The packet_loss of this Link.  # noqa: E501
+        :type packet_loss: float
+        :param availability: The availability of this Link.  # noqa: E501
+        :type availability: float
         """
         self.swagger_types = {
             'id': str,
             'name': str,
             'short_name': str,
-            'ports': List[Port]
+            'ports': List[Port],
+            'total_bandwidth': float,
+            'available_bandwidth': float,
+            'latency': float,
+            'packet_loss': float,
+            'availability': float
         }
 
         self.attribute_map = {
             'id': 'id',
             'name': 'name',
             'short_name': 'short_name',
-            'ports': 'ports'
+            'ports': 'ports',
+            'total_bandwidth': 'total_bandwidth',
+            'available_bandwidth': 'available_bandwidth',
+            'latency': 'latency',
+            'packet_loss': 'packet_loss',
+            'availability': 'availability'
         }
         self._id = id
         self._name = name
         self._short_name = short_name
         self._ports = ports
+        self._total_bandwidth = total_bandwidth
+        self._available_bandwidth = available_bandwidth
+        self._latency = latency
+        self._packet_loss = packet_loss
+        self._availability = availability
 
     @classmethod
     def from_dict(cls, dikt) -> 'Link':
@@ -141,5 +166,112 @@ class Link(Model):
         :param ports: The ports of this Link.
         :type ports: List[Port]
         """
+        if ports is None:
+            raise ValueError("Invalid value for `ports`, must not be `None`")  # noqa: E501
 
         self._ports = ports
+
+    @property
+    def total_bandwidth(self) -> float:
+        """Gets the total_bandwidth of this Link.
+
+
+        :return: The total_bandwidth of this Link.
+        :rtype: float
+        """
+        return self._total_bandwidth
+
+    @total_bandwidth.setter
+    def total_bandwidth(self, total_bandwidth: float):
+        """Sets the total_bandwidth of this Link.
+
+
+        :param total_bandwidth: The total_bandwidth of this Link.
+        :type total_bandwidth: float
+        """
+
+        self._total_bandwidth = total_bandwidth
+
+    @property
+    def available_bandwidth(self) -> float:
+        """Gets the available_bandwidth of this Link.
+
+
+        :return: The available_bandwidth of this Link.
+        :rtype: float
+        """
+        return self._available_bandwidth
+
+    @available_bandwidth.setter
+    def available_bandwidth(self, available_bandwidth: float):
+        """Sets the available_bandwidth of this Link.
+
+
+        :param available_bandwidth: The available_bandwidth of this Link.
+        :type available_bandwidth: float
+        """
+
+        self._available_bandwidth = available_bandwidth
+
+    @property
+    def latency(self) -> float:
+        """Gets the latency of this Link.
+
+
+        :return: The latency of this Link.
+        :rtype: float
+        """
+        return self._latency
+
+    @latency.setter
+    def latency(self, latency: float):
+        """Sets the latency of this Link.
+
+
+        :param latency: The latency of this Link.
+        :type latency: float
+        """
+
+        self._latency = latency
+
+    @property
+    def packet_loss(self) -> float:
+        """Gets the packet_loss of this Link.
+
+
+        :return: The packet_loss of this Link.
+        :rtype: float
+        """
+        return self._packet_loss
+
+    @packet_loss.setter
+    def packet_loss(self, packet_loss: float):
+        """Sets the packet_loss of this Link.
+
+
+        :param packet_loss: The packet_loss of this Link.
+        :type packet_loss: float
+        """
+
+        self._packet_loss = packet_loss
+
+    @property
+    def availability(self) -> float:
+        """Gets the availability of this Link.
+
+
+        :return: The availability of this Link.
+        :rtype: float
+        """
+        return self._availability
+
+    @availability.setter
+    def availability(self, availability: float):
+        """Sets the availability of this Link.
+
+
+        :param availability: The availability of this Link.
+        :type availability: float
+        """
+
+        self._availability = availability

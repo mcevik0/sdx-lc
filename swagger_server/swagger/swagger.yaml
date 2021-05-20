@@ -855,15 +855,25 @@ components:
         time_stamp: 2000-01-23T04:56:07.000+00:00
         name: amLight
         links:
-        - name: miami-Boca.amLight.sdx
+        - total_bandwidth: 80083.738963282099575735628604888916015625
+          packet_loss: 59.62133916683182377482808078639209270477294921875
+          latency: 146582.15146899645333178341388702392578125
+          name: miami-Boca.amLight.sdx
+          available_bandwidth: 602746.015561421983875334262847900390625
           short_name: Miami-BocaRaton
           id: id
+          availability: 56.37376656633328053658260614611208438873291015625
           ports:
           - null
           - null
-        - name: miami-Boca.amLight.sdx
+        - total_bandwidth: 80083.738963282099575735628604888916015625
+          packet_loss: 59.62133916683182377482808078639209270477294921875
+          latency: 146582.15146899645333178341388702392578125
+          name: miami-Boca.amLight.sdx
+          available_bandwidth: 602746.015561421983875334262847900390625
           short_name: Miami-BocaRaton
           id: id
+          availability: 56.37376656633328053658260614611208438873291015625
           ports:
           - null
           - null
@@ -916,7 +926,7 @@ components:
       required:
       - id
       - name
-      - nodes
+      - ports
       type: object
       properties:
         id:
@@ -931,10 +941,35 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/port'
+        total_bandwidth:
+          maximum: 1000000
+          minimum: 1
+          type: number
+        available_bandwidth:
+          maximum: 1000000
+          minimum: 1
+          type: number
+        latency:
+          maximum: 1000000
+          minimum: 1
+          type: number
+        packet_loss:
+          maximum: 100
+          minimum: 0
+          type: number
+        availability:
+          maximum: 100
+          minimum: 0
+          type: number
       example:
+        total_bandwidth: 80083.738963282099575735628604888916015625
+        packet_loss: 59.62133916683182377482808078639209270477294921875
+        latency: 146582.15146899645333178341388702392578125
         name: miami-Boca.amLight.sdx
+        available_bandwidth: 602746.015561421983875334262847900390625
         short_name: Miami-BocaRaton
         id: id
+        availability: 56.37376656633328053658260614611208438873291015625
         ports:
         - null
         - null
