@@ -6,7 +6,6 @@ from flask import json
 from six import BytesIO
 
 from swagger_server.models.api_response import ApiResponse  # noqa: E501
-from swagger_server.models.node import Node  # noqa: E501
 from swagger_server.models.topology import Topology  # noqa: E501
 from swagger_server.test import BaseTestCase
 
@@ -92,20 +91,6 @@ class TestTopologyController(BaseTestCase):
             '/YufengXin/SDX-LC/1.0.0/topology/version',
             method='GET',
             query_string=query_string)
-        self.assert200(response,
-                       'Response body is : ' + response.data.decode('utf-8'))
-
-    def test_update_node(self):
-        """Test case for update_node
-
-        Update an existing node
-        """
-        body = Node()
-        response = self.client.open(
-            '/YufengXin/SDX-LC/1.0.0/node',
-            method='PUT',
-            data=json.dumps(body),
-            content_type='application/json')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 

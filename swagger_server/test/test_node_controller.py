@@ -52,6 +52,20 @@ class TestNodeController(BaseTestCase):
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
+    def test_update_node(self):
+        """Test case for update_node
+
+        Update an existing node
+        """
+        body = Node()
+        response = self.client.open(
+            '/YufengXin/SDX-LC/1.0.0/node',
+            method='PUT',
+            data=json.dumps(body),
+            content_type='application/json')
+        self.assert200(response,
+                       'Response body is : ' + response.data.decode('utf-8'))
+
 
 if __name__ == '__main__':
     import unittest

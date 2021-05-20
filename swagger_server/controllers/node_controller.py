@@ -44,3 +44,18 @@ def get_node():  # noqa: E501
     :rtype: None
     """
     return 'do some magic!'
+
+
+def update_node(body):  # noqa: E501
+    """Update an existing node
+
+    ID of node that needs to be updated. # noqa: E501
+
+    :param body: node object that needs to be sent to the SDX LC
+    :type body: dict | bytes
+
+    :rtype: None
+    """
+    if connexion.request.is_json:
+        body = Node.from_dict(connexion.request.get_json())  # noqa: E501
+    return 'do some magic!'

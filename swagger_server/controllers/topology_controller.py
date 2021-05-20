@@ -2,7 +2,6 @@ import connexion
 import six
 
 from swagger_server.models.api_response import ApiResponse  # noqa: E501
-from swagger_server.models.node import Node  # noqa: E501
 from swagger_server.models.topology import Topology  # noqa: E501
 from swagger_server import util
 
@@ -90,21 +89,6 @@ def topology_version(topology_id):  # noqa: E501
 
     :rtype: Topology
     """
-    return 'do some magic!'
-
-
-def update_node(body):  # noqa: E501
-    """Update an existing node
-
-    ID of node that needs to be updated. # noqa: E501
-
-    :param body: node object that needs to be sent to the SDX LC
-    :type body: dict | bytes
-
-    :rtype: None
-    """
-    if connexion.request.is_json:
-        body = Node.from_dict(connexion.request.get_json())  # noqa: E501
     return 'do some magic!'
 
 
