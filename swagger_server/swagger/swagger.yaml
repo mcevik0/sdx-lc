@@ -740,12 +740,12 @@ components:
         id: id
         egress_port: null
         ingress_port:
-          node: null
-          name: eth1.miami-Boca.amLight.sdx
+          node: urn:sdx:port:amlight.net:Novi06
+          name: urn:sdx:port:amlight.net:Novi06:9
           label_range:
           - label_range
           - label_range
-          short_name: eth1
+          short_name: "9"
           id: id
         complete: false
         status: success
@@ -816,64 +816,64 @@ components:
             $ref: '#/components/schemas/link'
       example:
         nodes:
-        - name: miami.amLight.sdx
-          short_name: Miami-Noviflow
+        - name: urn:sdx:node:amlight.net:Novi06
+          short_name: Novi06
           id: id
           ports:
-          - node: null
-            name: eth1.miami-Boca.amLight.sdx
+          - node: urn:sdx:port:amlight.net:Novi06
+            name: urn:sdx:port:amlight.net:Novi06:9
             label_range:
             - label_range
             - label_range
-            short_name: eth1
+            short_name: "9"
             id: id
-          - node: null
-            name: eth1.miami-Boca.amLight.sdx
+          - node: urn:sdx:port:amlight.net:Novi06
+            name: urn:sdx:port:amlight.net:Novi06:9
             label_range:
             - label_range
             - label_range
-            short_name: eth1
+            short_name: "9"
             id: id
-        - name: miami.amLight.sdx
-          short_name: Miami-Noviflow
+        - name: urn:sdx:node:amlight.net:Novi06
+          short_name: Novi06
           id: id
           ports:
-          - node: null
-            name: eth1.miami-Boca.amLight.sdx
+          - node: urn:sdx:port:amlight.net:Novi06
+            name: urn:sdx:port:amlight.net:Novi06:9
             label_range:
             - label_range
             - label_range
-            short_name: eth1
+            short_name: "9"
             id: id
-          - node: null
-            name: eth1.miami-Boca.amLight.sdx
+          - node: urn:sdx:port:amlight.net:Novi06
+            name: urn:sdx:port:amlight.net:Novi06:9
             label_range:
             - label_range
             - label_range
-            short_name: eth1
+            short_name: "9"
             id: id
         time_stamp: 2000-01-23T04:56:07.000+00:00
         name: amLight
         links:
-        - total_bandwidth: 80083.7389632821
-          packet_loss: 59.621339166831824
-          latency: 146582.15146899645
+        - total_bandwidth: 80083.738963282099575735628604888916015625
+          packet_loss: 59.62133916683182377482808078639209270477294921875
+          latency: 146582.15146899645333178341388702392578125
           name: miami-Boca.amLight.sdx
-          available_bandwidth: 602746.015561422
+          available_bandwidth: 602746.015561421983875334262847900390625
           short_name: Miami-BocaRaton
           id: id
-          availability: 56.37376656633328
+          availability: 56.37376656633328053658260614611208438873291015625
           ports:
           - null
           - null
-        - total_bandwidth: 80083.7389632821
-          packet_loss: 59.621339166831824
-          latency: 146582.15146899645
+        - total_bandwidth: 80083.738963282099575735628604888916015625
+          packet_loss: 59.62133916683182377482808078639209270477294921875
+          latency: 146582.15146899645333178341388702392578125
           name: miami-Boca.amLight.sdx
-          available_bandwidth: 602746.015561422
+          available_bandwidth: 602746.015561421983875334262847900390625
           short_name: Miami-BocaRaton
           id: id
-          availability: 56.37376656633328
+          availability: 56.37376656633328053658260614611208438873291015625
           ports:
           - null
           - null
@@ -893,32 +893,32 @@ components:
           type: string
         name:
           type: string
-          example: miami.amLight.sdx
+          example: urn:sdx:node:amlight.net:Novi06
         short_name:
           type: string
-          example: Miami-Noviflow
+          example: Novi06
         ports:
           type: array
           items:
             $ref: '#/components/schemas/port'
       example:
-        name: miami.amLight.sdx
-        short_name: Miami-Noviflow
+        name: urn:sdx:node:amlight.net:Novi06
+        short_name: Novi06
         id: id
         ports:
-        - node: null
-          name: eth1.miami-Boca.amLight.sdx
+        - node: urn:sdx:port:amlight.net:Novi06
+          name: urn:sdx:port:amlight.net:Novi06:9
           label_range:
           - label_range
           - label_range
-          short_name: eth1
+          short_name: "9"
           id: id
-        - node: null
-          name: eth1.miami-Boca.amLight.sdx
+        - node: urn:sdx:port:amlight.net:Novi06
+          name: urn:sdx:port:amlight.net:Novi06:9
           label_range:
           - label_range
           - label_range
-          short_name: eth1
+          short_name: "9"
           id: id
       xml:
         name: node
@@ -962,14 +962,14 @@ components:
           minimum: 0
           type: number
       example:
-        total_bandwidth: 80083.7389632821
-        packet_loss: 59.621339166831824
-        latency: 146582.15146899645
+        total_bandwidth: 80083.738963282099575735628604888916015625
+        packet_loss: 59.62133916683182377482808078639209270477294921875
+        latency: 146582.15146899645333178341388702392578125
         name: miami-Boca.amLight.sdx
-        available_bandwidth: 602746.015561422
+        available_bandwidth: 602746.015561421983875334262847900390625
         short_name: Miami-BocaRaton
         id: id
-        availability: 56.37376656633328
+        availability: 56.37376656633328053658260614611208438873291015625
         ports:
         - null
         - null
@@ -990,23 +990,24 @@ components:
           type: string
         name:
           type: string
-          example: eth1.miami-Boca.amLight.sdx
+          example: urn:sdx:port:amlight.net:Novi06:9
         short_name:
           type: string
-          example: eth1
+          example: "9"
         node:
-          $ref: '#/components/schemas/node'
+          type: string
+          example: urn:sdx:port:amlight.net:Novi06
         label_range:
           type: array
           items:
             type: string
       example:
-        node: null
-        name: eth1.miami-Boca.amLight.sdx
+        node: urn:sdx:port:amlight.net:Novi06
+        name: urn:sdx:port:amlight.net:Novi06:9
         label_range:
         - label_range
         - label_range
-        short_name: eth1
+        short_name: "9"
         id: id
       xml:
         name: port

@@ -6,7 +6,6 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server.models.node import Node  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -15,7 +14,7 @@ class Port(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: str=None, name: str=None, short_name: str=None, node: Node=None, label_range: List[str]=None):  # noqa: E501
+    def __init__(self, id: str=None, name: str=None, short_name: str=None, node: str=None, label_range: List[str]=None):  # noqa: E501
         """Port - a model defined in Swagger
 
         :param id: The id of this Port.  # noqa: E501
@@ -25,7 +24,7 @@ class Port(Model):
         :param short_name: The short_name of this Port.  # noqa: E501
         :type short_name: str
         :param node: The node of this Port.  # noqa: E501
-        :type node: Node
+        :type node: str
         :param label_range: The label_range of this Port.  # noqa: E501
         :type label_range: List[str]
         """
@@ -33,7 +32,7 @@ class Port(Model):
             'id': str,
             'name': str,
             'short_name': str,
-            'node': Node,
+            'node': str,
             'label_range': List[str]
         }
 
@@ -129,22 +128,22 @@ class Port(Model):
         self._short_name = short_name
 
     @property
-    def node(self) -> Node:
+    def node(self) -> str:
         """Gets the node of this Port.
 
 
         :return: The node of this Port.
-        :rtype: Node
+        :rtype: str
         """
         return self._node
 
     @node.setter
-    def node(self, node: Node):
+    def node(self, node: str):
         """Sets the node of this Port.
 
 
         :param node: The node of this Port.
-        :type node: Node
+        :type node: str
         """
         if node is None:
             raise ValueError("Invalid value for `node`, must not be `None`")  # noqa: E501
