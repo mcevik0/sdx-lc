@@ -85,10 +85,6 @@ paths:
       responses:
         "405":
           description: Invalid input
-      security:
-      - topology_auth:
-        - write:topology
-        - read:topology
       x-openapi-router-controller: swagger_server.controllers.topology_controller
     delete:
       tags:
@@ -818,6 +814,10 @@ components:
         - name: urn:sdx:node:amlight.net:Novi06
           short_name: Novi06
           id: id
+          location:
+            address: Miami
+            latitude: -28.51107891831147
+            longitude: -79.57947854792273
           ports:
           - node: urn:sdx:port:amlight.net:Novi06
             name: urn:sdx:port:amlight.net:Novi06:9
@@ -826,6 +826,7 @@ components:
             - label_range
             short_name: "9"
             id: id
+            status: up
           - node: urn:sdx:port:amlight.net:Novi06
             name: urn:sdx:port:amlight.net:Novi06:9
             label_range:
@@ -833,9 +834,14 @@ components:
             - label_range
             short_name: "9"
             id: id
+            status: up
         - name: urn:sdx:node:amlight.net:Novi06
           short_name: Novi06
           id: id
+          location:
+            address: Miami
+            latitude: -28.51107891831147
+            longitude: -79.57947854792273
           ports:
           - node: urn:sdx:port:amlight.net:Novi06
             name: urn:sdx:port:amlight.net:Novi06:9
@@ -844,6 +850,7 @@ components:
             - label_range
             short_name: "9"
             id: id
+            status: up
           - node: urn:sdx:port:amlight.net:Novi06
             name: urn:sdx:port:amlight.net:Novi06:9
             label_range:
@@ -851,6 +858,7 @@ components:
             - label_range
             short_name: "9"
             id: id
+            status: up
         time_stamp: 2000-01-23T04:56:07.000Z
         name: amLight
         links:
@@ -863,8 +871,22 @@ components:
           id: id
           availability: 56.37376656633328
           ports:
-          - null
-          - null
+          - node: urn:sdx:port:amlight.net:Novi06
+            name: urn:sdx:port:amlight.net:Novi06:9
+            label_range:
+            - label_range
+            - label_range
+            short_name: "9"
+            id: id
+            status: up
+          - node: urn:sdx:port:amlight.net:Novi06
+            name: urn:sdx:port:amlight.net:Novi06:10
+            label_range:
+            - label_range
+            - label_range
+            short_name: "10"
+            id: id
+            status: up
         - total_bandwidth: 80083.7389632821
           packet_loss: 59.621339166831824
           latency: 146582.15146899645
@@ -874,8 +896,22 @@ components:
           id: id
           availability: 56.37376656633328
           ports:
-          - null
-          - null
+          - node: urn:sdx:port:amlight.net:Novi06
+            name: urn:sdx:port:amlight.net:Novi06:9
+            label_range:
+            - label_range
+            - label_range
+            short_name: "9"
+            id: id
+            status: up
+          - node: urn:sdx:port:amlight.net:Novi06
+            name: urn:sdx:port:amlight.net:Novi06:10
+            label_range:
+            - label_range
+            - label_range
+            short_name: "10"
+            id: id
+            status: up
         id: id
         version: 1
       xml:
@@ -906,6 +942,10 @@ components:
         name: urn:sdx:node:amlight.net:Novi06
         short_name: Novi06
         id: id
+        location:
+          address: Miami
+          latitude: -28.51107891831147
+          longitude: -79.57947854792273
         ports:
         - node: urn:sdx:port:amlight.net:Novi06
           name: urn:sdx:port:amlight.net:Novi06:9
@@ -914,13 +954,15 @@ components:
           - label_range
           short_name: "9"
           id: id
+          status: up
         - node: urn:sdx:port:amlight.net:Novi06
-          name: urn:sdx:port:amlight.net:Novi06:9
+          name: urn:sdx:port:amlight.net:Novi06:10
           label_range:
           - label_range
           - label_range
-          short_name: "9"
+          short_name: "10"
           id: id
+          status: up
       xml:
         name: node
     link:
@@ -972,8 +1014,22 @@ components:
         id: id
         availability: 56.37376656633328
         ports:
-        - null
-        - null
+        - node: urn:sdx:port:amlight.net:Novi06
+          name: urn:sdx:port:amlight.net:Novi06:9
+          label_range:
+          - label_range
+          - label_range
+          short_name: "9"
+          id: id
+          status: up
+        - node: urn:sdx:port:amlight.net:Novi06
+          name: urn:sdx:port:amlight.net:Novi06:10
+          label_range:
+          - label_range
+          - label_range
+          short_name: "10"
+          id: id
+          status: up
       xml:
         name: link
     port:
