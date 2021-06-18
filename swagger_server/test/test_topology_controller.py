@@ -20,7 +20,7 @@ class TestTopologyController(BaseTestCase):
         """
         body = Topology()
         response = self.client.open(
-            '/YufengXin/SDX-LC/1.0.0/topology',
+            '/SDX-LC/1.0.0/topology',
             method='POST',
             data=json.dumps(body),
             content_type='application/json')
@@ -35,7 +35,7 @@ class TestTopologyController(BaseTestCase):
         query_string = [('topology_id', 789)]
         headers = [('api_key', 'api_key_example')]
         response = self.client.open(
-            '/YufengXin/SDX-LC/1.0.0/topology',
+            '/SDX-LC/1.0.0/topology',
             method='DELETE',
             headers=headers,
             query_string=query_string)
@@ -50,7 +50,7 @@ class TestTopologyController(BaseTestCase):
         query_string = [('topology_id', 789)]
         headers = [('api_key', 'api_key_example')]
         response = self.client.open(
-            '/YufengXin/SDX-LC/1.0.0/topology/{version}'.format(version=789),
+            '/SDX-LC/1.0.0/topology/{version}'.format(version=789),
             method='DELETE',
             headers=headers,
             query_string=query_string)
@@ -63,7 +63,7 @@ class TestTopologyController(BaseTestCase):
         get an existing topology
         """
         response = self.client.open(
-            '/YufengXin/SDX-LC/1.0.0/topology',
+            '/SDX-LC/1.0.0/topology',
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
@@ -75,7 +75,7 @@ class TestTopologyController(BaseTestCase):
         """
         query_string = [('topology_id', 789)]
         response = self.client.open(
-            '/YufengXin/SDX-LC/1.0.0/topology/{version}'.format(version=789),
+            '/SDX-LC/1.0.0/topology/{version}'.format(version=789),
             method='GET',
             query_string=query_string)
         self.assert200(response,
@@ -88,7 +88,7 @@ class TestTopologyController(BaseTestCase):
         """
         query_string = [('topology_id', 'topology_id_example')]
         response = self.client.open(
-            '/YufengXin/SDX-LC/1.0.0/topology/version',
+            '/SDX-LC/1.0.0/topology/version',
             method='GET',
             query_string=query_string)
         self.assert200(response,
@@ -101,7 +101,7 @@ class TestTopologyController(BaseTestCase):
         """
         body = Topology()
         response = self.client.open(
-            '/YufengXin/SDX-LC/1.0.0/topology',
+            '/SDX-LC/1.0.0/topology',
             method='PUT',
             data=json.dumps(body),
             content_type='application/json')
@@ -115,7 +115,7 @@ class TestTopologyController(BaseTestCase):
         """
         body = Object()
         response = self.client.open(
-            '/YufengXin/SDX-LC/1.0.0/topology/{topologyId}/uploadImage'.format(topology_id=789),
+            '/SDX-LC/1.0.0/topology/{topologyId}/uploadImage'.format(topology_id=789),
             method='POST',
             data=json.dumps(body),
             content_type='application/octet-stream')

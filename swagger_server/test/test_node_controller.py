@@ -19,7 +19,7 @@ class TestNodeController(BaseTestCase):
         """
         body = Node()
         response = self.client.open(
-            '/YufengXin/SDX-LC/1.0.0/node',
+            '/SDX-LC/1.0.0/node',
             method='POST',
             data=json.dumps(body),
             content_type='application/json')
@@ -34,7 +34,7 @@ class TestNodeController(BaseTestCase):
         query_string = [('node_id', 789)]
         headers = [('api_key', 'api_key_example')]
         response = self.client.open(
-            '/YufengXin/SDX-LC/1.0.0/node',
+            '/SDX-LC/1.0.0/node',
             method='DELETE',
             headers=headers,
             query_string=query_string)
@@ -47,7 +47,7 @@ class TestNodeController(BaseTestCase):
         get an existing node
         """
         response = self.client.open(
-            '/YufengXin/SDX-LC/1.0.0/node',
+            '/SDX-LC/1.0.0/node',
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
@@ -59,7 +59,7 @@ class TestNodeController(BaseTestCase):
         """
         body = Node()
         response = self.client.open(
-            '/YufengXin/SDX-LC/1.0.0/node',
+            '/SDX-LC/1.0.0/node',
             method='PUT',
             data=json.dumps(body),
             content_type='application/json')

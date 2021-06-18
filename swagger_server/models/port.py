@@ -14,7 +14,7 @@ class Port(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: str=None, name: str=None, short_name: str=None, node: str=None, label_range: List[str]=None):  # noqa: E501
+    def __init__(self, id: str=None, name: str=None, short_name: str=None, node: str=None, status: str=None):  # noqa: E501
         """Port - a model defined in Swagger
 
         :param id: The id of this Port.  # noqa: E501
@@ -25,15 +25,15 @@ class Port(Model):
         :type short_name: str
         :param node: The node of this Port.  # noqa: E501
         :type node: str
-        :param label_range: The label_range of this Port.  # noqa: E501
-        :type label_range: List[str]
+        :param status: The status of this Port.  # noqa: E501
+        :type status: str
         """
         self.swagger_types = {
             'id': str,
             'name': str,
             'short_name': str,
             'node': str,
-            'label_range': List[str]
+            'status': str
         }
 
         self.attribute_map = {
@@ -41,13 +41,13 @@ class Port(Model):
             'name': 'name',
             'short_name': 'short_name',
             'node': 'node',
-            'label_range': 'label_range'
+            'status': 'status'
         }
         self._id = id
         self._name = name
         self._short_name = short_name
         self._node = node
-        self._label_range = label_range
+        self._status = status
 
     @classmethod
     def from_dict(cls, dikt) -> 'Port':
@@ -151,24 +151,24 @@ class Port(Model):
         self._node = node
 
     @property
-    def label_range(self) -> List[str]:
-        """Gets the label_range of this Port.
+    def status(self) -> str:
+        """Gets the status of this Port.
 
 
-        :return: The label_range of this Port.
-        :rtype: List[str]
+        :return: The status of this Port.
+        :rtype: str
         """
-        return self._label_range
+        return self._status
 
-    @label_range.setter
-    def label_range(self, label_range: List[str]):
-        """Sets the label_range of this Port.
+    @status.setter
+    def status(self, status: str):
+        """Sets the status of this Port.
 
 
-        :param label_range: The label_range of this Port.
-        :type label_range: List[str]
+        :param status: The status of this Port.
+        :type status: str
         """
-        if label_range is None:
-            raise ValueError("Invalid value for `label_range`, must not be `None`")  # noqa: E501
+        if status is None:
+            raise ValueError("Invalid value for `status`, must not be `None`")  # noqa: E501
 
-        self._label_range = label_range
+        self._status = status

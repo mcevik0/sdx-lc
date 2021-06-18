@@ -6,6 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
+from swagger_server.models.location import Location  # noqa: F401,E501
 from swagger_server.models.port import Port  # noqa: F401,E501
 from swagger_server import util
 
@@ -15,7 +16,7 @@ class Node(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: str=None, name: str=None, short_name: str=None, ports: List[Port]=None):  # noqa: E501
+    def __init__(self, id: str=None, name: str=None, short_name: str=None, location: Location=None, ports: List[Port]=None):  # noqa: E501
         """Node - a model defined in Swagger
 
         :param id: The id of this Node.  # noqa: E501
@@ -24,6 +25,8 @@ class Node(Model):
         :type name: str
         :param short_name: The short_name of this Node.  # noqa: E501
         :type short_name: str
+        :param location: The location of this Node.  # noqa: E501
+        :type location: Location
         :param ports: The ports of this Node.  # noqa: E501
         :type ports: List[Port]
         """
@@ -31,6 +34,7 @@ class Node(Model):
             'id': str,
             'name': str,
             'short_name': str,
+            'location': Location,
             'ports': List[Port]
         }
 
@@ -38,11 +42,13 @@ class Node(Model):
             'id': 'id',
             'name': 'name',
             'short_name': 'short_name',
+            'location': 'location',
             'ports': 'ports'
         }
         self._id = id
         self._name = name
         self._short_name = short_name
+        self._location = location
         self._ports = ports
 
     @classmethod
@@ -122,6 +128,29 @@ class Node(Model):
         """
 
         self._short_name = short_name
+
+    @property
+    def location(self) -> Location:
+        """Gets the location of this Node.
+
+
+        :return: The location of this Node.
+        :rtype: Location
+        """
+        return self._location
+
+    @location.setter
+    def location(self, location: Location):
+        """Sets the location of this Node.
+
+
+        :param location: The location of this Node.
+        :type location: Location
+        """
+        if location is None:
+            raise ValueError("Invalid value for `location`, must not be `None`")  # noqa: E501
+
+        self._location = location
 
     @property
     def ports(self) -> List[Port]:
