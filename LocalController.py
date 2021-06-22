@@ -1,6 +1,9 @@
 from MessageQueue import *
 from optparse import OptionParser
 import argparse
+import sqlite3
+from sqlite3 import Error
+import dataset
 
 class LocalController():
     ''' This is the main coordinating module of the local controller. It mostly 
@@ -12,12 +15,13 @@ class LocalController():
         ''' The bulk of the work happens here. This initializes nearly 
             everything and starts up the main processing loop for the entire SDX
             Controller. '''
-        self.loggerid = 'sdxcontroller'
-        self.logfilename = 'sdxcontroller.log'
+        self.loggerid = 'localcontroller'
+        self.logfilename = 'localcontroller.log'
         self.debuglogfilename = None
 
         manifest = options.manifest
-        #db = options.database
+        db = options.dbfile
+
         #run_topo = options.topo
 
         serverconfigure = RabbitmqConfigure(queue='hello',
@@ -27,7 +31,46 @@ class LocalController():
 
         rabbitmq = RabbitMq(serverconfigure)
         # Testing message
-        rabbitmq.publish(msg={"localctlr":1})
+        rabbitmq.publish(body={"localctlr":1})
+        # response = rabbitmq.call()
+        # print(" [.] Got %r" % response)
+        
+
+
+    def _initialize_db(self, db_filename, db_tables_tuples,
+                        print_table_on_load=False):
+        # A lot of modules will need DB access for storing data, but some use a
+        # DB for storing configuration information as well. This is *optional*
+        # to use, which is why it's not part of __init__()
+        # Details on the setup:
+        # https://dataset.readthedocs.io/en/latest/api.html
+        # https://github.com/g2p/bedup/issues/38#issuecomment-43703630
+        self.logger.critical("Connection to DB: %s" % db_filename)
+        self.db = dataset.connect('sqlite:///' + db_filename, 
+                                    engine_kwargs={'connect_args':
+                                                    {'check_same_thread':False}})
+
+        #Try loading the tables, if they don't exist, create them.
+        for (name, table) in db_tables_tuples:
+            if table in self.db: #https://github.com/pudo/dataset/issues/281
+                self.logger.info("Trying to load %s from DB" % name)
+                t = self.db.load_table(table)
+                if print_table_on_load:
+                    entries = t.find()
+                    #print "\n\n&&&&& ENTRIES in %s &&&&&" % name
+                    for e in entries:
+                        print ("\n%s" % str(e))
+                    #print "&&&&& END ENTRIES &&&&&\n\n"
+                    
+                setattr(self, name, t)
+                
+            else:
+                # If load_table() fails, that's fine! It means that the
+                # table doesn't yet exist. So, create it.
+                self.logger.info("Failed to load %s from DB, creating table" %
+                                    name)
+                t = self.db[table]
+                setattr(self, name, t)
     
     
 if __name__ == '__main__':
@@ -35,10 +78,10 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-    # parser.add_argument("-d", "--database", dest="database", type=str, 
-    #                     action="store", help="Specifies the database ", 
-    #                     default=":memory:")
-    #
+    parser.add_argument("-d", "--dbfile", dest="dbfile", type=str, 
+                        action="store", help="Specifies the database ", 
+                        default=":memory:")
+    
     parser.add_argument("-m", "--manifest", dest="manifest", type=str, 
                         action="store", help="specifies the manifest")
     #

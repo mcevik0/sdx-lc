@@ -23,12 +23,15 @@ class RabbitMq():
         self.server = server
         self._connection = pika.BlockingConnection(pika.ConnectionParameters(host=self.server.host))
         self._channel = self._connection.channel()
-        self._channel.queue_declare(queue=self.server.queue)
 
-    def publish(self, msg ={}):
+    def publish(self, body ={}):
+        result = self._channel.queue_declare(queue=self.server.queue)
+        callback_queue = result.method.queue
         self._channel.basic_publish(exchange=self.server.exchange,
                       routing_key=self.server.routingKey,
-                      body=str(msg))
+                      properties=pika.BasicProperties(reply_to = callback_queue,),
+                      body=str(body))
 
-        print("Published Message: {}".format(msg))
+        print("Published Message: {}".format(body))
+        
         self._connection.close()
