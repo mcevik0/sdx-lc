@@ -70,10 +70,6 @@ paths:
           description: Topology not found
         "405":
           description: Validation exception
-      security:
-      - topology_auth:
-        - write:topology
-        - read:topology
       x-openapi-router-controller: swagger_server.controllers.topology_controller
     post:
       tags:
@@ -293,10 +289,6 @@ paths:
           description: Node not found
         "405":
           description: Validation exception
-      security:
-      - topology_auth:
-        - write:topology
-        - read:topology
       x-openapi-router-controller: swagger_server.controllers.node_controller
     post:
       tags:
@@ -308,10 +300,6 @@ paths:
       responses:
         "405":
           description: Invalid input
-      security:
-      - topology_auth:
-        - write:topology
-        - read:topology
       x-openapi-router-controller: swagger_server.controllers.node_controller
     delete:
       tags:
@@ -340,10 +328,6 @@ paths:
           description: Invalid ID supplied
         "404":
           description: node not found
-      security:
-      - topology_auth:
-        - write:topology
-        - read:topology
       x-openapi-router-controller: swagger_server.controllers.node_controller
   /link:
     get:
@@ -730,22 +714,23 @@ components:
           default: false
       example:
         start_time: 2000-01-23T04:56:07.000Z
-        quantity: 0
         name: name
         end_time: 2000-01-23T04:56:07.000Z
         id: id
+        egress_port:
+          node: urn:sdx:port:amlight.net:Novi07
+          name: urn:sdx:port:amlight.net:Novi07:10
+          short_name: "10"
+          id: id
+          status: up
         ingress_port:
           node: urn:sdx:port:amlight.net:Novi06
           name: urn:sdx:port:amlight.net:Novi06:9
-          label_range:
-          - label_range
-          - label_range
           short_name: "9"
           id: id
-        complete: false
-        status: success
+          status: up
       xml:
-        name: Order
+        name: Connection
     User:
       type: object
       properties:
@@ -821,17 +806,11 @@ components:
           ports:
           - node: urn:sdx:port:amlight.net:Novi06
             name: urn:sdx:port:amlight.net:Novi06:9
-            label_range:
-            - label_range
-            - label_range
             short_name: "9"
             id: id
             status: up
           - node: urn:sdx:port:amlight.net:Novi06
             name: urn:sdx:port:amlight.net:Novi06:9
-            label_range:
-            - label_range
-            - label_range
             short_name: "9"
             id: id
             status: up
@@ -1016,17 +995,11 @@ components:
         ports:
         - node: urn:sdx:port:amlight.net:Novi06
           name: urn:sdx:port:amlight.net:Novi06:9
-          label_range:
-          - label_range
-          - label_range
           short_name: "9"
           id: id
           status: up
         - node: urn:sdx:port:amlight.net:Novi06
           name: urn:sdx:port:amlight.net:Novi06:10
-          label_range:
-          - label_range
-          - label_range
           short_name: "10"
           id: id
           status: up
@@ -1051,6 +1024,10 @@ components:
         node:
           type: string
           example: urn:sdx:port:amlight.net:Novi06
+        label_range:
+          type: array
+          items:
+            type: string
         status:
           type: string
           example: up

@@ -17,7 +17,8 @@ def add_node(body):  # noqa: E501
     """
     if connexion.request.is_json:
         body = Node.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+    #return 'do some magic!'
+    return body
 
 
 def delete_node(node_id, api_key=None):  # noqa: E501
@@ -58,4 +59,5 @@ def update_node(body):  # noqa: E501
     """
     if connexion.request.is_json:
         body = Node.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+    #return 'do some magic!'
+    return body

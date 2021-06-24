@@ -18,7 +18,8 @@ def add_topology(body):  # noqa: E501
     """
     if connexion.request.is_json:
         body = Topology.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+    #return 'do some magic!'
+    return body
 
 
 def delete_topology(topology_id, api_key=None):  # noqa: E501
@@ -104,8 +105,8 @@ def update_topology(body):  # noqa: E501
     """
     if connexion.request.is_json:
         body = Topology.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
-
+    #return 'do some magic!'
+    return body
 
 def upload_file(topology_id, body=None):  # noqa: E501
     """uploads an topology image
