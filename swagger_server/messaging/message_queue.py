@@ -8,7 +8,6 @@ class MetaClass(type):
             return cls._instance[cls]
 
 class RabbitmqConfigure(metaclass=MetaClass):
-
     def __init__(self, queue='hello', host='localhost', routingKey='hello', exchange=''):
         #Configure Rabbit Mq Server
         self.queue = queue
@@ -18,7 +17,6 @@ class RabbitmqConfigure(metaclass=MetaClass):
 
 
 class RabbitMq():
-
     def __init__(self, server):
         self.server = server
         self._connection = pika.BlockingConnection(pika.ConnectionParameters(host=self.server.host))
