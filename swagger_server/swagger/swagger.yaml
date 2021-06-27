@@ -77,8 +77,21 @@ paths:
       summary: Send a new topology to SDX-LC
       operationId: add_topology
       requestBody:
-        $ref: '#/components/requestBodies/topology'
+        description: placed for adding a new topology
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/topology'
+        required: true
       responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/topology'
+        "400":
+          description: Invalid Connection     
         "405":
           description: Invalid input
       x-openapi-router-controller: swagger_server.controllers.topology_controller
@@ -298,6 +311,17 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/node'
       responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/node'
+            text/plain:
+              schema:
+                type: string
+        "400":
+          description: Invalid Connection
         "405":
           description: Invalid input
       x-openapi-router-controller: swagger_server.controllers.node_controller
