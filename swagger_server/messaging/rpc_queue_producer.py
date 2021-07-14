@@ -15,7 +15,7 @@ def on_request(ch, method, props, message_body):
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id = \
                                                          props.correlation_id),
-                     message_body=str(response))
+                     body=str(response))
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 channel.basic_qos(prefetch_count=1)
