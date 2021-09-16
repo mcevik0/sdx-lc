@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 import pika
 
+SDX_MQ_IP = os.environ.get('SDX_MQ_IP')
+
 connection = pika.BlockingConnection(
-    pika.ConnectionParameters(host='localhost'))
+    pika.ConnectionParameters(host=SDX_MQ_IP))
 
 channel = connection.channel()
 

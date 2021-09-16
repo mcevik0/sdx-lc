@@ -1,16 +1,24 @@
 #!/usr/bin/env python3
 
 import connexion
+import os
+import time
 
 from swagger_server import encoder
 from swagger_server.messaging.message_queue_producer import *
-from swagger_server.messaging.rpc_queue_producer import *
+from swagger_server.utils.db_utils import *
+# from swagger_server.messaging.rpc_queue_producer import *
 
 from optparse import OptionParser
 import argparse
-from swagger_server.utils.db_utils import *
+
 
 def main():
+    # Sleep 10 seconds waiting for RabbitMQ to be ready
+    time.sleep(10)
+
+    SDX_MQ_IP = os.environ.get('SDX_MQ_IP')
+
     parser = OptionParser()
 
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -43,7 +51,7 @@ def main():
     # rabbitmq.publish(body={"localctlr":1})
 
     # message queue rpc test
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=SDX_MQ_IP))
     channel = connection.channel()
     channel.queue_declare(queue='rpc_queue')
 
