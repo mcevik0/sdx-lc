@@ -15,9 +15,9 @@ import argparse
 
 def main():
     # Sleep 10 seconds waiting for RabbitMQ to be ready
-    time.sleep(10)
+    time.sleep(7)
 
-    SDX_MQ_IP = os.environ.get('SDX_MQ_IP')
+    MQ_HOST = os.environ.get('MQ_HOST')
 
     parser = OptionParser()
 
@@ -51,7 +51,7 @@ def main():
     # rabbitmq.publish(body={"localctlr":1})
 
     # message queue rpc test
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host=SDX_MQ_IP))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=MQ_HOST))
     channel = connection.channel()
     channel.queue_declare(queue='rpc_queue')
 

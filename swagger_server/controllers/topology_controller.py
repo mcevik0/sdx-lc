@@ -9,6 +9,11 @@ from swagger_server import util
 from swagger_server.utils.db_utils import *
 from swagger_server.messaging.message_queue_consumer import *
 from swagger_server.messaging.rpc_queue_consumer import *
+from swagger_server.messaging.async_publisher import *
+
+LOG_FORMAT = ('%(levelname) -10s %(asctime)s %(name) -30s %(funcName) '
+              '-35s %(lineno) -5d: %(message)s')
+LOGGER = logging.getLogger(__name__)
 
 class Payload(object):
     def __init__(self, j):
@@ -23,7 +28,12 @@ db_tuples = [('config_table', "test-config")]
 db_instance = DbUtils()
 db_instance._initialize_db(DB_NAME, db_tuples)
 
-rpc = RpcClient()
+# rpc = RpcClient()
+
+publisher = AsyncPublisher(
+        'amqp://guest:guest@aw-sdx-monitor.renci.org:5672/%2F?connection_attempts=3&heartbeat=3600'
+    )
+# publisher.publish_message('header', 'message')
 
 def add_topology(body):  # noqa: E501
     """Send a new topology to SDX-LC
@@ -46,9 +56,13 @@ def add_topology(body):  # noqa: E501
     print('Saving to database complete.')
 
     print("Published Message: {}".format(body))
-    response = rpc.call(json_body)
+    # response = publisher.call(json_body)
+    publisher.run()
     print(" [.] Got response: " + str(response))
+
+
     return 'do some magic!'
+    # return str(response)
 
 
 def delete_topology(topology_id, api_key=None):  # noqa: E501
