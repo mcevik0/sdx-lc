@@ -1,27 +1,44 @@
 #!/usr/bin/env python
 import pika
+import uuid
 
-SDX_MQ_IP = os.environ.get('SDX_MQ_IP')
+class RpcClient(object):
+    def __init__(self):
+        self.connection = pika.BlockingConnection(
+            pika.ConnectionParameters(host='aw-sdx-monitor.renci.org'))
 
-connection = pika.BlockingConnection(
-    pika.ConnectionParameters(host=SDX_MQ_IP))
+        self.channel = self.connection.channel()
 
-channel = connection.channel()
+        result = self.channel.queue_declare(queue='', exclusive=True)
+        self.callback_queue = result.method.queue
 
-channel.queue_declare(queue='rpc_queue')
+        self.channel.basic_consume(
+            queue=self.callback_queue,
+            on_message_callback=self.on_response,
+            auto_ack=True)
 
-def on_request(ch, method, props, message_body):
-    response = message_body
+    def on_response(self, ch, method, props, body):
+        if self.corr_id == props.correlation_id:
+            self.response = body
 
-    ch.basic_publish(exchange='',
-                     routing_key=props.reply_to,
-                     properties=pika.BasicProperties(correlation_id = \
-                                                         props.correlation_id),
-                     body=str(response))
-    ch.basic_ack(delivery_tag=method.delivery_tag)
+    def call(self, body):
+        self.response = None
+        self.corr_id = str(uuid.uuid4())
+        self.channel.basic_publish(
+            exchange='',
+            routing_key='rpc_queue',
+            properties=pika.BasicProperties(
+                reply_to=self.callback_queue,
+                correlation_id=self.corr_id,
+            ),
+            body=str(body))
+        while self.response is None:
+            self.connection.process_data_events()
+        return self.response
 
-channel.basic_qos(prefetch_count=1)
-channel.basic_consume(queue='rpc_queue', on_message_callback=on_request)
-
-print(" [x] Awaiting RPC requests")
-channel.start_consuming()
+if __name__ == "__main__":
+    rpc = RpcClient()
+    msg = 'hello!'
+    print(" [x] Sending MQ request")
+    response = rpc.call(msg)
+    print(" [.] Got %r" % response)

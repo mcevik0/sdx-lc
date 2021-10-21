@@ -9,7 +9,7 @@ from pika.exchange_type import ExchangeType
 
 LOG_FORMAT = ('%(levelname) -10s %(asctime)s %(name) -30s %(funcName) '
               '-35s %(lineno) -5d: %(message)s')
-# LOGGER = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
 class AsyncPublisher(object):
@@ -308,29 +308,27 @@ class AsyncPublisher(object):
         self._deliveries.append(self._message_number)
         LOGGER.info('Published message # %i', self._message_number)
         self.schedule_next_message()
+        return self._message_number
 
     def run(self):
         """Run the example code by connecting and then starting the IOLoop.
 
         """
-        while not self._stopping:
-            self._connection = None
-            self._deliveries = []
-            self._acked = 0
-            self._nacked = 0
-            self._message_number = 0
+        self._connection = None
+        self._deliveries = []
+        self._acked = 0
+        self._nacked = 0
+        self._message_number = 0
 
-            try:
-                self._connection = self.connect()
+        try:
+            self._connection = self.connect()
+            self._connection.ioloop.start()
+        except KeyboardInterrupt:
+            self.stop()
+            if (self._connection is not None and
+                    not self._connection.is_closed):
+                # Finish closing
                 self._connection.ioloop.start()
-            except KeyboardInterrupt:
-                self.stop()
-                if (self._connection is not None and
-                        not self._connection.is_closed):
-                    # Finish closing
-                    self._connection.ioloop.start()
-
-        LOGGER.info('Stopped')
 
     def stop(self):
         """Stop the example by closing the channel and connection. We
