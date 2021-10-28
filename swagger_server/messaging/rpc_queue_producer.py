@@ -5,7 +5,7 @@ import os
 import time
 import threading
 
-MQ_HOST = 'aw-sdx-monitor.renci.org'
+MQ_HOST = os.environ.get('MQ_HOST')
 
 class RpcProducer(object):
     def __init__(self, timeout):
@@ -30,7 +30,8 @@ class RpcProducer(object):
     def keep_live(self):
         while True:
             time.sleep(30)
-            msg = "[MQ]: Sending Heart Beat"
+            msg = "[MQ]: Heart Beat"
+            print("Sending heart beat msg.")
             # self.connection.process_data_events()
             self.call(msg)
 
