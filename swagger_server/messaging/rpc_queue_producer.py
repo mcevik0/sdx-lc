@@ -14,6 +14,7 @@ class RpcProducer(object):
 
         self.channel = self.connection.channel()
         self.timeout = timeout
+        self.exchange_name = ''
 
         result = self.channel.queue_declare(queue='', exclusive=True)
         self.callback_queue = result.method.queue
@@ -32,15 +33,25 @@ class RpcProducer(object):
             self.response = body
 
     def call(self, body):
+        print("RPC CALL")
+        if not self.connection or self.connection.is_closed:
+            # print("Reopening connection...")
+            self.connection = pika.BlockingConnection(pika.ConnectionParameters(host=MQ_HOST))
+            self.channel = self.connection.channel()
+            # print("Connection reopened.")
+            # channel.exchange_declare(exchange=self.exchange_name)
+
         self.response = None
         self.corr_id = str(uuid.uuid4())
+
         self.channel.basic_publish(exchange='',
-                                routing_key='rpc_queue',
-                                properties=pika.BasicProperties(
-                                    reply_to=self.callback_queue,
-                                    correlation_id=self.corr_id,
-                                ),
-                                body=str(body))
+                                    routing_key='rpc_queue',
+                                    properties=pika.BasicProperties(
+                                        reply_to=self.callback_queue,
+                                        correlation_id=self.corr_id,
+                                    ),
+                                    body=str(body))
+                            
         print("Waiting for response...")
         timer = 0
         while self.response is None:

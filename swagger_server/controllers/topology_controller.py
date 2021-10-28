@@ -54,7 +54,7 @@ def add_topology(body):  # noqa: E501
     db_instance.add_key_value_pair_to_db('test', json_body)
     print('Saving to database complete.')
 
-    print("Published Message to MQ: {}".format(body))
+    print("Publishing Message to MQ: {}".format(body))
     response = rpc.call(json_body)
 
     return str(response)
