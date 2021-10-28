@@ -16,6 +16,9 @@ class RpcProducer(object):
         self.timeout = timeout
         self.exchange_name = ''
 
+        t1 = threading.Thread(target=self.keep_live, args=())
+        t1.start()
+
         result = self.channel.queue_declare(queue='', exclusive=True)
         self.callback_queue = result.method.queue
 
@@ -23,23 +26,25 @@ class RpcProducer(object):
                             on_message_callback=self.on_response,
                             auto_ack=True)
 
+
     def keep_live(self):
         while True:
             time.sleep(30)
-            self.connection.process_data_events()
+            msg = "[MQ]: Sending Heart Beat"
+            # self.connection.process_data_events()
+            self.call(msg)
 
     def on_response(self, ch, method, props, body):
         if self.corr_id == props.correlation_id:
             self.response = body
 
     def call(self, body):
-        print("RPC CALL")
-        if not self.connection or self.connection.is_closed:
-            # print("Reopening connection...")
-            self.connection = pika.BlockingConnection(pika.ConnectionParameters(host=MQ_HOST))
-            self.channel = self.connection.channel()
-            # print("Connection reopened.")
-            # channel.exchange_declare(exchange=self.exchange_name)
+        # if not self.connection or self.connection.is_closed:
+        #     # print("Reopening connection...")
+        #     self.connection = pika.BlockingConnection(pika.ConnectionParameters(host=MQ_HOST))
+        #     self.channel = self.connection.channel()
+        #     # print("Connection reopened.")
+        #     # channel.exchange_declare(exchange=self.exchange_name)
 
         self.response = None
         self.corr_id = str(uuid.uuid4())
@@ -52,17 +57,15 @@ class RpcProducer(object):
                                     ),
                                     body=str(body))
                             
-        print("Waiting for response...")
         timer = 0
         while self.response is None:
             time.sleep(1)
             timer += 1
-            # print("Waiting for response..." + str(timer))
             if timer == self.timeout:
                 return "No response from MQ receiver"
             self.connection.process_data_events()
 
-        self.channel.close()
+        # self.channel.close()
         return self.response
 
 if __name__ == "__main__":
