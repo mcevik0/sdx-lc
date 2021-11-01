@@ -14,7 +14,7 @@ import argparse
 
 
 def main():
-    # Sleep 10 seconds waiting for RabbitMQ to be ready
+    # Sleep 7 seconds waiting for RabbitMQ to be ready
     time.sleep(7)
 
     MQ_HOST = os.environ.get('MQ_HOST')
@@ -33,27 +33,17 @@ def main():
     options = parser.parse_args()
     print(options.manifest)
 
-    dbname = options.database
+    # dbname = options.database
     # Get DB connection and tables set up.
-    db_tuples = [('config_table', "test-config")]
+    # db_tuples = [('config_table', "test-config")]
     
-    db_util = DbUtils()
-    db_util._initialize_db(dbname, db_tuples)
+    # db_util = DbUtils()
+    # db_util._initialize_db(dbname, db_tuples)
     
-
-    # serverconfigure = RabbitmqConfigure(queue='hello',
-    #                            host='localhost',
-    #                            routingKey='hello',
-    #                            exchange='')
-
-    # rabbitmq = RabbitMq(serverconfigure)
-    # # Testing message
-    # rabbitmq.publish(body={"localctlr":1})
-
     # message queue rpc test
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host=MQ_HOST))
-    channel = connection.channel()
-    channel.queue_declare(queue='rpc_queue')
+    # connection = pika.BlockingConnection(pika.ConnectionParameters(host=MQ_HOST))
+    # channel = connection.channel()
+    # channel.queue_declare(queue='rpc_queue')
 
     # Run swagger service
     app = connexion.App(__name__, specification_dir='./swagger/')
