@@ -28,6 +28,12 @@ def _deserialize(data, klass):
             return _deserialize_list(data, klass.__args__[0])
         if klass.__extra__ == dict:
             return _deserialize_dict(data, klass.__args__[1])
+    #for python>3.7
+    #elif hasattr(klass, '__origin__'):
+    #    if klass.__origin__ == list:
+    #        return _deserialize_list(data, klass.__args__[0])
+    #    if klass.__origin__ == dict:
+    #        return _deserialize_dict(data, klass.__args__[1])
     else:
         return deserialize_model(data, klass)
 
