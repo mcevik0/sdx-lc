@@ -46,4 +46,19 @@ docker build -t swagger_server .
 
 # starting up a container
 docker run -p 8080:8080 swagger_server
+
+# or start with docker-compose
+docker-compose up
 ```
+
+## Communication between SDX Controller and Local Controller
+
+The SDX controller and local controller communicate using RabbitMQ. All the topology and connectivity related messages are sent with RPC, with receiver confirmation. The monitoring related messages are sent without receiver confirmation.
+
+Below are two sample scenarios for RabbitMQ implementation:
+
+SDX controller breaks down the topology and sends connectivity information to local controllers:
+![SDX controller to local controller](https://user-images.githubusercontent.com/29924060/139590360-d6c9aaef-e9ba-4c32-a8f9-7a0644b4b35f.jpg)
+
+Local controller sends domain information to SDX controller:
+![Local controller to SDX controller](https://user-images.githubusercontent.com/29924060/139590365-361b4f46-984c-4ab6-8d47-83c9c362910b.jpg)

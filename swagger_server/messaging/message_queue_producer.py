@@ -8,8 +8,7 @@ class MetaClass(type):
             return cls._instance[cls]
 
 class RabbitmqConfigure(metaclass=MetaClass):
-
-    def __init__(self, queue='hello', host='localhost', routingKey='hello', exchange=''):
+    def __init__(self, queue='hello', host='aw-sdx-monitor.renci.org', routingKey='hello', exchange=''):
         #Configure Rabbit Mq Server
         self.queue = queue
         self.host = host
@@ -18,17 +17,32 @@ class RabbitmqConfigure(metaclass=MetaClass):
 
 
 class RabbitMq():
-
     def __init__(self, server):
         self.server = server
         self._connection = pika.BlockingConnection(pika.ConnectionParameters(host=self.server.host))
         self._channel = self._connection.channel()
-        self._channel.queue_declare(queue=self.server.queue)
 
-    def publish(self, msg ={}):
+    def publish(self, body ={}):
+        result = self._channel.queue_declare(queue=self.server.queue)
+        callback_queue = result.method.queue
         self._channel.basic_publish(exchange=self.server.exchange,
                       routing_key=self.server.routingKey,
-                      body=str(msg))
+                      properties=pika.BasicProperties(reply_to = callback_queue,),
+                      body=str(body))
 
-        print("Published Message: {}".format(msg))
+        print("Published Message: {}".format(body))
+        
         self._connection.close()
+
+if __name__ == "__main__":
+
+    server = RabbitmqConfigure(queue='hello',
+                               host='localhost',
+                               routingKey='hello',
+                               exchange='')
+
+    image = Image(filename="local-ctlr-1.manifest")
+    data = image.get
+
+    with RabbitMq(server) as rabbitmq:
+        rabbitmq.publish(payload=data)
