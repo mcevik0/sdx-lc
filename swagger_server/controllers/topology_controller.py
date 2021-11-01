@@ -10,17 +10,11 @@ from swagger_server.models.topology import Topology  # noqa: E501
 from swagger_server import util
 from swagger_server.utils.db_utils import *
 from swagger_server.messaging.rpc_queue_producer import *
-# from swagger_server.messaging.async_publisher import *
-# from swagger_server.messaging.message_queue_consumer import *
 
 LOG_FORMAT = ('%(levelname) -10s %(asctime)s %(name) -30s %(funcName) '
               '-35s %(lineno) -5d: %(message)s')
-LOGGER = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 logging.getLogger("pika").setLevel(logging.WARNING)
-
-class Payload(object):
-    def __init__(self, j):
-        self.__dict__ = json.loads(j)
 
 DB_NAME = os.environ.get('DB_NAME')
 MANIFEST = os.environ.get('MANIFEST')
@@ -50,11 +44,11 @@ def add_topology(body):  # noqa: E501
     
     json_body = json.dumps(body)
 
-    print('Placing connection. Saving to database.')
+    logger.debug('Placing connection. Saving to database.')
     db_instance.add_key_value_pair_to_db('test', json_body)
-    print('Saving to database complete.')
+    logger.debug('Saving to database complete.')
 
-    print("Publishing Message to MQ: {}".format(body))
+    logger.debug("Publishing Message to MQ: {}".format(body))
     response = rpc.call(json_body)
 
     return str(response)

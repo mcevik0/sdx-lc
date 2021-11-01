@@ -4,11 +4,13 @@ import uuid
 import os
 import time
 import threading
+import logging
 
 MQ_HOST = os.environ.get('MQ_HOST')
 
 class RpcProducer(object):
     def __init__(self, timeout):
+        self.logger = logging.getLogger(__name__)
         self.connection = pika.BlockingConnection(
             pika.ConnectionParameters(host=MQ_HOST))
 
@@ -31,8 +33,7 @@ class RpcProducer(object):
         while True:
             time.sleep(30)
             msg = "[MQ]: Heart Beat"
-            print("Sending heart beat msg.")
-            # self.connection.process_data_events()
+            self.logger.debug("Sending heart beat msg.")
             self.call(msg)
 
     def on_response(self, ch, method, props, body):
