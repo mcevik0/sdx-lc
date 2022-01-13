@@ -6,6 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
+from swagger_server.models.link_measurement_period import LinkMeasurementPeriod  # noqa: F401,E501
 from swagger_server.models.port import Port  # noqa: F401,E501
 from swagger_server import util
 
@@ -15,7 +16,7 @@ class Link(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: str=None, name: str=None, short_name: str=None, ports: List[Port]=None, total_bandwidth: float=None, available_bandwidth: float=None, latency: float=None, packet_loss: float=None, availability: float=None):  # noqa: E501
+    def __init__(self, id: str=None, name: str=None, short_name: str=None, ports: List[Port]=None, bandwidth: float=None, residual_bandwidth: float=None, latency: float=None, packet_loss: float=None, availability: float=None, status: str=None, state: str=None, private_attributes: List[str]=None, time_stamp: datetime=None, measurement_period: LinkMeasurementPeriod=None):  # noqa: E501
         """Link - a model defined in Swagger
 
         :param id: The id of this Link.  # noqa: E501
@@ -26,27 +27,42 @@ class Link(Model):
         :type short_name: str
         :param ports: The ports of this Link.  # noqa: E501
         :type ports: List[Port]
-        :param total_bandwidth: The total_bandwidth of this Link.  # noqa: E501
-        :type total_bandwidth: float
-        :param available_bandwidth: The available_bandwidth of this Link.  # noqa: E501
-        :type available_bandwidth: float
+        :param bandwidth: The bandwidth of this Link.  # noqa: E501
+        :type bandwidth: float
+        :param residual_bandwidth: The residual_bandwidth of this Link.  # noqa: E501
+        :type residual_bandwidth: float
         :param latency: The latency of this Link.  # noqa: E501
         :type latency: float
         :param packet_loss: The packet_loss of this Link.  # noqa: E501
         :type packet_loss: float
         :param availability: The availability of this Link.  # noqa: E501
         :type availability: float
+        :param status: The status of this Link.  # noqa: E501
+        :type status: str
+        :param state: The state of this Link.  # noqa: E501
+        :type state: str
+        :param private_attributes: The private_attributes of this Link.  # noqa: E501
+        :type private_attributes: List[str]
+        :param time_stamp: The time_stamp of this Link.  # noqa: E501
+        :type time_stamp: datetime
+        :param measurement_period: The measurement_period of this Link.  # noqa: E501
+        :type measurement_period: LinkMeasurementPeriod
         """
         self.swagger_types = {
             'id': str,
             'name': str,
             'short_name': str,
             'ports': List[Port],
-            'total_bandwidth': float,
-            'available_bandwidth': float,
+            'bandwidth': float,
+            'residual_bandwidth': float,
             'latency': float,
             'packet_loss': float,
-            'availability': float
+            'availability': float,
+            'status': str,
+            'state': str,
+            'private_attributes': List[str],
+            'time_stamp': datetime,
+            'measurement_period': LinkMeasurementPeriod
         }
 
         self.attribute_map = {
@@ -54,21 +70,31 @@ class Link(Model):
             'name': 'name',
             'short_name': 'short_name',
             'ports': 'ports',
-            'total_bandwidth': 'total_bandwidth',
-            'available_bandwidth': 'available_bandwidth',
+            'bandwidth': 'bandwidth',
+            'residual_bandwidth': 'residual_bandwidth',
             'latency': 'latency',
             'packet_loss': 'packet_loss',
-            'availability': 'availability'
+            'availability': 'availability',
+            'status': 'status',
+            'state': 'state',
+            'private_attributes': 'private_attributes',
+            'time_stamp': 'time_stamp',
+            'measurement_period': 'measurement_period'
         }
         self._id = id
         self._name = name
         self._short_name = short_name
         self._ports = ports
-        self._total_bandwidth = total_bandwidth
-        self._available_bandwidth = available_bandwidth
+        self._bandwidth = bandwidth
+        self._residual_bandwidth = residual_bandwidth
         self._latency = latency
         self._packet_loss = packet_loss
         self._availability = availability
+        self._status = status
+        self._state = state
+        self._private_attributes = private_attributes
+        self._time_stamp = time_stamp
+        self._measurement_period = measurement_period
 
     @classmethod
     def from_dict(cls, dikt) -> 'Link':
@@ -172,46 +198,46 @@ class Link(Model):
         self._ports = ports
 
     @property
-    def total_bandwidth(self) -> float:
-        """Gets the total_bandwidth of this Link.
+    def bandwidth(self) -> float:
+        """Gets the bandwidth of this Link.
 
 
-        :return: The total_bandwidth of this Link.
+        :return: The bandwidth of this Link.
         :rtype: float
         """
-        return self._total_bandwidth
+        return self._bandwidth
 
-    @total_bandwidth.setter
-    def total_bandwidth(self, total_bandwidth: float):
-        """Sets the total_bandwidth of this Link.
+    @bandwidth.setter
+    def bandwidth(self, bandwidth: float):
+        """Sets the bandwidth of this Link.
 
 
-        :param total_bandwidth: The total_bandwidth of this Link.
-        :type total_bandwidth: float
+        :param bandwidth: The bandwidth of this Link.
+        :type bandwidth: float
         """
 
-        self._total_bandwidth = total_bandwidth
+        self._bandwidth = bandwidth
 
     @property
-    def available_bandwidth(self) -> float:
-        """Gets the available_bandwidth of this Link.
+    def residual_bandwidth(self) -> float:
+        """Gets the residual_bandwidth of this Link.
 
 
-        :return: The available_bandwidth of this Link.
+        :return: The residual_bandwidth of this Link.
         :rtype: float
         """
-        return self._available_bandwidth
+        return self._residual_bandwidth
 
-    @available_bandwidth.setter
-    def available_bandwidth(self, available_bandwidth: float):
-        """Sets the available_bandwidth of this Link.
+    @residual_bandwidth.setter
+    def residual_bandwidth(self, residual_bandwidth: float):
+        """Sets the residual_bandwidth of this Link.
 
 
-        :param available_bandwidth: The available_bandwidth of this Link.
-        :type available_bandwidth: float
+        :param residual_bandwidth: The residual_bandwidth of this Link.
+        :type residual_bandwidth: float
         """
 
-        self._available_bandwidth = available_bandwidth
+        self._residual_bandwidth = residual_bandwidth
 
     @property
     def latency(self) -> float:
@@ -275,3 +301,108 @@ class Link(Model):
         """
 
         self._availability = availability
+
+    @property
+    def status(self) -> str:
+        """Gets the status of this Link.
+
+
+        :return: The status of this Link.
+        :rtype: str
+        """
+        return self._status
+
+    @status.setter
+    def status(self, status: str):
+        """Sets the status of this Link.
+
+
+        :param status: The status of this Link.
+        :type status: str
+        """
+
+        self._status = status
+
+    @property
+    def state(self) -> str:
+        """Gets the state of this Link.
+
+
+        :return: The state of this Link.
+        :rtype: str
+        """
+        return self._state
+
+    @state.setter
+    def state(self, state: str):
+        """Sets the state of this Link.
+
+
+        :param state: The state of this Link.
+        :type state: str
+        """
+
+        self._state = state
+
+    @property
+    def private_attributes(self) -> List[str]:
+        """Gets the private_attributes of this Link.
+
+
+        :return: The private_attributes of this Link.
+        :rtype: List[str]
+        """
+        return self._private_attributes
+
+    @private_attributes.setter
+    def private_attributes(self, private_attributes: List[str]):
+        """Sets the private_attributes of this Link.
+
+
+        :param private_attributes: The private_attributes of this Link.
+        :type private_attributes: List[str]
+        """
+
+        self._private_attributes = private_attributes
+
+    @property
+    def time_stamp(self) -> datetime:
+        """Gets the time_stamp of this Link.
+
+
+        :return: The time_stamp of this Link.
+        :rtype: datetime
+        """
+        return self._time_stamp
+
+    @time_stamp.setter
+    def time_stamp(self, time_stamp: datetime):
+        """Sets the time_stamp of this Link.
+
+
+        :param time_stamp: The time_stamp of this Link.
+        :type time_stamp: datetime
+        """
+
+        self._time_stamp = time_stamp
+
+    @property
+    def measurement_period(self) -> LinkMeasurementPeriod:
+        """Gets the measurement_period of this Link.
+
+
+        :return: The measurement_period of this Link.
+        :rtype: LinkMeasurementPeriod
+        """
+        return self._measurement_period
+
+    @measurement_period.setter
+    def measurement_period(self, measurement_period: LinkMeasurementPeriod):
+        """Sets the measurement_period of this Link.
+
+
+        :param measurement_period: The measurement_period of this Link.
+        :type measurement_period: LinkMeasurementPeriod
+        """
+
+        self._measurement_period = measurement_period
