@@ -8,6 +8,7 @@ from typing import List, Dict  # noqa: F401
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.link import Link  # noqa: F401,E501
 from swagger_server.models.node import Node  # noqa: F401,E501
+from swagger_server.models.service import Service  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -16,13 +17,15 @@ class Topology(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: str=None, name: str=None, version: int=None, time_stamp: datetime=None, nodes: List[Node]=None, links: List[Link]=None):  # noqa: E501
+    def __init__(self, id: str=None, name: str=None, domain_service: Service=None, version: int=None, time_stamp: datetime=None, nodes: List[Node]=None, links: List[Link]=None, private_attributes: List[str]=None):  # noqa: E501
         """Topology - a model defined in Swagger
 
         :param id: The id of this Topology.  # noqa: E501
         :type id: str
         :param name: The name of this Topology.  # noqa: E501
         :type name: str
+        :param domain_service: The domain_service of this Topology.  # noqa: E501
+        :type domain_service: Service
         :param version: The version of this Topology.  # noqa: E501
         :type version: int
         :param time_stamp: The time_stamp of this Topology.  # noqa: E501
@@ -31,30 +34,38 @@ class Topology(Model):
         :type nodes: List[Node]
         :param links: The links of this Topology.  # noqa: E501
         :type links: List[Link]
+        :param private_attributes: The private_attributes of this Topology.  # noqa: E501
+        :type private_attributes: List[str]
         """
         self.swagger_types = {
             'id': str,
             'name': str,
+            'domain_service': Service,
             'version': int,
             'time_stamp': datetime,
             'nodes': List[Node],
-            'links': List[Link]
+            'links': List[Link],
+            'private_attributes': List[str]
         }
 
         self.attribute_map = {
             'id': 'id',
             'name': 'name',
+            'domain_service': 'domain_service',
             'version': 'version',
             'time_stamp': 'time_stamp',
             'nodes': 'nodes',
-            'links': 'links'
+            'links': 'links',
+            'private_attributes': 'private_attributes'
         }
         self._id = id
         self._name = name
+        self._domain_service = domain_service
         self._version = version
         self._time_stamp = time_stamp
         self._nodes = nodes
         self._links = links
+        self._private_attributes = private_attributes
 
     @classmethod
     def from_dict(cls, dikt) -> 'Topology':
@@ -112,6 +123,27 @@ class Topology(Model):
             raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
         self._name = name
+
+    @property
+    def domain_service(self) -> Service:
+        """Gets the domain_service of this Topology.
+
+
+        :return: The domain_service of this Topology.
+        :rtype: Service
+        """
+        return self._domain_service
+
+    @domain_service.setter
+    def domain_service(self, domain_service: Service):
+        """Sets the domain_service of this Topology.
+
+
+        :param domain_service: The domain_service of this Topology.
+        :type domain_service: Service
+        """
+
+        self._domain_service = domain_service
 
     @property
     def version(self) -> int:
@@ -204,3 +236,24 @@ class Topology(Model):
             raise ValueError("Invalid value for `links`, must not be `None`")  # noqa: E501
 
         self._links = links
+
+    @property
+    def private_attributes(self) -> List[str]:
+        """Gets the private_attributes of this Topology.
+
+
+        :return: The private_attributes of this Topology.
+        :rtype: List[str]
+        """
+        return self._private_attributes
+
+    @private_attributes.setter
+    def private_attributes(self, private_attributes: List[str]):
+        """Sets the private_attributes of this Topology.
+
+
+        :param private_attributes: The private_attributes of this Topology.
+        :type private_attributes: List[str]
+        """
+
+        self._private_attributes = private_attributes

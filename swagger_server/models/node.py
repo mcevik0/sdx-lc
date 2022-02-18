@@ -16,7 +16,7 @@ class Node(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: str=None, name: str=None, short_name: str=None, location: Location=None, ports: List[Port]=None):  # noqa: E501
+    def __init__(self, id: str=None, name: str=None, short_name: str=None, location: Location=None, ports: List[Port]=None, private_attributes: List[str]=None):  # noqa: E501
         """Node - a model defined in Swagger
 
         :param id: The id of this Node.  # noqa: E501
@@ -29,13 +29,16 @@ class Node(Model):
         :type location: Location
         :param ports: The ports of this Node.  # noqa: E501
         :type ports: List[Port]
+        :param private_attributes: The private_attributes of this Node.  # noqa: E501
+        :type private_attributes: List[str]
         """
         self.swagger_types = {
             'id': str,
             'name': str,
             'short_name': str,
             'location': Location,
-            'ports': List[Port]
+            'ports': List[Port],
+            'private_attributes': List[str]
         }
 
         self.attribute_map = {
@@ -43,13 +46,15 @@ class Node(Model):
             'name': 'name',
             'short_name': 'short_name',
             'location': 'location',
-            'ports': 'ports'
+            'ports': 'ports',
+            'private_attributes': 'private_attributes'
         }
         self._id = id
         self._name = name
         self._short_name = short_name
         self._location = location
         self._ports = ports
+        self._private_attributes = private_attributes
 
     @classmethod
     def from_dict(cls, dikt) -> 'Node':
@@ -174,3 +179,24 @@ class Node(Model):
             raise ValueError("Invalid value for `ports`, must not be `None`")  # noqa: E501
 
         self._ports = ports
+
+    @property
+    def private_attributes(self) -> List[str]:
+        """Gets the private_attributes of this Node.
+
+
+        :return: The private_attributes of this Node.
+        :rtype: List[str]
+        """
+        return self._private_attributes
+
+    @private_attributes.setter
+    def private_attributes(self, private_attributes: List[str]):
+        """Sets the private_attributes of this Node.
+
+
+        :param private_attributes: The private_attributes of this Node.
+        :type private_attributes: List[str]
+        """
+
+        self._private_attributes = private_attributes
