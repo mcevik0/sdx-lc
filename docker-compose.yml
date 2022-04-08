@@ -25,9 +25,15 @@ services:
       - 8080:8080
     environment:
       - SDX_MQ_IP=152.54.3.143
+      # update to local controller host name
       - SDXLC_HOST=aw-sdx-lc-1.renci.org
       - SDXLC_PORT=8080
       - SDXLC_VERSION=1.0.0
+      - PUB_TOPIC=topo
+      - PUB_QUEUE=sdx_q1
+      - SUB_QUEUE=connection
+      # update to local controller config (lcX_q1)
+      - SUB_TOPIC=lc1_q1
       - MQ_NAME=hello
       - MQ_HOST=aw-sdx-monitor.renci.org
       - MQ_PORT=5672 
