@@ -14,8 +14,8 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
-    networks:
-      - sdxnet
+    # networks:
+    #   - sdxnet
 
   sdx-controller:
     image: sdx-lc
@@ -25,25 +25,25 @@ services:
       - 8080:8080
     environment:
       - SDX_MQ_IP=152.54.3.143
-      # update to local controller host name
+      # change to local controller host name
       - SDXLC_HOST=aw-sdx-lc-1.renci.org
       - SDXLC_PORT=8080
       - SDXLC_VERSION=1.0.0
       - PUB_TOPIC=topo
       - PUB_QUEUE=sdx_q1
       - SUB_QUEUE=connection
-      # update to local controller config (lcX_q1)
+      # change to local controller config (lcX_q1)
       - SUB_TOPIC=lc1_q1
       - MQ_NAME=hello
       - MQ_HOST=aw-sdx-monitor.renci.org
       - MQ_PORT=5672 
       - DB_NAME=test-db
       - DB_CONFIG_TABLE_NAME=test-1
-    networks:
-      - sdxnet
+#     networks:
+#       - sdxnet
 
-networks:
-  sdxnet:
-    external:
-      name: sdxnet
+# networks:
+#   sdxnet:
+#     external:
+#       name: sdxnet
 
