@@ -27,7 +27,7 @@ def start_consumer(thread_queue, db_instance):
     MESSAGE_ID = 0
     HEARTBEAT_ID = 0
     
-    rpc = RpcConsumer(thread_queue, '')
+    rpc = RpcConsumer(thread_queue, 'lc1_q1')
     t1 = threading.Thread(target=rpc.start_consumer, args=())
     t1.start()
 
@@ -85,6 +85,9 @@ def main():
 
     DB_NAME = os.environ.get('DB_NAME') + '.sqlite3'
     MANIFEST = os.environ.get('MANIFEST')
+
+    # manifest_data = json.load(MANIFEST)
+    # print(manifest_data)
 
     # Get DB connection and tables set up.
     db_tuples = [('config_table', "test-config")]

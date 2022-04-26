@@ -8,7 +8,8 @@ from queue import Queue
 MQ_HOST = os.environ.get('MQ_HOST')
 # subscribe to the corresponding queue
 SUB_QUEUE = os.environ.get('SUB_QUEUE')
-# SUB_QUEUE = 'rpc_queue'
+SUB_TOPIC = os.environ.get('SUB_TOPIC')
+SUB_EXCHANGE = os.environ.get('SUB_EXCHANGE')
 
 class RpcConsumer(object):
     def __init__(self, thread_queue, exchange_name):
@@ -19,8 +20,15 @@ class RpcConsumer(object):
         self.channel = self.connection.channel()
         self.exchange_name = exchange_name
 
-        self.channel.queue_declare(queue=SUB_QUEUE)
+        # self.result = self.channel.queue_declare(queue=SUB_QUEUE)
+        self.result = self.channel.queue_declare(queue='')
         self._thread_queue = thread_queue
+
+        self.binding_keys = []
+        self.binding_keys.append(SUB_TOPIC)
+        
+        # self.channel.exchange_declare(exchange=SUB_TOPIC, exchange_type='topic')
+        # self.channel.queue_bind(exchange=SUB_TOPIC, queue=SUB_QUEUE, routing_key=SUB_TOPIC)
 
     def on_request(self,ch, method, props, message_body):
         response = message_body
@@ -37,6 +45,16 @@ class RpcConsumer(object):
         ch.basic_ack(delivery_tag=method.delivery_tag)
 
     def start_consumer(self):
+        # self.channel.queue_declare(queue=SUB_QUEUE)
+        self.channel.exchange_declare(exchange=SUB_EXCHANGE, exchange_type='topic')
+        queue_name = self.result.method.queue
+        print('queue_name: ' + queue_name)
+
+        # binding to: queue--'', exchange--connection, routing_key--lc1_q1
+        for binding_key in self.binding_keys:
+            self.channel.queue_bind(
+                exchange=SUB_EXCHANGE, queue=queue_name, routing_key=binding_key)
+
         self.channel.basic_qos(prefetch_count=1)
         self.channel.basic_consume(queue=SUB_QUEUE, 
                                    on_message_callback=self.on_request)

@@ -1,21 +1,21 @@
 version: '3.8'
 
 services:
-  rabbitmq:
-    image: rabbitmq:3-management-alpine
-    # image: rabbitmq:latest
-    # container_name: simple-mq
-    hostname: rabbitmq-container
-    #volumes:
-    #  - ./rabbitmq/etc/definitions.json:/etc/rabbitmq/definitions.json
-    #  - ./rabbitmq/etc/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
-    #  - ./rabbitmq/data:/var/lib/rabbitmq/mnesia/rabbit@my-rabbit
-    #  - ./rabbitmq/logs:/var/log/rabbitmq/log
-    ports:
-      - 5672:5672
-      - 15672:15672
-    # networks:
-    #   - sdxnet
+  # rabbitmq:
+  #   image: rabbitmq:3-management-alpine
+  #   # image: rabbitmq:latest
+  #   # container_name: simple-mq
+  #   hostname: rabbitmq-container
+  #   #volumes:
+  #   #  - ./rabbitmq/etc/definitions.json:/etc/rabbitmq/definitions.json
+  #   #  - ./rabbitmq/etc/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+  #   #  - ./rabbitmq/data:/var/lib/rabbitmq/mnesia/rabbit@my-rabbit
+  #   #  - ./rabbitmq/logs:/var/log/rabbitmq/log
+  #   ports:
+  #     - 5672:5672
+  #     - 15672:15672
+  #   # networks:
+  #   #   - sdxnet
 
   sdx-controller:
     image: sdx-lc
@@ -32,6 +32,7 @@ services:
       - PUB_TOPIC=topo
       - PUB_QUEUE=sdx_q1
       - SUB_QUEUE=connection
+      - SUB_EXCHANGE=connection
       # change to local controller config (lcX_q1)
       - SUB_TOPIC=lc1_q1
       - MQ_NAME=hello
