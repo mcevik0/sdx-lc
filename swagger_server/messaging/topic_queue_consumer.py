@@ -36,7 +36,7 @@ class TopicQueueConsumer(object):
         # self.channel.exchange_declare(exchange=SUB_TOPIC, exchange_type='topic')
         # self.channel.queue_bind(exchange=SUB_TOPIC, queue=SUB_QUEUE, routing_key=SUB_TOPIC)
 
-    def on_request(self, ch, method, props, message_body):
+    def on_rpc_request(self, ch, method, props, message_body):
         response = message_body
         self._thread_queue.put(message_body)
 
@@ -50,6 +50,9 @@ class TopicQueueConsumer(object):
                         body=str(response))
         ch.basic_ack(delivery_tag=method.delivery_tag)
 
+    def callback(self, ch, method, properties, body):
+        print(" [x] %r:%r" % (method.routing_key, body))
+
     def start_consumer(self):
         # self.channel.queue_declare(queue=SUB_QUEUE)
         self.channel.exchange_declare(exchange=SUB_EXCHANGE, exchange_type='topic')
@@ -62,8 +65,11 @@ class TopicQueueConsumer(object):
                 exchange=SUB_EXCHANGE, queue=queue_name, routing_key=binding_key)
 
         self.channel.basic_qos(prefetch_count=1)
-        self.channel.basic_consume(queue=queue_name, 
-                                   on_message_callback=self.on_request)
+        # self.channel.basic_consume(queue=queue_name, 
+        #                            on_message_callback=self.on_rpc_request)
+
+        self.channel.basic_consume(queue=queue_name, on_message_callback=self.callback, 
+                                   auto_ack=True)
 
         self.logger.info(" [MQ] Awaiting requests from queue: " + SUB_QUEUE)
         self.channel.start_consuming() 

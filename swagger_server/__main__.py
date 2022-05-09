@@ -3,7 +3,7 @@
 import connexion
 
 from swagger_server import encoder
-from swagger_server.messaging.rpc_queue_consumer import *
+from swagger_server.messaging.topic_queue_consumer import *
 from swagger_server.utils.db_utils import *
 
 from optparse import OptionParser
@@ -27,7 +27,7 @@ def start_consumer(thread_queue, db_instance):
     MESSAGE_ID = 0
     HEARTBEAT_ID = 0
     
-    rpc = RpcConsumer(thread_queue, 'lc1_q1')
+    rpc = TopicQueueConsumer(thread_queue, "connection")
     t1 = threading.Thread(target=rpc.start_consumer, args=())
     t1.start()
 
@@ -70,7 +70,7 @@ def start_consumer(thread_queue, db_instance):
 
 def main():
     # Sleep 7 seconds waiting for RabbitMQ to be ready
-    time.sleep(7)
+    # time.sleep(7)
 
     logging.basicConfig(level=logging.INFO)
 
