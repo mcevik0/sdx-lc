@@ -8,7 +8,10 @@ import logging
 
 MQ_HOST = os.environ.get('MQ_HOST')
 
-class RpcProducer(object):
+# hardcode for testing
+MQ_HOST = 'aw-sdx-monitor.renci.org'
+
+class TopicQueueProducer(object):
     def __init__(self, timeout, exchange_name, routing_key):
         self.logger = logging.getLogger(__name__)
         self.connection = pika.BlockingConnection(
@@ -16,14 +19,15 @@ class RpcProducer(object):
 
         self.channel = self.connection.channel()
         self.timeout = timeout
-        self.exchange_name = exchange_name
-        self.routing_key = routing_key
+        # self.exchange_name = ''
+        # self.routing_key = routing_key
 
         t1 = threading.Thread(target=self.keep_live, args=())
         t1.start()
 
         # set up callback queue
         result = self.channel.queue_declare(queue='', exclusive=True)
+
         self.callback_queue = result.method.queue
 
         self.channel.basic_consume(queue=self.callback_queue,
@@ -52,7 +56,13 @@ class RpcProducer(object):
 
         self.response = None
         self.corr_id = str(uuid.uuid4())
+        self.exchange_name='connection'
+        self.routing_key = 'lc1_q1'
+        self.channel.exchange_declare(exchange=self.exchange_name, 
+                                      exchange_type='topic')
+        
 
+        print('publishing message!!')
         self.channel.basic_publish(exchange=self.exchange_name,
                                     routing_key=self.routing_key,
                                     properties=pika.BasicProperties(
@@ -73,8 +83,8 @@ class RpcProducer(object):
         return self.response
 
 if __name__ == "__main__":
-    rpc = RpcProducer()
+    producer = TopicQueueProducer(5, "connection", "lc1_q1")
     body = "test body"
     print("Published Message: {}".format(body))
-    response = rpc.call(body)
+    response = producer.call(body)
     print(" [.] Got response: " + str(response))
