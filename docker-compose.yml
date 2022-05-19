@@ -17,7 +17,7 @@ services:
   #   # networks:
   #   #   - sdxnet
 
-  sdx-controller:
+  sdx-lc:
     image: sdx-lc
     tty: true
     build: ./
