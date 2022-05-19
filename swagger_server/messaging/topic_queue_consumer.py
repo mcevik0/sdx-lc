@@ -11,12 +11,6 @@ SUB_QUEUE = os.environ.get('SUB_QUEUE')
 SUB_TOPIC = os.environ.get('SUB_TOPIC')
 SUB_EXCHANGE = os.environ.get('SUB_EXCHANGE')
 
-# hardcode for testing
-MQ_HOST = 'aw-sdx-monitor.renci.org'
-SUB_QUEUE = 'connection'
-SUB_TOPIC = 'lc1_q1'
-SUB_EXCHANGE = 'connection'
-
 class TopicQueueConsumer(object):
     def __init__(self, thread_queue, exchange_name):
         self.logger = logging.getLogger(__name__)
