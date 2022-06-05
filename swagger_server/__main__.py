@@ -34,12 +34,13 @@ def start_consumer(thread_queue, db_instance):
     while True:
         if not thread_queue.empty():
             msg = thread_queue.get()
-            logger.info("MQ received message:" + str(msg))
+            
             
             if 'Heart Beat' in str(msg):
                 HEARTBEAT_ID += 1
-                logger.info('Heart beat received. ID: ' + str(HEARTBEAT_ID))
+                logger.debug('Heart beat received. ID: ' + str(HEARTBEAT_ID))
             else:
+                logger.info("MQ received message:" + str(msg))
                 logger.info('Saving to database.')
                 if is_json(msg):
                     if 'version' in str(msg):
