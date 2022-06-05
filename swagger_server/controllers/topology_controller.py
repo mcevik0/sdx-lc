@@ -42,6 +42,7 @@ def add_topology(body):  # noqa: E501
         body = connexion.request.get_json()
         # body = Topology.from_dict(connexion.request.get_json())  # noqa: E501
     
+    body['lc_queue_name'] = os.environ.get('SUB_TOPIC')
     json_body = json.dumps(body)
 
     logger.debug('Placing connection. Saving to database.')
