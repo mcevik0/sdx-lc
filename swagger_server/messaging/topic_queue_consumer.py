@@ -45,7 +45,8 @@ class TopicQueueConsumer(object):
         ch.basic_ack(delivery_tag=method.delivery_tag)
 
     def callback(self, ch, method, properties, body):
-        print(" [x] %r:%r" % (method.routing_key, body))
+        if 'Heart Beat' not in str(body):
+            print(" [x] %r:%r" % (method.routing_key, body))
 
     def start_consumer(self):
         # self.channel.queue_declare(queue=SUB_QUEUE)

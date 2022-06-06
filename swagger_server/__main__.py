@@ -35,7 +35,6 @@ def start_consumer(thread_queue, db_instance):
         if not thread_queue.empty():
             msg = thread_queue.get()
             
-            
             if 'Heart Beat' in str(msg):
                 HEARTBEAT_ID += 1
                 logger.debug('Heart beat received. ID: ' + str(HEARTBEAT_ID))
