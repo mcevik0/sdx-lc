@@ -18,6 +18,7 @@ logging.getLogger("pika").setLevel(logging.WARNING)
 
 DB_NAME = os.environ.get('DB_NAME')
 MANIFEST = os.environ.get('MANIFEST')
+SDXLC_DOMAIN = os.environ.get('SDXLC_DOMAIN')
 
 # Get DB connection and tables set up.
 db_tuples = [('config_table', "test-config")]
@@ -27,6 +28,14 @@ db_instance._initialize_db(DB_NAME, db_tuples)
 
 # initiate rpc producer with 5 seconds timeout
 rpc = RpcProducer(5, '', 'topo')
+
+def find_between(s, first, last):
+    try:
+        start = s.index(first) + len(first)
+        end = s.index(last, start)
+        return s[start:end]
+    except ValueError:
+        return ""
 
 def add_topology(body):  # noqa: E501
     """Send a new topology to SDX-LC
@@ -40,7 +49,15 @@ def add_topology(body):  # noqa: E501
     """
     if connexion.request.is_json:
         body = connexion.request.get_json()
-        # body = Topology.from_dict(connexion.request.get_json())  # noqa: E501
+
+    msg_id = body["id"]
+    if msg_id is None:
+        return "ID is missing."
+
+    domain_name = find_between(msg_id, "topology:", ".net")
+    if domain_name != SDXLC_DOMAIN:
+        return "Domain name not matching LC domain. Please check again.", 400
+
     
     body['lc_queue_name'] = os.environ.get('SUB_TOPIC')
     print(body['lc_queue_name'])
