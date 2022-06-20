@@ -24,4 +24,4 @@ services:
       - MQ_PORT=5672 
       - DB_NAME=test-db
       - DB_CONFIG_TABLE_NAME=test-1
-      - KYTOS_URL=http://0.0.0.0:8088/SDX-LC/1.0.0/provision
+      - KYTOS_URL=http://192.168.201.205:8088/SDX-LC/1.0.0/provision
