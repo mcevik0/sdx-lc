@@ -14,7 +14,7 @@ class Port(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: str=None, name: str=None, short_name: str=None, node: str=None, label_range: List[str]=None, status: str=None):  # noqa: E501
+    def __init__(self, id: str=None, name: str=None, short_name: str=None, node: str=None, label_range: List[str]=None, status: str=None, state: str=None, private_attributes: List[str]=None):  # noqa: E501
         """Port - a model defined in Swagger
 
         :param id: The id of this Port.  # noqa: E501
@@ -29,6 +29,10 @@ class Port(Model):
         :type label_range: List[str]
         :param status: The status of this Port.  # noqa: E501
         :type status: str
+        :param state: The state of this Port.  # noqa: E501
+        :type state: str
+        :param private_attributes: The private_attributes of this Port.  # noqa: E501
+        :type private_attributes: List[str]
         """
         self.swagger_types = {
             'id': str,
@@ -36,7 +40,9 @@ class Port(Model):
             'short_name': str,
             'node': str,
             'label_range': List[str],
-            'status': str
+            'status': str,
+            'state': str,
+            'private_attributes': List[str]
         }
 
         self.attribute_map = {
@@ -45,7 +51,9 @@ class Port(Model):
             'short_name': 'short_name',
             'node': 'node',
             'label_range': 'label_range',
-            'status': 'status'
+            'status': 'status',
+            'state': 'state',
+            'private_attributes': 'private_attributes'
         }
         self._id = id
         self._name = name
@@ -53,6 +61,8 @@ class Port(Model):
         self._node = node
         self._label_range = label_range
         self._status = status
+        self._state = state
+        self._private_attributes = private_attributes
 
     @classmethod
     def from_dict(cls, dikt) -> 'Port':
@@ -198,3 +208,45 @@ class Port(Model):
             raise ValueError("Invalid value for `status`, must not be `None`")  # noqa: E501
 
         self._status = status
+
+    @property
+    def state(self) -> str:
+        """Gets the state of this Port.
+
+
+        :return: The state of this Port.
+        :rtype: str
+        """
+        return self._state
+
+    @state.setter
+    def state(self, state: str):
+        """Sets the state of this Port.
+
+
+        :param state: The state of this Port.
+        :type state: str
+        """
+
+        self._state = state
+
+    @property
+    def private_attributes(self) -> List[str]:
+        """Gets the private_attributes of this Port.
+
+
+        :return: The private_attributes of this Port.
+        :rtype: List[str]
+        """
+        return self._private_attributes
+
+    @private_attributes.setter
+    def private_attributes(self, private_attributes: List[str]):
+        """Sets the private_attributes of this Port.
+
+
+        :param private_attributes: The private_attributes of this Port.
+        :type private_attributes: List[str]
+        """
+
+        self._private_attributes = private_attributes

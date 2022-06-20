@@ -91,7 +91,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/topology'
         "400":
-          description: Invalid Connection     
+          description: Invalid Connection
         "405":
           description: Invalid input
       x-openapi-router-controller: swagger_server.controllers.topology_controller
@@ -383,10 +383,6 @@ paths:
           description: Topology not found
         "405":
           description: Validation exception
-      security:
-      - topology_auth:
-        - write:topology
-        - read:topology
       x-openapi-router-controller: swagger_server.controllers.link_controller
     post:
       tags:
@@ -803,6 +799,8 @@ components:
         name:
           type: string
           example: amLight
+        domain_service:
+          $ref: '#/components/schemas/service'
         version:
           type: integer
           format: int64
@@ -818,6 +816,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/link'
+        private_attributes:
+          type: array
+          items:
+            type: string
       example:
         nodes:
         - name: urn:sdx:node:amlight.net:Novi06
@@ -865,11 +867,11 @@ components:
         time_stamp: 2000-01-23T04:56:07.000Z
         name: amLight
         links:
-        - total_bandwidth: 80083.7389632821
+        - bandwidth: 80083.7389632821
           packet_loss: 59.621339166831824
           latency: 146582.15146899645
           name: miami-Boca.amLight.sdx
-          available_bandwidth: 602746.015561422
+          residual_bandwidth: 602746.015561422
           short_name: Miami-BocaRaton
           id: id
           availability: 56.37376656633328
@@ -890,11 +892,11 @@ components:
             short_name: "10"
             id: id
             status: up
-        - total_bandwidth: 80083.7389632821
+        - bandwidth: 80083.7389632821
           packet_loss: 59.621339166831824
           latency: 146582.15146899645
           name: miami-Boca.amLight.sdx
-          available_bandwidth: 602746.015561422
+          residual_bandwidth: 602746.015561422
           short_name: Miami-BocaRaton
           id: id
           availability: 56.37376656633328
@@ -941,6 +943,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/port'
+        private_attributes:
+          type: array
+          items:
+            type: string
       example:
         name: urn:sdx:node:amlight.net:Novi06
         short_name: Novi06
@@ -987,11 +993,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/port'
-        total_bandwidth:
+        bandwidth:
           maximum: 1000000
           minimum: 1
           type: number
-        available_bandwidth:
+        residual_bandwidth:
           maximum: 1000000
           minimum: 1
           type: number
@@ -1007,12 +1013,27 @@ components:
           maximum: 100
           minimum: 0
           type: number
+        status:
+          type: string
+          example: up
+        state:
+          type: string
+          example: enabled
+        private_attributes:
+          type: array
+          items:
+            type: string
+        time_stamp:
+          type: string
+          format: date-time
+        measurement_period:
+          $ref: '#/components/schemas/link_measurement_period'
       example:
-        total_bandwidth: 80083.7389632821
+        bandwidth: 80083.7389632821
         packet_loss: 59.621339166831824
         latency: 146582.15146899645
         name: miami-Boca.amLight.sdx
-        available_bandwidth: 602746.015561422
+        residual_bandwidth: 602746.015561422
         short_name: Miami-BocaRaton
         id: id
         availability: 56.37376656633328
@@ -1055,6 +1076,13 @@ components:
         status:
           type: string
           example: up
+        state:
+          type: string
+          example: enabled
+        private_attributes:
+          type: array
+          items:
+            type: string
       example:
         node: urn:sdx:port:amlight.net:Novi06
         name: urn:sdx:port:amlight.net:Novi06:9
@@ -1086,6 +1114,33 @@ components:
           type: number
         longitude:
           type: number
+    service:
+      type: object
+      properties:
+        monitoring_capability:
+          type: string
+        owner:
+          type: string
+        private_attributes:
+          type: array
+          items:
+            type: string
+        provisioning_system:
+          type: string
+        provisioning_url:
+          type: string
+        vendor:
+          type: array
+          items:
+            type: string
+      description: Domain Services
+    link_measurement_period:
+      type: object
+      properties:
+        period:
+          type: number
+        time_unit:
+          type: string
   requestBodies:
     topology:
       description: topology object that needs to be sent to the SDX LC

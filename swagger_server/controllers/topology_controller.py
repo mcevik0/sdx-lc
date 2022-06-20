@@ -26,7 +26,7 @@ db_instance = DbUtils()
 db_instance._initialize_db(DB_NAME, db_tuples)
 
 # initiate rpc producer with 5 seconds timeout
-rpc = RpcProducer(5)
+rpc = RpcProducer(5, '', 'topo')
 
 def add_topology(body):  # noqa: E501
     """Send a new topology to SDX-LC
@@ -42,6 +42,8 @@ def add_topology(body):  # noqa: E501
         body = connexion.request.get_json()
         # body = Topology.from_dict(connexion.request.get_json())  # noqa: E501
     
+    body['lc_queue_name'] = os.environ.get('SUB_TOPIC')
+    print(body['lc_queue_name'])
     json_body = json.dumps(body)
 
     logger.debug('Placing connection. Saving to database.')
