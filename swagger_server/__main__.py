@@ -13,12 +13,14 @@ import threading
 import logging
 import json
 
+
 def is_json(myjson):
-  try:
-    json.loads(myjson)
-  except ValueError as e:
-    return False
-  return True
+    try:
+        json.loads(myjson)
+    except ValueError as e:
+        return False
+    return True
+
 
 def start_consumer(thread_queue, db_instance):
     logger = logging.getLogger(__name__)
@@ -26,7 +28,7 @@ def start_consumer(thread_queue, db_instance):
 
     MESSAGE_ID = 0
     HEARTBEAT_ID = 0
-    
+
     rpc = TopicQueueConsumer(thread_queue, "connection")
     t1 = threading.Thread(target=rpc.start_consumer, args=())
     t1.start()
@@ -34,7 +36,7 @@ def start_consumer(thread_queue, db_instance):
     while True:
         if not thread_queue.empty():
             msg = thread_queue.get()
-            
+
             # if 'Heart Beat' in str(msg):
             #     HEARTBEAT_ID += 1
             #     logger.debug('Heart beat received. ID: ' + str(HEARTBEAT_ID))
@@ -58,7 +60,7 @@ def start_consumer(thread_queue, db_instance):
             #         else:
             #             logger.info('got message: ' + str(msg))
             #     else:
-            #         db_instance.add_key_value_pair_to_db(MESSAGE_ID, msg) 
+            #         db_instance.add_key_value_pair_to_db(MESSAGE_ID, msg)
 
             #         logger.info('Save to database complete.')
             #         logger.info('message ID:' + str(MESSAGE_ID))
@@ -66,7 +68,7 @@ def start_consumer(thread_queue, db_instance):
             #         logger.info('got value back:')
             #         logger.info(value)
             #         MESSAGE_ID += 1
-                
+
 
 def main():
     # Sleep 7 seconds waiting for RabbitMQ to be ready
@@ -75,22 +77,22 @@ def main():
     logging.basicConfig(level=logging.INFO)
 
     # Run swagger service
-    app = connexion.App(__name__, specification_dir='./swagger/')
+    app = connexion.App(__name__, specification_dir="./swagger/")
     app.app.json_encoder = encoder.JSONEncoder
-    app.add_api('swagger.yaml', arguments={'title': 'SDX LC'}, pythonic_params=True)
+    app.add_api("swagger.yaml", arguments={"title": "SDX LC"}, pythonic_params=True)
     # app.run(port=8080)
     # Run swagger in a thread
     threading.Thread(target=lambda: app.run(port=8080)).start()
     # app.run(port=8080)
 
-    DB_NAME = os.environ.get('DB_NAME') + '.sqlite3'
-    MANIFEST = os.environ.get('MANIFEST')
+    DB_NAME = os.environ.get("DB_NAME") + ".sqlite3"
+    MANIFEST = os.environ.get("MANIFEST")
 
     # manifest_data = json.load(MANIFEST)
     # print(manifest_data)
 
     # Get DB connection and tables set up.
-    db_tuples = [('config_table', "test-config")]
+    db_tuples = [("config_table", "test-config")]
 
     db_instance = DbUtils()
     db_instance._initialize_db(DB_NAME, db_tuples)
@@ -98,5 +100,6 @@ def main():
     thread_queue = Queue()
     start_consumer(thread_queue, db_instance)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

@@ -14,7 +14,18 @@ class Port(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: str=None, name: str=None, short_name: str=None, node: str=None, label_range: List[str]=None, status: str=None, state: str=None, private_attributes: List[str]=None):  # noqa: E501
+
+    def __init__(
+        self,
+        id: str = None,
+        name: str = None,
+        short_name: str = None,
+        node: str = None,
+        label_range: List[str] = None,
+        status: str = None,
+        state: str = None,
+        private_attributes: List[str] = None,
+    ):  # noqa: E501
         """Port - a model defined in Swagger
 
         :param id: The id of this Port.  # noqa: E501
@@ -35,25 +46,25 @@ class Port(Model):
         :type private_attributes: List[str]
         """
         self.swagger_types = {
-            'id': str,
-            'name': str,
-            'short_name': str,
-            'node': str,
-            'label_range': List[str],
-            'status': str,
-            'state': str,
-            'private_attributes': List[str]
+            "id": str,
+            "name": str,
+            "short_name": str,
+            "node": str,
+            "label_range": List[str],
+            "status": str,
+            "state": str,
+            "private_attributes": List[str],
         }
 
         self.attribute_map = {
-            'id': 'id',
-            'name': 'name',
-            'short_name': 'short_name',
-            'node': 'node',
-            'label_range': 'label_range',
-            'status': 'status',
-            'state': 'state',
-            'private_attributes': 'private_attributes'
+            "id": "id",
+            "name": "name",
+            "short_name": "short_name",
+            "node": "node",
+            "label_range": "label_range",
+            "status": "status",
+            "state": "state",
+            "private_attributes": "private_attributes",
         }
         self._id = id
         self._name = name
@@ -65,7 +76,7 @@ class Port(Model):
         self._private_attributes = private_attributes
 
     @classmethod
-    def from_dict(cls, dikt) -> 'Port':
+    def from_dict(cls, dikt) -> "Port":
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -117,7 +128,9 @@ class Port(Model):
         :type name: str
         """
         if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `name`, must not be `None`"
+            )  # noqa: E501
 
         self._name = name
 
@@ -161,7 +174,9 @@ class Port(Model):
         :type node: str
         """
         if node is None:
-            raise ValueError("Invalid value for `node`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `node`, must not be `None`"
+            )  # noqa: E501
 
         self._node = node
 
@@ -205,7 +220,9 @@ class Port(Model):
         :type status: str
         """
         if status is None:
-            raise ValueError("Invalid value for `status`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `status`, must not be `None`"
+            )  # noqa: E501
 
         self._status = status
 

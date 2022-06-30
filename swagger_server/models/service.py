@@ -14,7 +14,16 @@ class Service(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, monitoring_capability: str=None, owner: str=None, private_attributes: List[str]=None, provisioning_system: str=None, provisioning_url: str=None, vendor: List[str]=None):  # noqa: E501
+
+    def __init__(
+        self,
+        monitoring_capability: str = None,
+        owner: str = None,
+        private_attributes: List[str] = None,
+        provisioning_system: str = None,
+        provisioning_url: str = None,
+        vendor: List[str] = None,
+    ):  # noqa: E501
         """Service - a model defined in Swagger
 
         :param monitoring_capability: The monitoring_capability of this Service.  # noqa: E501
@@ -31,21 +40,21 @@ class Service(Model):
         :type vendor: List[str]
         """
         self.swagger_types = {
-            'monitoring_capability': str,
-            'owner': str,
-            'private_attributes': List[str],
-            'provisioning_system': str,
-            'provisioning_url': str,
-            'vendor': List[str]
+            "monitoring_capability": str,
+            "owner": str,
+            "private_attributes": List[str],
+            "provisioning_system": str,
+            "provisioning_url": str,
+            "vendor": List[str],
         }
 
         self.attribute_map = {
-            'monitoring_capability': 'monitoring_capability',
-            'owner': 'owner',
-            'private_attributes': 'private_attributes',
-            'provisioning_system': 'provisioning_system',
-            'provisioning_url': 'provisioning_url',
-            'vendor': 'vendor'
+            "monitoring_capability": "monitoring_capability",
+            "owner": "owner",
+            "private_attributes": "private_attributes",
+            "provisioning_system": "provisioning_system",
+            "provisioning_url": "provisioning_url",
+            "vendor": "vendor",
         }
         self._monitoring_capability = monitoring_capability
         self._owner = owner
@@ -55,7 +64,7 @@ class Service(Model):
         self._vendor = vendor
 
     @classmethod
-    def from_dict(cls, dikt) -> 'Service':
+    def from_dict(cls, dikt) -> "Service":
         """Returns the dict as a model
 
         :param dikt: A dict.

@@ -6,16 +6,18 @@ import time
 import threading
 import logging
 
-MQ_HOST = os.environ.get('MQ_HOST')
+MQ_HOST = os.environ.get("MQ_HOST")
 
 # hardcode for testing
-MQ_HOST = 'aw-sdx-monitor.renci.org'
+MQ_HOST = "aw-sdx-monitor.renci.org"
+
 
 class TopicQueueProducer(object):
     def __init__(self, timeout, exchange_name, routing_key):
         self.logger = logging.getLogger(__name__)
         self.connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host=MQ_HOST))
+            pika.ConnectionParameters(host=MQ_HOST)
+        )
 
         self.channel = self.connection.channel()
         self.timeout = timeout
@@ -26,14 +28,15 @@ class TopicQueueProducer(object):
         t1.start()
 
         # set up callback queue
-        result = self.channel.queue_declare(queue='', exclusive=True)
+        result = self.channel.queue_declare(queue="", exclusive=True)
 
         self.callback_queue = result.method.queue
 
-        self.channel.basic_consume(queue=self.callback_queue,
-                            on_message_callback=self.on_response,
-                            auto_ack=True)
-
+        self.channel.basic_consume(
+            queue=self.callback_queue,
+            on_message_callback=self.on_response,
+            auto_ack=True,
+        )
 
     def keep_live(self):
         while True:
@@ -56,21 +59,23 @@ class TopicQueueProducer(object):
 
         self.response = None
         self.corr_id = str(uuid.uuid4())
-        self.exchange_name='connection'
-        self.routing_key = 'lc1_q1'
-        self.channel.exchange_declare(exchange=self.exchange_name, 
-                                      exchange_type='topic')
-        
+        self.exchange_name = "connection"
+        self.routing_key = "lc1_q1"
+        self.channel.exchange_declare(
+            exchange=self.exchange_name, exchange_type="topic"
+        )
 
-        print('publishing message!!')
-        self.channel.basic_publish(exchange=self.exchange_name,
-                                    routing_key=self.routing_key,
-                                    properties=pika.BasicProperties(
-                                        reply_to=self.callback_queue,
-                                        correlation_id=self.corr_id,
-                                    ),
-                                    body=str(body))
-                            
+        print("publishing message!!")
+        self.channel.basic_publish(
+            exchange=self.exchange_name,
+            routing_key=self.routing_key,
+            properties=pika.BasicProperties(
+                reply_to=self.callback_queue,
+                correlation_id=self.corr_id,
+            ),
+            body=str(body),
+        )
+
         timer = 0
         while self.response is None:
             time.sleep(1)
@@ -81,6 +86,7 @@ class TopicQueueProducer(object):
 
         # self.channel.close()
         return self.response
+
 
 if __name__ == "__main__":
     producer = TopicQueueProducer(5, "connection", "lc1_q1")

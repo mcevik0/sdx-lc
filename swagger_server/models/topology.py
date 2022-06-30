@@ -17,7 +17,18 @@ class Topology(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: str=None, name: str=None, domain_service: Service=None, version: int=None, time_stamp: datetime=None, nodes: List[Node]=None, links: List[Link]=None, private_attributes: List[str]=None):  # noqa: E501
+
+    def __init__(
+        self,
+        id: str = None,
+        name: str = None,
+        domain_service: Service = None,
+        version: int = None,
+        time_stamp: datetime = None,
+        nodes: List[Node] = None,
+        links: List[Link] = None,
+        private_attributes: List[str] = None,
+    ):  # noqa: E501
         """Topology - a model defined in Swagger
 
         :param id: The id of this Topology.  # noqa: E501
@@ -38,25 +49,25 @@ class Topology(Model):
         :type private_attributes: List[str]
         """
         self.swagger_types = {
-            'id': str,
-            'name': str,
-            'domain_service': Service,
-            'version': int,
-            'time_stamp': datetime,
-            'nodes': List[Node],
-            'links': List[Link],
-            'private_attributes': List[str]
+            "id": str,
+            "name": str,
+            "domain_service": Service,
+            "version": int,
+            "time_stamp": datetime,
+            "nodes": List[Node],
+            "links": List[Link],
+            "private_attributes": List[str],
         }
 
         self.attribute_map = {
-            'id': 'id',
-            'name': 'name',
-            'domain_service': 'domain_service',
-            'version': 'version',
-            'time_stamp': 'time_stamp',
-            'nodes': 'nodes',
-            'links': 'links',
-            'private_attributes': 'private_attributes'
+            "id": "id",
+            "name": "name",
+            "domain_service": "domain_service",
+            "version": "version",
+            "time_stamp": "time_stamp",
+            "nodes": "nodes",
+            "links": "links",
+            "private_attributes": "private_attributes",
         }
         self._id = id
         self._name = name
@@ -68,7 +79,7 @@ class Topology(Model):
         self._private_attributes = private_attributes
 
     @classmethod
-    def from_dict(cls, dikt) -> 'Topology':
+    def from_dict(cls, dikt) -> "Topology":
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -120,7 +131,9 @@ class Topology(Model):
         :type name: str
         """
         if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `name`, must not be `None`"
+            )  # noqa: E501
 
         self._name = name
 
@@ -164,7 +177,9 @@ class Topology(Model):
         :type version: int
         """
         if version is None:
-            raise ValueError("Invalid value for `version`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `version`, must not be `None`"
+            )  # noqa: E501
 
         self._version = version
 
@@ -187,7 +202,9 @@ class Topology(Model):
         :type time_stamp: datetime
         """
         if time_stamp is None:
-            raise ValueError("Invalid value for `time_stamp`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `time_stamp`, must not be `None`"
+            )  # noqa: E501
 
         self._time_stamp = time_stamp
 
@@ -210,7 +227,9 @@ class Topology(Model):
         :type nodes: List[Node]
         """
         if nodes is None:
-            raise ValueError("Invalid value for `nodes`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `nodes`, must not be `None`"
+            )  # noqa: E501
 
         self._nodes = nodes
 
@@ -233,7 +252,9 @@ class Topology(Model):
         :type links: List[Link]
         """
         if links is None:
-            raise ValueError("Invalid value for `links`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `links`, must not be `None`"
+            )  # noqa: E501
 
         self._links = links
 

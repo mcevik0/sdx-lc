@@ -19,38 +19,35 @@ class TestNodeController(BaseTestCase):
         """
         body = Node()
         response = self.client.open(
-            '/SDX-LC/1.0.0/node',
-            method='POST',
+            "/SDX-LC/1.0.0/node",
+            method="POST",
             data=json.dumps(body),
-            content_type='application/json')
-        self.assert200(response,
-                       'Response body is : ' + response.data.decode('utf-8'))
+            content_type="application/json",
+        )
+        self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
 
     def test_delete_node(self):
         """Test case for delete_node
 
         Deletes a node
         """
-        query_string = [('node_id', 789)]
-        headers = [('api_key', 'api_key_example')]
+        query_string = [("node_id", 789)]
+        headers = [("api_key", "api_key_example")]
         response = self.client.open(
-            '/SDX-LC/1.0.0/node',
-            method='DELETE',
+            "/SDX-LC/1.0.0/node",
+            method="DELETE",
             headers=headers,
-            query_string=query_string)
-        self.assert200(response,
-                       'Response body is : ' + response.data.decode('utf-8'))
+            query_string=query_string,
+        )
+        self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
 
     def test_get_node(self):
         """Test case for get_node
 
         get an existing node
         """
-        response = self.client.open(
-            '/SDX-LC/1.0.0/node',
-            method='GET')
-        self.assert200(response,
-                       'Response body is : ' + response.data.decode('utf-8'))
+        response = self.client.open("/SDX-LC/1.0.0/node", method="GET")
+        self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
 
     def test_update_node(self):
         """Test case for update_node
@@ -59,14 +56,15 @@ class TestNodeController(BaseTestCase):
         """
         body = Node()
         response = self.client.open(
-            '/SDX-LC/1.0.0/node',
-            method='PUT',
+            "/SDX-LC/1.0.0/node",
+            method="PUT",
             data=json.dumps(body),
-            content_type='application/json')
-        self.assert200(response,
-                       'Response body is : ' + response.data.decode('utf-8'))
+            content_type="application/json",
+        )
+        self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import unittest
+
     unittest.main()

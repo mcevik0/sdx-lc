@@ -17,7 +17,7 @@ def add_link(body):  # noqa: E501
     """
     if connexion.request.is_json:
         body = Link.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+    return "do some magic!"
 
 
 def delete_link(node_id, api_key=None):  # noqa: E501
@@ -27,12 +27,12 @@ def delete_link(node_id, api_key=None):  # noqa: E501
 
     :param node_id: ID of link to delete
     :type node_id: int
-    :param api_key: 
+    :param api_key:
     :type api_key: str
 
     :rtype: None
     """
-    return 'do some magic!'
+    return "do some magic!"
 
 
 def get_link():  # noqa: E501
@@ -43,7 +43,7 @@ def get_link():  # noqa: E501
 
     :rtype: None
     """
-    return 'do some magic!'
+    return "do some magic!"
 
 
 def update_link(body):  # noqa: E501
@@ -58,4 +58,4 @@ def update_link(body):  # noqa: E501
     """
     if connexion.request.is_json:
         body = Link.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+    return "do some magic!"

@@ -19,38 +19,35 @@ class TestLinkController(BaseTestCase):
         """
         body = Link()
         response = self.client.open(
-            '/SDX-LC/1.0.0/link',
-            method='POST',
+            "/SDX-LC/1.0.0/link",
+            method="POST",
             data=json.dumps(body),
-            content_type='application/json')
-        self.assert200(response,
-                       'Response body is : ' + response.data.decode('utf-8'))
+            content_type="application/json",
+        )
+        self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
 
     def test_delete_link(self):
         """Test case for delete_link
 
         Deletes a link
         """
-        query_string = [('node_id', 789)]
-        headers = [('api_key', 'api_key_example')]
+        query_string = [("node_id", 789)]
+        headers = [("api_key", "api_key_example")]
         response = self.client.open(
-            '/SDX-LC/1.0.0/link',
-            method='DELETE',
+            "/SDX-LC/1.0.0/link",
+            method="DELETE",
             headers=headers,
-            query_string=query_string)
-        self.assert200(response,
-                       'Response body is : ' + response.data.decode('utf-8'))
+            query_string=query_string,
+        )
+        self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
 
     def test_get_link(self):
         """Test case for get_link
 
         get an existing link
         """
-        response = self.client.open(
-            '/SDX-LC/1.0.0/link',
-            method='GET')
-        self.assert200(response,
-                       'Response body is : ' + response.data.decode('utf-8'))
+        response = self.client.open("/SDX-LC/1.0.0/link", method="GET")
+        self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
 
     def test_update_link(self):
         """Test case for update_link
@@ -59,14 +56,15 @@ class TestLinkController(BaseTestCase):
         """
         body = Link()
         response = self.client.open(
-            '/SDX-LC/1.0.0/link',
-            method='PUT',
+            "/SDX-LC/1.0.0/link",
+            method="PUT",
             data=json.dumps(body),
-            content_type='application/json')
-        self.assert200(response,
-                       'Response body is : ' + response.data.decode('utf-8'))
+            content_type="application/json",
+        )
+        self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import unittest
+
     unittest.main()

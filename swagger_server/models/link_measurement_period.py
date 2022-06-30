@@ -14,7 +14,8 @@ class LinkMeasurementPeriod(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, period: float=None, time_unit: str=None):  # noqa: E501
+
+    def __init__(self, period: float = None, time_unit: str = None):  # noqa: E501
         """LinkMeasurementPeriod - a model defined in Swagger
 
         :param period: The period of this LinkMeasurementPeriod.  # noqa: E501
@@ -22,20 +23,14 @@ class LinkMeasurementPeriod(Model):
         :param time_unit: The time_unit of this LinkMeasurementPeriod.  # noqa: E501
         :type time_unit: str
         """
-        self.swagger_types = {
-            'period': float,
-            'time_unit': str
-        }
+        self.swagger_types = {"period": float, "time_unit": str}
 
-        self.attribute_map = {
-            'period': 'period',
-            'time_unit': 'time_unit'
-        }
+        self.attribute_map = {"period": "period", "time_unit": "time_unit"}
         self._period = period
         self._time_unit = time_unit
 
     @classmethod
-    def from_dict(cls, dikt) -> 'LinkMeasurementPeriod':
+    def from_dict(cls, dikt) -> "LinkMeasurementPeriod":
         """Returns the dict as a model
 
         :param dikt: A dict.

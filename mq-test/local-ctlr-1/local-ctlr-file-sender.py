@@ -3,13 +3,14 @@ import os
 import sys
 import json
 
+
 class MetaClass(type):
 
-    _instance ={}
+    _instance = {}
 
     def __call__(cls, *args, **kwargs):
 
-        """ Singelton Design Pattern  """
+        """Singelton Design Pattern"""
 
         if cls not in cls._instance:
             cls._instance[cls] = super(MetaClass, cls).__call__(*args, **kwargs)
@@ -17,16 +18,17 @@ class MetaClass(type):
 
 
 class RabbitmqConfigure(metaclass=MetaClass):
-
-    def __init__(self, queue='hello', host='localhost', routingKey='hello', exchange=''):
-        """ Configure Rabbit Mq Server  """
+    def __init__(
+        self, queue="hello", host="localhost", routingKey="hello", exchange=""
+    ):
+        """Configure Rabbit Mq Server"""
         self.queue = queue
         self.host = host
         self.routingKey = routingKey
         self.exchange = exchange
 
 
-class RabbitMq():
+class RabbitMq:
 
     __slots__ = ["server", "_channel", "_connection"]
 
@@ -38,7 +40,9 @@ class RabbitMq():
         """
 
         self.server = server
-        self._connection = pika.BlockingConnection(pika.ConnectionParameters(host=self.server.host))
+        self._connection = pika.BlockingConnection(
+            pika.ConnectionParameters(host=self.server.host)
+        )
         self._channel = self._connection.channel()
         self._channel.queue_declare(queue=self.server.queue)
 
@@ -50,7 +54,7 @@ class RabbitMq():
         print("__exit__")
         self._connection.close()
 
-    def publish(self, payload ={}):
+    def publish(self, payload={}):
 
         """
 
@@ -58,11 +62,14 @@ class RabbitMq():
         :return: None
         """
 
-        self._channel.basic_publish(exchange=self.server.exchange,
-                                    routing_key=self.server.routingKey,
-                                    body=str(payload))
+        self._channel.basic_publish(
+            exchange=self.server.exchange,
+            routing_key=self.server.routingKey,
+            body=str(payload),
+        )
 
         print("Published Message: {}".format(payload))
+
 
 class Image(object):
 
@@ -80,18 +87,12 @@ class Image(object):
 
 if __name__ == "__main__":
 
-    server = RabbitmqConfigure(queue='hello',
-                               host='localhost',
-                               routingKey='hello',
-                               exchange='')
+    server = RabbitmqConfigure(
+        queue="hello", host="localhost", routingKey="hello", exchange=""
+    )
 
     image = Image(filename="local-ctlr-1.manifest")
     data = image.get
 
     with RabbitMq(server) as rabbitmq:
         rabbitmq.publish(payload=data)
-
-
-
-
-

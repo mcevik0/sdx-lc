@@ -6,13 +6,15 @@ import time
 import threading
 import logging
 
-MQ_HOST = os.environ.get('MQ_HOST')
+MQ_HOST = os.environ.get("MQ_HOST")
+
 
 class RpcProducer(object):
     def __init__(self, timeout, exchange_name, routing_key):
         self.logger = logging.getLogger(__name__)
         self.connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host=MQ_HOST))
+            pika.ConnectionParameters(host=MQ_HOST)
+        )
 
         self.channel = self.connection.channel()
         self.timeout = timeout
@@ -23,13 +25,14 @@ class RpcProducer(object):
         t1.start()
 
         # set up callback queue
-        result = self.channel.queue_declare(queue='', exclusive=True)
+        result = self.channel.queue_declare(queue="", exclusive=True)
         self.callback_queue = result.method.queue
 
-        self.channel.basic_consume(queue=self.callback_queue,
-                            on_message_callback=self.on_response,
-                            auto_ack=True)
-
+        self.channel.basic_consume(
+            queue=self.callback_queue,
+            on_message_callback=self.on_response,
+            auto_ack=True,
+        )
 
     def keep_live(self):
         while True:
@@ -53,14 +56,16 @@ class RpcProducer(object):
         self.response = None
         self.corr_id = str(uuid.uuid4())
 
-        self.channel.basic_publish(exchange=self.exchange_name,
-                                    routing_key=self.routing_key,
-                                    properties=pika.BasicProperties(
-                                        reply_to=self.callback_queue,
-                                        correlation_id=self.corr_id,
-                                    ),
-                                    body=str(body))
-                            
+        self.channel.basic_publish(
+            exchange=self.exchange_name,
+            routing_key=self.routing_key,
+            properties=pika.BasicProperties(
+                reply_to=self.callback_queue,
+                correlation_id=self.corr_id,
+            ),
+            body=str(body),
+        )
+
         timer = 0
         while self.response is None:
             time.sleep(1)
@@ -71,6 +76,7 @@ class RpcProducer(object):
 
         # self.channel.close()
         return self.response
+
 
 if __name__ == "__main__":
     rpc = RpcProducer()

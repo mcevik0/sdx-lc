@@ -15,7 +15,7 @@ def delete_connection(connection_id):  # noqa: E501
 
     :rtype: None
     """
-    return 'do some magic!'
+    return "do some magic!"
 
 
 def getconnection_by_id(connection_id):  # noqa: E501
@@ -28,7 +28,7 @@ def getconnection_by_id(connection_id):  # noqa: E501
 
     :rtype: Connection
     """
-    return 'do some magic!'
+    return "do some magic!"
 
 
 def place_connection(body):  # noqa: E501
