@@ -108,7 +108,7 @@ class TestTopologyController(BaseTestCase):
 
         uploads an topology image
         """
-        body = Object()
+        body = Topology()
         response = self.client.open(
             "/SDX-LC/1.0.0/topology/{topologyId}/uploadImage".format(topology_id=789),
             method="POST",
