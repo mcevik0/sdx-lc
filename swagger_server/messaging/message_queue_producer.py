@@ -1,5 +1,6 @@
-import pika
+import json
 
+import pika
 
 class MetaClass(type):
     _instance = {}
@@ -56,8 +57,6 @@ if __name__ == "__main__":
         queue="hello", host="localhost", routingKey="hello", exchange=""
     )
 
-    image = Image(filename="local-ctlr-1.manifest")
-    data = image.get
-
-    with RabbitMq(server) as rabbitmq:
-        rabbitmq.publish(payload=data)
+    with open("./mq-test/local-ctlr-1/local-ctlr-1.manifest") as f:
+        data = json.load(f)
+        RabbitMq(server).publish(body=data)
