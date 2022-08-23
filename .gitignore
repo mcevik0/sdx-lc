@@ -2,3 +2,8 @@
 /swagger_server.egg-info/
 __pycache__/
 /venv*
+
+# Ignore sqlite files
+*-db-shm
+*-db-wal
+*-db.sqlite3
