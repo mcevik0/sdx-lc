@@ -76,13 +76,6 @@ jobs:
           # exit-zero treats all errors as warnings.
           python -m flake8 . --count --exit-zero --max-complexity=10 --statistics
 
-      - name: Test that we can publish on message queue
-        run: |
-          pip install pika
-          python -c """
-          
-
-
       - name: Run tests
         run: |
           python -m tox
