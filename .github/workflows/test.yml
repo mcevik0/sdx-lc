@@ -27,8 +27,8 @@ jobs:
           RABBITMQ_DEFAULT_USER: guest
           RABBITMQ_DEFAULT_PASS: guest
         ports:
-          - 5672
-          - 15672
+          - 5672:5672
+          - 15672:15672
 
     strategy:
       fail-fast: false
@@ -74,7 +74,15 @@ jobs:
           python -m flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
 
           # exit-zero treats all errors as warnings.
-          python -m flake8 . --count --exit-zero --max-complexity=10 --statistics
+          python -m flake8 . --count --exit-zero --max-complexity=10
+          --statistics
+
+      - name: Test that we can publish on message queue
+        run: |
+          pip install pika
+          python -c """
+          
+
 
       - name: Run tests
         run: |
