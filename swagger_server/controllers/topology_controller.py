@@ -28,10 +28,6 @@ db_tuples = [("config_table", "test-config")]
 db_instance = DbUtils()
 db_instance._initialize_db(DB_NAME, db_tuples)
 
-# initiate rpc producer with 5 seconds timeout
-rpc = RpcProducer(5, "", "topo")
-
-
 def find_between(s, first, last):
     try:
         start = s.index(first) + len(first)
@@ -71,7 +67,12 @@ def add_topology(body):  # noqa: E501
     logger.debug("Saving to database complete.")
 
     logger.debug("Publishing Message to MQ: {}".format(body))
+
+    # initiate rpc producer with 5 seconds timeout
+    rpc = RpcProducer(5, "", "topo")
     response = rpc.call(json_body)
+    # Signal to end keep alive pings.
+    rpc.stop()
 
     return str(response)
 
