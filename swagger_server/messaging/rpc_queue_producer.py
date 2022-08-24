@@ -37,6 +37,10 @@ class RpcProducer(object):
         )
 
     def stop(self):
+        """
+        Signal to stop keep-alive pings, so that RpcProducer instances
+        can be safely deleted.
+        """
         self.stop_keep_live = True
 
     def keep_live(self):
