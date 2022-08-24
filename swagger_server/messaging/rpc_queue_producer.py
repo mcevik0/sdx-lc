@@ -89,7 +89,7 @@ class RpcProducer(object):
 
 if __name__ == "__main__":
     rpc = RpcProducer(
-        timeout=1, exchange_name="", routing_key="329a0137-23a8-4a9b-bd65-a3379f0d564e"
+        timeout=1, exchange_name="", routing_key=str(uuid.uuid4())
     )
     body = "test body"
     print("Published Message: {}".format(body))
