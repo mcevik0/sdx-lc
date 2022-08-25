@@ -110,7 +110,7 @@ class TestTopologyController(BaseTestCase):
         """
         body = Topology()
         response = self.client.open(
-            "/SDX-LC/1.0.0/topology/{topologyId}/uploadImage".format(topology_id=789),
+            "/SDX-LC/1.0.0/topology/{topology_id}/uploadImage".format(topology_id=789),
             method="POST",
             data=json.dumps(body),
             content_type="application/octet-stream",
