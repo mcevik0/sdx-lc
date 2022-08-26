@@ -2,11 +2,17 @@
 
 from __future__ import absolute_import
 
+import datetime
+
 from flask import json
 from six import BytesIO
 
 from swagger_server.models.api_response import ApiResponse  # noqa: E501
 from swagger_server.models.topology import Topology  # noqa: E501
+from swagger_server.models.node import Node
+from swagger_server.models.link import Link
+from swagger_server.models.location import Location
+from swagger_server.models.port import Port
 from swagger_server.test import BaseTestCase
 
 
@@ -18,11 +24,59 @@ class TestTopologyController(BaseTestCase):
 
         Send a new topology to SDX-LC
         """
-        body = Topology()
+        links = [Link(
+            id = "test_topology_link_id",
+            name = "test_topology_link_name",
+            short_name = "test_topology_link_short_name",
+            ports = list(),
+            bandwidth = 1.0,
+            residual_bandwidth = 1.0,
+            latency = 1.0,
+            packet_loss = 0.0,
+            availability = 0.0,
+            status = "unknown",
+            state = "unknown",
+            private_attributes = list(),
+            time_stamp = datetime.datetime.fromtimestamp(0),
+            measurement_period = None,
+        )]
+        location = Location(
+            address = "unknown",
+            latitude = 0.0,
+            longitude = 0.0,
+        )        
+        ports = [Port(
+            id = "test_topology_port_id",
+            name = "test_topology_port_name",
+            short_name = "test_topology_port_short_name",
+            node = "test_topology_id",
+            label_range = None,
+            status = "unknown",
+            state = "unknown",
+            private_attributes = None,
+        )]
+        nodes = [Node(
+            id = "test_topology_node_id",
+            name = "test_topology_node_name",
+            short_name = "test_topology_node_short_name",
+            location = location,
+            ports = ports,
+            private_attributes = None,
+        )]
+        topology = Topology(
+            id = "test_topology_id",
+            name = "test_topology_name",
+            domain_service = None,
+            version = 0,
+            time_stamp = datetime.datetime.fromtimestamp(0),
+            nodes = nodes,
+            links = links,
+            private_attributes = None,
+        )
         response = self.client.open(
             "/SDX-LC/1.0.0/topology",
             method="POST",
-            data=json.dumps(body),
+            data=json.dumps(topology),
             content_type="application/json",
         )
         self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
