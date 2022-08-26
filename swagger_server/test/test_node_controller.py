@@ -6,6 +6,8 @@ from flask import json
 from six import BytesIO
 
 from swagger_server.models.node import Node  # noqa: E501
+from swagger_server.models.location import Location
+from swagger_server.models.port import Port
 from swagger_server.test import BaseTestCase
 
 
@@ -17,7 +19,29 @@ class TestNodeController(BaseTestCase):
 
         add a new node to the topology
         """
-        body = Node()
+        location = Location(
+            address = "unknown",
+            latitude = 0.0,
+            longitude = 0.0,
+        )
+        ports = [Port(
+            id = "test_add_node_port_id",
+            name = "test_add_node_port_name",
+            short_name = "test_add_node_port_short_name",
+            node = "test_add_node_id",
+            label_range = None,
+            status = "unknown",
+            state = "unknown",
+            private_attributes = None,
+        )]
+        body = Node(
+            id = "test_add_node_id",
+            name = "test_add_node_name",
+            short_name = "test_add_node_short_name",
+            location = location,
+            ports = ports,
+            private_attributes = None,
+        )
         response = self.client.open(
             "/SDX-LC/1.0.0/node",
             method="POST",
