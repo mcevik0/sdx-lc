@@ -2,10 +2,13 @@
 
 from __future__ import absolute_import
 
+import datetime
+
 from flask import json
 from six import BytesIO
 
 from swagger_server.models.connection import Connection  # noqa: E501
+from swagger_server.models.port import Port
 from swagger_server.test import BaseTestCase
 
 
@@ -39,7 +42,38 @@ class TestConnectionController(BaseTestCase):
 
         Place an connection request from the SDX-Controller
         """
-        body = Connection()
+        ingress_port = Port(
+            id = "ingress_port_id",
+            name = "ingress_port_name",
+            node = "ingress_node",
+            label_range = None,
+            status = "unknown",
+            state = "unknown",
+            private_attributes = None,
+        )
+        
+        egress_port = Port(
+            id = "egress_port_id",
+            name = "egress_port_name",
+            node = "egress_node",
+            label_range = None,
+            status = "unknown",
+            state = "unknown",
+            private_attributes = None,
+        )
+        
+        body = Connection(
+            id = "test_place_connection_id",
+            name = "test_place_connection_name",
+            ingress_port = ingress_port,
+            egress_port = egress_port,
+            quantity = 0,
+            start_time = datetime.datetime.fromtimestamp(0),
+            end_time = datetime.datetime.fromtimestamp(0),
+            status = "fail",
+            complete = False,
+        )
+        
         response = self.client.open(
             "/SDX-LC/1.0.0/conection",
             method="POST",
