@@ -412,7 +412,7 @@ paths:
       #   explode: false
       #   schema:
       #     type: string
-      - name: nodeId
+      - name: node_id
         in: query
         description: ID of link to delete
         required: true
