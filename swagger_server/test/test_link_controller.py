@@ -71,7 +71,22 @@ class TestLinkController(BaseTestCase):
 
         Update an existing link
         """
-        body = Link()
+        body = Link(
+            id = "test_update_link_id",
+            name = "test_update_link_name",
+            short_name = "test_update_link_short_name",
+            ports = list(),
+            bandwidth = 1.0,
+            residual_bandwidth = 1.0,
+            latency = 1.0,
+            packet_loss = 0.0,
+            availability = 0.0,
+            status = "unknown",
+            state = "unknown",
+            private_attributes = list(),
+            time_stamp = datetime.datetime.fromtimestamp(0),
+            measurement_period = None,
+        )
         response = self.client.open(
             "/SDX-LC/1.0.0/link",
             method="PUT",
