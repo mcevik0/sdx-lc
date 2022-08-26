@@ -20,59 +20,65 @@ class TestTopologyController(BaseTestCase):
     """TopologyController integration test stubs"""
 
     __location = Location(
-        address = "unknown",
-        latitude = 0.0,
-        longitude = 0.0,
+        address="unknown",
+        latitude=0.0,
+        longitude=0.0,
     )
-    
-    __ports = [Port(
-        id = "test_topology_port_id",
-        name = "test_topology_port_name",
-        short_name = "test_topology_port_short_name",
-        node = "test_topology_id",
-        label_range = None,
-        status = "unknown",
-        state = "unknown",
-        private_attributes = None,
-    )]
-    
-    __nodes = [Node(
-        id = "test_topology_node_id",
-        name = "test_topology_node_name",
-        short_name = "test_topology_node_short_name",
-        location = __location,
-        ports = __ports,
-        private_attributes = None,
-    )]
-    
-    __links = [Link(
-        id = "test_topology_link_id",
-        name = "test_topology_link_name",
-        short_name = "test_topology_link_short_name",
-        ports = list(),
-        bandwidth = 1.0,
-        residual_bandwidth = 1.0,
-        latency = 1.0,
-        packet_loss = 0.0,
-        availability = 0.0,
-        status = "unknown",
-        state = "unknown",
-        private_attributes = list(),
-        time_stamp = datetime.datetime.fromtimestamp(0),
-        measurement_period = None,
-    )]
-    
+
+    __ports = [
+        Port(
+            id="test_topology_port_id",
+            name="test_topology_port_name",
+            short_name="test_topology_port_short_name",
+            node="test_topology_id",
+            label_range=None,
+            status="unknown",
+            state="unknown",
+            private_attributes=None,
+        )
+    ]
+
+    __nodes = [
+        Node(
+            id="test_topology_node_id",
+            name="test_topology_node_name",
+            short_name="test_topology_node_short_name",
+            location=__location,
+            ports=__ports,
+            private_attributes=None,
+        )
+    ]
+
+    __links = [
+        Link(
+            id="test_topology_link_id",
+            name="test_topology_link_name",
+            short_name="test_topology_link_short_name",
+            ports=list(),
+            bandwidth=1.0,
+            residual_bandwidth=1.0,
+            latency=1.0,
+            packet_loss=0.0,
+            availability=0.0,
+            status="unknown",
+            state="unknown",
+            private_attributes=list(),
+            time_stamp=datetime.datetime.fromtimestamp(0),
+            measurement_period=None,
+        )
+    ]
+
     __topology = Topology(
-        id = "test_topology_id",
-        name = "test_topology_name",
-        domain_service = None,
-        version = 0,
-        time_stamp = datetime.datetime.fromtimestamp(0),
-        nodes = __nodes,
-        links = __links,
-        private_attributes = None,
+        id="test_topology_id",
+        name="test_topology_name",
+        domain_service=None,
+        version=0,
+        time_stamp=datetime.datetime.fromtimestamp(0),
+        nodes=__nodes,
+        links=__links,
+        private_attributes=None,
     )
-    
+
     def test_add_topology(self):
         """Test case for add_topology
 
