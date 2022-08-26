@@ -78,7 +78,29 @@ class TestNodeController(BaseTestCase):
 
         Update an existing node
         """
-        body = Node()
+        location = Location(
+            address = "unknown",
+            latitude = 0.0,
+            longitude = 0.0,
+        )
+        ports = [Port(
+            id = "test_update_node_port_id",
+            name = "test_update_node_port_name",
+            short_name = "test_update_node_port_short_name",
+            node = "test_add_node_id",
+            label_range = None,
+            status = "unknown",
+            state = "unknown",
+            private_attributes = None,
+        )]
+        body = Node(
+            id = "test_update_node_id",
+            name = "test_update_node_name",
+            short_name = "test_update_node_short_name",
+            location = location,
+            ports = ports,
+            private_attributes = None,
+        )
         response = self.client.open(
             "/SDX-LC/1.0.0/node",
             method="PUT",
