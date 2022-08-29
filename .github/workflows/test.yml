@@ -65,7 +65,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install flake8 tox
+          python -m pip install flake8 tox coveralls
 
       - name: Lint with flake8
         run: |
@@ -94,3 +94,6 @@ jobs:
           DB_NAME: 'test-db'
           DB_CONFIG_TABLE_NAME: 'test-config-table'
 
+      - name: Send coverage data to coveralls.io
+        run: |
+          python -m coveralls
