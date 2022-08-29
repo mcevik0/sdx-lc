@@ -100,5 +100,7 @@ jobs:
         env:
           # Coveralls checks for this environment variable. 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Help coveralls identify our project.
+          # COVERALLS_REPO_TOKEN helps coveralls identify our project.
+          # On GitHub, the variable is set at
+          # https://github.com/atlanticwave-sdx/sdx-lc/settings/secrets/actions
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
