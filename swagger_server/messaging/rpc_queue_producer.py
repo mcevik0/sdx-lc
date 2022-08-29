@@ -21,6 +21,8 @@ class RpcProducer(object):
         self.exchange_name = exchange_name
         self.routing_key = routing_key
 
+        self.stop_keep_live = False
+
         t1 = threading.Thread(target=self.keep_live, args=())
         t1.start()
 
@@ -34,8 +36,15 @@ class RpcProducer(object):
             auto_ack=True,
         )
 
+    def stop(self):
+        """
+        Signal to stop keep-alive pings, so that RpcProducer instances
+        can be safely deleted.
+        """
+        self.stop_keep_live = True
+
     def keep_live(self):
-        while True:
+        while self.stop_keep_live != True:
             time.sleep(30)
             msg = "[MQ]: Heart Beat"
             self.logger.debug("Sending heart beat msg.")
@@ -79,8 +88,11 @@ class RpcProducer(object):
 
 
 if __name__ == "__main__":
-    rpc = RpcProducer()
+    rpc = RpcProducer(
+        timeout=1, exchange_name="", routing_key=str(uuid.uuid4())
+    )
     body = "test body"
     print("Published Message: {}".format(body))
     response = rpc.call(body)
     print(" [.] Got response: " + str(response))
+    rpc.stop()

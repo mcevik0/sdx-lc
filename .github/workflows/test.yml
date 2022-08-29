@@ -79,7 +79,6 @@ jobs:
       - name: Run tests
         run: |
           python -m tox
-        timeout-minutes: 3
         env:
           SDXLC_HOST: 'localhost'
           SDXLC_DOMAIN: ''

@@ -101,14 +101,14 @@ paths:
       summary: Deletes a topology
       operationId: delete_topology
       parameters:
-      - name: api_key
-        in: header
-        required: false
-        style: simple
-        explode: false
-        schema:
-          type: string
-      - name: topologyId
+      # - name: api_key
+      #   in: header
+      #   required: false
+      #   style: simple
+      #   explode: false
+      #   schema:
+      #     type: string
+      - name: topology_id
         in: query
         description: ID of topology to delete
         required: true
@@ -122,10 +122,10 @@ paths:
           description: Invalid ID supplied
         "404":
           description: topology not found
-      security:
-      - topology_auth:
-        - write:topology
-        - read:topology
+      # security:
+      # - topology_auth:
+      #   - write:topology
+      #   - read:topology
       x-openapi-router-controller: swagger_server.controllers.topology_controller
   /topology/version:
     get:
@@ -135,7 +135,7 @@ paths:
       description: Topology version
       operationId: topology_version
       parameters:
-      - name: topologyId
+      - name: topology_id
         in: query
         description: topology id
         required: true
@@ -152,10 +152,10 @@ paths:
                 $ref: '#/components/schemas/topology'
         "400":
           description: Invalid id value
-      security:
-      - topology_auth:
-        - write:topology
-        - read:topology
+      # security:
+      # - topology_auth:
+      #   - write:topology
+      #   - read:topology
       x-openapi-router-controller: swagger_server.controllers.topology_controller
   /topology/{version}:
     get:
@@ -165,7 +165,7 @@ paths:
       description: Returns a single topology
       operationId: get_topologyby_version
       parameters:
-      - name: topologyId
+      - name: topology_id
         in: query
         description: ID of topology to return
         required: true
@@ -194,8 +194,8 @@ paths:
           description: Invalid version supplied
         "404":
           description: Topology not found
-      security:
-      - api_key: []
+      # security:
+      # - api_key: []
       x-openapi-router-controller: swagger_server.controllers.topology_controller
     delete:
       tags:
@@ -203,14 +203,14 @@ paths:
       summary: Deletes a topology version
       operationId: delete_topology_version
       parameters:
-      - name: api_key
-        in: header
-        required: false
-        style: simple
-        explode: false
-        schema:
-          type: string
-      - name: topologyId
+      # - name: api_key
+      #   in: header
+      #   required: false
+      #   style: simple
+      #   explode: false
+      #   schema:
+      #     type: string
+      - name: topology_id
         in: query
         description: ID of topology to return
         required: true
@@ -233,19 +233,19 @@ paths:
           description: Invalid ID supplied
         "404":
           description: topology not found
-      security:
-      - topology_auth:
-        - write:topology
-        - read:topology
+      # security:
+      # - topology_auth:
+      #   - write:topology
+      #   - read:topology
       x-openapi-router-controller: swagger_server.controllers.topology_controller
-  /topology/{topologyId}/uploadImage:
+  /topology/{topology_id}/uploadImage:
     post:
       tags:
       - topology
       summary: uploads an topology image
       operationId: upload_file
       parameters:
-      - name: topologyId
+      - name: topology_id
         in: path
         description: ID of topology to update
         required: true
@@ -267,10 +267,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponse'
-      security:
-      - topology_auth:
-        - write:topology
-        - read:topology
+      # security:
+      # - topology_auth:
+      #   - write:topology
+      #   - read:topology
       x-openapi-router-controller: swagger_server.controllers.topology_controller
   /node:
     get:
@@ -331,14 +331,14 @@ paths:
       summary: Deletes a node
       operationId: delete_node
       parameters:
-      - name: api_key
-        in: header
-        required: false
-        style: simple
-        explode: false
-        schema:
-          type: string
-      - name: nodeId
+      # - name: api_key
+      #   in: header
+      #   required: false
+      #   style: simple
+      #   explode: false
+      #   schema:
+      #     type: string
+      - name: node_id
         in: query
         description: ID of node to delete
         required: true
@@ -394,10 +394,10 @@ paths:
       responses:
         "405":
           description: Invalid input
-      security:
-      - topology_auth:
-        - write:topology
-        - read:topology
+      # security:
+      # - topology_auth:
+      #   - write:topology
+      #   - read:topology
       x-openapi-router-controller: swagger_server.controllers.link_controller
     delete:
       tags:
@@ -405,14 +405,14 @@ paths:
       summary: Deletes a link
       operationId: delete_link
       parameters:
-      - name: api_key
-        in: header
-        required: false
-        style: simple
-        explode: false
-        schema:
-          type: string
-      - name: nodeId
+      # - name: api_key
+      #   in: header
+      #   required: false
+      #   style: simple
+      #   explode: false
+      #   schema:
+      #     type: string
+      - name: node_id
         in: query
         description: ID of link to delete
         required: true
@@ -426,10 +426,10 @@ paths:
           description: Invalid ID supplied
         "404":
           description: link not found
-      security:
-      - topology_auth:
-        - write:topology
-        - read:topology
+      # security:
+      # - topology_auth:
+      #   - write:topology
+      #   - read:topology
       x-openapi-router-controller: swagger_server.controllers.link_controller
   /conection:
     post:
@@ -454,7 +454,7 @@ paths:
         "400":
           description: Invalid Connection
       x-openapi-router-controller: swagger_server.controllers.connection_controller
-  /connection/{connectionId}:
+  /connection/{connection_id}:
     get:
       tags:
       - connection
@@ -462,7 +462,7 @@ paths:
       description: connection details
       operationId: getconnection_by_id
       parameters:
-      - name: connectionId
+      - name: connection_id
         in: path
         description: ID of connection that needs to be fetched
         required: true
@@ -495,7 +495,7 @@ paths:
       description: delete a connection
       operationId: delete_connection
       parameters:
-      - name: connectionId
+      - name: connection_id
         in: path
         description: ID of the connection that needs to be deleted
         required: true
@@ -1179,20 +1179,20 @@ components:
             items:
               $ref: '#/components/schemas/User'
       required: true
-  securitySchemes:
-    topology_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: http://0.0.0.0:8080/oauth/dialog
-          scopes:
-            write:topology: modify topology in your account
-            read:topology: read your topology
-      x-tokenInfoFunc: swagger_server.controllers.authorization_controller.check_topology_auth
-      x-scopeValidateFunc: swagger_server.controllers.authorization_controller.validate_scope_topology_auth
-    api_key:
-      type: apiKey
-      name: api_key
-      in: header
-      x-apikeyInfoFunc: swagger_server.controllers.authorization_controller.check_api_key
+  # securitySchemes:
+  #   topology_auth:
+  #     type: oauth2
+  #     flows:
+  #       implicit:
+  #         authorizationUrl: http://0.0.0.0:8080/oauth/dialog
+  #         scopes:
+  #           write:topology: modify topology in your account
+  #           read:topology: read your topology
+  #     x-tokenInfoFunc: swagger_server.controllers.authorization_controller.check_topology_auth
+  #     x-scopeValidateFunc: swagger_server.controllers.authorization_controller.validate_scope_topology_auth
+  #   api_key:
+  #     type: apiKey
+  #     name: api_key
+  #     in: header
+  #     x-apikeyInfoFunc: swagger_server.controllers.authorization_controller.check_api_key
 

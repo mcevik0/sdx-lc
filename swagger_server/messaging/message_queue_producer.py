@@ -2,6 +2,7 @@ import json
 
 import pika
 
+
 class MetaClass(type):
     _instance = {}
 

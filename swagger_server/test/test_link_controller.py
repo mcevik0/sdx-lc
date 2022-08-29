@@ -5,6 +5,8 @@ from __future__ import absolute_import
 from flask import json
 from six import BytesIO
 
+import datetime
+
 from swagger_server.models.link import Link  # noqa: E501
 from swagger_server.test import BaseTestCase
 
@@ -17,7 +19,22 @@ class TestLinkController(BaseTestCase):
 
         add a new link to the topology
         """
-        body = Link()
+        body = Link(
+            id="test_add_link_id",
+            name="test_add_link_name",
+            short_name="test_add_link_short_name",
+            ports=list(),
+            bandwidth=1.0,
+            residual_bandwidth=1.0,
+            latency=1.0,
+            packet_loss=0.0,
+            availability=0.0,
+            status="unknown",
+            state="unknown",
+            private_attributes=list(),
+            time_stamp=datetime.datetime.fromtimestamp(0),
+            measurement_period=None,
+        )
         response = self.client.open(
             "/SDX-LC/1.0.0/link",
             method="POST",
@@ -54,7 +71,22 @@ class TestLinkController(BaseTestCase):
 
         Update an existing link
         """
-        body = Link()
+        body = Link(
+            id="test_update_link_id",
+            name="test_update_link_name",
+            short_name="test_update_link_short_name",
+            ports=list(),
+            bandwidth=1.0,
+            residual_bandwidth=1.0,
+            latency=1.0,
+            packet_loss=0.0,
+            availability=0.0,
+            status="unknown",
+            state="unknown",
+            private_attributes=list(),
+            time_stamp=datetime.datetime.fromtimestamp(0),
+            measurement_period=None,
+        )
         response = self.client.open(
             "/SDX-LC/1.0.0/link",
             method="PUT",
