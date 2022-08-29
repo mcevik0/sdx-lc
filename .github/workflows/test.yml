@@ -100,3 +100,5 @@ jobs:
         env:
           # Coveralls checks for this environment variable. 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Help coveralls identify our project.
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
