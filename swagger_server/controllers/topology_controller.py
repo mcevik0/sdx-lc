@@ -28,6 +28,7 @@ db_tuples = [("config_table", "test-config")]
 db_instance = DbUtils()
 db_instance._initialize_db(DB_NAME, db_tuples)
 
+
 def find_between(s, first, last):
     try:
         start = s.index(first) + len(first)
