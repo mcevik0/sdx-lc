@@ -20,7 +20,7 @@ class RabbitMqParams:
 
 class RabbitMq:
     def __init__(self, params):
-        self.params = server
+        self.params = params
         self._connection = pika.BlockingConnection(
             pika.ConnectionParameters(host=self.params.host)
         )
