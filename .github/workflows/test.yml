@@ -97,3 +97,6 @@ jobs:
       - name: Send coverage data to coveralls.io
         run: |
           python -m coveralls
+        env:
+          # Coveralls checks for this environment variable. 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
