@@ -7,7 +7,7 @@ class RabbitMqParams:
     def __init__(
         self,
         queue="hello",
-        host="aw-sdx-monitor.renci.org",
+        host="localhost",
         routingKey="hello",
         exchange="",
     ):
