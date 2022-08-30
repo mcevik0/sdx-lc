@@ -3,20 +3,11 @@ import json
 import pika
 
 
-class MetaClass(type):
-    _instance = {}
-
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instance:
-            cls._instance[cls] = super(MetaClass, cls).__call__(*args, **kwargs)
-            return cls._instance[cls]
-
-
-class RabbitmqConfigure(metaclass=MetaClass):
+class RabbitMqParams:
     def __init__(
         self,
         queue="hello",
-        host="aw-sdx-monitor.renci.org",
+        host="localhost",
         routingKey="hello",
         exchange="",
     ):
@@ -28,10 +19,10 @@ class RabbitmqConfigure(metaclass=MetaClass):
 
 
 class RabbitMq:
-    def __init__(self, server):
-        self.server = server
+    def __init__(self, params):
+        self.params = params
         self._connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host=self.server.host)
+            pika.ConnectionParameters(host=self.params.host)
         )
         self._channel = self._connection.channel()
 
@@ -39,8 +30,8 @@ class RabbitMq:
         result = self._channel.queue_declare(queue=self.server.queue)
         callback_queue = result.method.queue
         self._channel.basic_publish(
-            exchange=self.server.exchange,
-            routing_key=self.server.routingKey,
+            exchange=self.params.exchange,
+            routing_key=self.params.routingKey,
             properties=pika.BasicProperties(
                 reply_to=callback_queue,
             ),
@@ -54,10 +45,10 @@ class RabbitMq:
 
 if __name__ == "__main__":
 
-    server = RabbitmqConfigure(
+    params = RabbitMqParams(
         queue="hello", host="localhost", routingKey="hello", exchange=""
     )
 
     with open("./mq-test/local-ctlr-1/local-ctlr-1.manifest") as f:
         data = json.load(f)
-        RabbitMq(server).publish(body=data)
+        RabbitMq(params).publish(body=data)
