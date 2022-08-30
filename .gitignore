@@ -13,3 +13,9 @@ test-db
 
 # Ignore copies of env
 env.*
+
+# Ignore files written by code coverage tools
+.coverage
+.coverage.*
+.coverage.el
+coverage-html/
