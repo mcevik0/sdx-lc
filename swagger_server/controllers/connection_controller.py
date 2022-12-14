@@ -1,8 +1,8 @@
 import connexion
 import six
 
-from swagger_server.models.connection import Connection  # noqa: E501
 from swagger_server import util
+from swagger_server.models.connection import Connection  # noqa: E501
 
 
 def delete_connection(connection_id):  # noqa: E501

@@ -1,7 +1,8 @@
-import pika
+import json
 import os
 import sys
-import json
+
+import pika
 
 
 class MetaClass(type):

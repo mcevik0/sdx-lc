@@ -1,11 +1,13 @@
 #!/usr/bin/env python
-import pika
+import json
+import logging
 import os
 import threading
-import logging
-import json
-import requests
 from queue import Queue
+
+import pika
+import requests
+
 from swagger_server.utils.db_utils import *
 
 MQ_HOST = os.environ.get("MQ_HOST")

@@ -2,10 +2,10 @@
 
 from __future__ import absolute_import
 
+import datetime
+
 from flask import json
 from six import BytesIO
-
-import datetime
 
 from swagger_server.models.link import Link  # noqa: E501
 from swagger_server.test import BaseTestCase

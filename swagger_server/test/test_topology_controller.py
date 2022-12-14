@@ -8,11 +8,11 @@ from flask import json
 from six import BytesIO
 
 from swagger_server.models.api_response import ApiResponse  # noqa: E501
-from swagger_server.models.topology import Topology  # noqa: E501
-from swagger_server.models.node import Node
 from swagger_server.models.link import Link
 from swagger_server.models.location import Location
+from swagger_server.models.node import Node
 from swagger_server.models.port import Port
+from swagger_server.models.topology import Topology  # noqa: E501
 from swagger_server.test import BaseTestCase
 
 
