@@ -1,16 +1,16 @@
 # coding: utf-8
 
 from __future__ import absolute_import
+
 from datetime import date, datetime  # noqa: F401
+from typing import Dict, List  # noqa: F401
 
-from typing import List, Dict  # noqa: F401
-
-from swagger_server.models.base_model_ import Model
-from swagger_server.models.link_measurement_period import (
-    LinkMeasurementPeriod,
-)  # noqa: F401,E501
-from swagger_server.models.port import Port  # noqa: F401,E501
 from swagger_server import util
+from swagger_server.models.base_model_ import Model
+from swagger_server.models.link_measurement_period import (  # noqa: F401,E501
+    LinkMeasurementPeriod,
+)
+from swagger_server.models.port import Port  # noqa: F401,E501
 
 
 class Link(Model):

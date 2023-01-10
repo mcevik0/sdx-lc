@@ -5,8 +5,8 @@ from __future__ import absolute_import
 from flask import json
 from six import BytesIO
 
-from swagger_server.models.node import Node  # noqa: E501
 from swagger_server.models.location import Location
+from swagger_server.models.node import Node  # noqa: E501
 from swagger_server.models.port import Port
 from swagger_server.test import BaseTestCase
 

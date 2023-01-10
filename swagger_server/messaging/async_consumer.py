@@ -3,10 +3,11 @@
 
 import functools
 import logging
+import threading
 import time
+
 import pika
 from pika.exchange_type import ExchangeType
-import threading
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "

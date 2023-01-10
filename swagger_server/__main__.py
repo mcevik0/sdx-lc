@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 
+import argparse
+import json
+import logging
+import threading
+import time
+from optparse import OptionParser
+
 import connexion
 
 from swagger_server import encoder
 from swagger_server.messaging.topic_queue_consumer import *
 from swagger_server.utils.db_utils import *
-
-from optparse import OptionParser
-import argparse
-import time
-import threading
-import logging
-import json
 
 
 def is_json(myjson):
