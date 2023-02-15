@@ -48,4 +48,4 @@ jobs:
           push: true
           tags: |
             awsdx/sdx-lc:latest
-            awsdx/sdx-lc:${{ github.ref_name }}
+            awsdx/sdx-lc:${{ github.sha }}
