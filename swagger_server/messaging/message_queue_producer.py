@@ -44,7 +44,6 @@ class RabbitMq:
 
 
 if __name__ == "__main__":
-
     params = RabbitMqParams(
         queue="hello", host="localhost", routingKey="hello", exchange=""
     )

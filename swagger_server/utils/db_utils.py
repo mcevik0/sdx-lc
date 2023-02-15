@@ -25,7 +25,7 @@ class DbUtils(object):
         )
 
         # Load the tables, create table if table does not.
-        for (name, table) in db_tables_tuples:
+        for name, table in db_tables_tuples:
             if table in self.db:  # https://github.com/pudo/dataset/issues/281
                 self.logger.debug("Trying to load {} from DB".format(name))
                 t = self.db.load_table(table)
