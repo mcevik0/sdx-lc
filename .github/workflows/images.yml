@@ -34,6 +34,7 @@ jobs:
             ghcr.io/username/app
           # generate Docker tags based on the following events/attributes
           tags: |
+            type=pep440,pattern={{version}}
             type=schedule
             type=ref,event=branch
             type=ref,event=pr
