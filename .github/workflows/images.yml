@@ -46,4 +46,6 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: awsdx/sdx-lc:latest
+          tags: |
+            awsdx/sdx-lc:latest
+            awsdx/sdx-lc:${{ github.ref_name }}
