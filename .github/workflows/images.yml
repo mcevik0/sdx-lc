@@ -49,3 +49,4 @@ jobs:
           tags: |
             awsdx/sdx-lc:latest
             awsdx/sdx-lc:${{ github.sha }}
+            awsdx/sdx-lc:${{ github.sha::7 }}
