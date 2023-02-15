@@ -44,7 +44,7 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
             type=sha
-            
+
       # Secrets used here are set under "repository secrets" at
       # https://github.com/atlanticwave-sdx/sdx-controller/settings/secrets/actions,
       #
