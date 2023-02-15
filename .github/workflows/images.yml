@@ -69,4 +69,5 @@ jobs:
           push: true
           tags: |
             awsdx/sdx-lc:latest
-            awsdx/sdx-lc:${{ github.sha }}
+            ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
