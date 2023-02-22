@@ -19,15 +19,12 @@ LOG_FORMAT = (
 logger = logging.getLogger(__name__)
 logging.getLogger("pika").setLevel(logging.WARNING)
 
-DB_NAME = os.environ.get("DB_NAME")
 MANIFEST = os.environ.get("MANIFEST")
 SDXLC_DOMAIN = os.environ.get("SDXLC_DOMAIN")
 
 # Get DB connection and tables set up.
-db_tuples = [("config_table", "test-config")]
-
 db_instance = DbUtils()
-db_instance._initialize_db(DB_NAME, db_tuples)
+db_instance._initialize_db()
 
 
 def find_between(s, first, last):

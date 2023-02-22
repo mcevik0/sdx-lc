@@ -44,14 +44,9 @@ def main():
     # Run swagger in a thread
     threading.Thread(target=lambda: app.run(port=8080)).start()
 
-    DB_NAME = os.environ.get("DB_NAME") + ".sqlite3"
-    MANIFEST = os.environ.get("MANIFEST")
-
     # Get DB connection and tables set up.
-    db_tuples = [("config_table", "test-config")]
-
     db_instance = DbUtils()
-    db_instance._initialize_db(DB_NAME, db_tuples)
+    db_instance._initialize_db()
     thread_queue = Queue()
     start_consumer(thread_queue, db_instance)
 
