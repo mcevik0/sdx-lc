@@ -16,6 +16,7 @@ This example uses the [Connexion](https://github.com/zalando/connexion) library 
 Python 3.9.6+.
 
 ## Prerequisite: run the RabbitMQ server
+
 The communication between SDX controller and Local controller rely on RabbitMQ. RabbitMQ can either run on the SDX controller, or run on a separate node. The easiest way to run RabbitMQ is using docker:
 
 ```
@@ -23,6 +24,16 @@ sudo docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:la
 ```
 
 Then in `env` and `docker-compose.yml` files, change `MQ_HOST` host to the corresponding IP address or hostname of the RabbitMQ server
+
+You also will need a MongoDB server:
+
+```console
+$ docker run -it --rm --name mongo \
+    -p 27017:27017 \
+    -e MONGO_INITDB_ROOT_USERNAME=guest \
+    -e MONGO_INITDB_ROOT_PASSWORD=guest \
+    mongo:3.7
+```
 
 ## Run with Python
 
