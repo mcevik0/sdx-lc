@@ -91,6 +91,7 @@ jobs:
           SUB_EXCHANGE: 'test-exchange'
           DB_NAME: 'test-db'
           DB_CONFIG_TABLE_NAME: 'test-config-table'
+          MONGODB_CONNSTRING: 'mongodb://guest:guest@localhost:27017/'
 
       - name: Send coverage data to coveralls.io
         run: |
