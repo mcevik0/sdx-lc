@@ -6,11 +6,9 @@ import pika
 
 
 class MetaClass(type):
-
     _instance = {}
 
     def __call__(cls, *args, **kwargs):
-
         """Singelton Design Pattern"""
 
         if cls not in cls._instance:
@@ -30,11 +28,9 @@ class RabbitmqConfigure(metaclass=MetaClass):
 
 
 class RabbitMq:
-
     __slots__ = ["server", "_channel", "_connection"]
 
     def __init__(self, server):
-
         """
 
         :param server: Object of class RabbitmqConfigure
@@ -56,7 +52,6 @@ class RabbitMq:
         self._connection.close()
 
     def publish(self, payload={}):
-
         """
 
         :param payload: JSON payload
@@ -73,7 +68,6 @@ class RabbitMq:
 
 
 class Image(object):
-
     __slots__ = ["filename"]
 
     def __init__(self, filename):
@@ -87,7 +81,6 @@ class Image(object):
 
 
 if __name__ == "__main__":
-
     server = RabbitmqConfigure(
         queue="hello", host="localhost", routingKey="hello", exchange=""
     )

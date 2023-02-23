@@ -2,11 +2,9 @@ import pika
 
 
 class MetaClass(type):
-
     _instance = {}
 
     def __call__(cls, *args, **kwargs):
-
         """Singelton Design Pattern"""
 
         if cls not in cls._instance:
@@ -27,7 +25,6 @@ class RabbitmqConfigure(metaclass=MetaClass):
 
 class RabbitMq:
     def __init__(self, server):
-
         """
 
         :param server: Object of class RabbitmqConfigure
@@ -42,7 +39,6 @@ class RabbitMq:
         self._channel.queue_declare(queue=self.server.queue)
 
     def publish(self, msg={}):
-
         """
 
         :param msg: JSON msg
