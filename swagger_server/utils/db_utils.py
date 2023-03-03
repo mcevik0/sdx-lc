@@ -17,6 +17,7 @@ class DbUtils(object):
         self.logger.setLevel(logging.DEBUG)
 
     def initialize_db(self):
+        """Init database"""
         self.logger.debug("Trying to load {} from DB".format(self.db_name))
 
         if self.db_name not in self.mongo_client.list_database_names():
@@ -31,6 +32,7 @@ class DbUtils(object):
         self.logger.debug("DB {} initialized".format(self.db_name))
 
     def add_key_value_pair_to_db(self, key, value):
+        """Add key value pair to database"""
         obj = self.read_from_db(key)
         if obj is None:
             self.logger.debug("Adding key value pair {}:{} to DB.".format(key, value))
@@ -46,6 +48,7 @@ class DbUtils(object):
         return result
 
     def read_from_db(self, key):
+        """Given a user specified key, return the value stored in database"""
         return self.sdxdb[self.db_name][self.config_table_name].find_one(
             {key: {"$exists": 1}}
         )
