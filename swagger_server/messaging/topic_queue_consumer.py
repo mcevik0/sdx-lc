@@ -44,7 +44,7 @@ class TopicQueueConsumer(object):
 
         # Get DB connection and tables set up.
         self.db_instance = DbUtils()
-        self.db_instance._initialize_db()
+        self.db_instance.initialize_db()
 
         self.heartbeat_id = 0
         self.message_id = 0

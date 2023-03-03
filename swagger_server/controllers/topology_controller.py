@@ -24,7 +24,7 @@ SDXLC_DOMAIN = os.environ.get("SDXLC_DOMAIN")
 
 # Get DB connection and tables set up.
 db_instance = DbUtils()
-db_instance._initialize_db()
+db_instance.initialize_db()
 
 
 def find_between(s, first, last):
