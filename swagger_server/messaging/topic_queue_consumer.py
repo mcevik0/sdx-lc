@@ -15,7 +15,6 @@ MQ_HOST = os.environ.get("MQ_HOST")
 SUB_QUEUE = os.environ.get("SUB_QUEUE")
 SUB_TOPIC = os.environ.get("SUB_TOPIC")
 SUB_EXCHANGE = os.environ.get("SUB_EXCHANGE")
-DB_NAME = os.environ.get("DB_NAME") + ".sqlite3"
 KYTOS_URL = os.environ.get("KYTOS_URL")
 
 
@@ -44,10 +43,8 @@ class TopicQueueConsumer(object):
         self.binding_keys.append(SUB_TOPIC)
 
         # Get DB connection and tables set up.
-        db_tuples = [("config_table", "test-config")]
-
         self.db_instance = DbUtils()
-        self.db_instance._initialize_db(DB_NAME, db_tuples)
+        self.db_instance.initialize_db()
 
         self.heartbeat_id = 0
         self.message_id = 0
