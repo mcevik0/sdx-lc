@@ -3,9 +3,9 @@ import logging
 import os
 import threading
 
-import connexion
 import six
 
+import connexion
 from swagger_server import util
 from swagger_server.messaging.rpc_queue_producer import *
 from swagger_server.models.api_response import ApiResponse  # noqa: E501
@@ -61,8 +61,11 @@ def add_topology(body):  # noqa: E501
     body["lc_queue_name"] = os.environ.get("SUB_TOPIC")
     json_body = json.dumps(body)
 
-    logger.debug("Placing connection. Saving to database.")
-    db_instance.add_key_value_pair_to_db("test", json_body)
+    logger.debug("Adding topology. Saving to database.")
+    db_instance.add_key_value_pair_to_db(
+        "topoVersion" + str(body["version"]), json_body
+    )
+    db_instance.add_key_value_pair_to_db("latest_topology", json_body)
     logger.debug("Saving to database complete.")
 
     logger.debug("Publishing Message to MQ: {}".format(body))
