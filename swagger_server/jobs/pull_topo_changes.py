@@ -59,6 +59,10 @@ def process_domain_controller_topo(db_instance):
             time.sleep(5)
             continue
 
+        logger.debug("Adding pulled topo to db")
+        db_instance.add_key_value_pair_to_db(
+            "topoVersion" + str(json_pulled_topology["version"]), pulled_topology
+        )
         db_instance.add_key_value_pair_to_db("latest_topology", pulled_topology)
         # initiate rpc producer with 5 seconds timeout
         rpc_producer = RpcProducer(5, "", "topo")
