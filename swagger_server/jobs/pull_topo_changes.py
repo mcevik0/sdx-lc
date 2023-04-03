@@ -18,7 +18,7 @@ from utils.db_utils import *
 DOMAIN_CONTROLLER_PULL_URL = os.environ.get("DOMAIN_CONTROLLER_PULL_URL")
 DOMAIN_CONTROLLER_PULL_INTERVAL = os.environ.get("DOMAIN_CONTROLLER_PULL_INTERVAL")
 logger = logging.getLogger(__name__)
-
+# logger.setLevel(logging.DEBUG)
 
 def main():
     db_instance = DbUtils()
@@ -29,18 +29,20 @@ def main():
 
 def process_domain_controller_topo(db_instance):
     while True:
+        latest_topology_exists = False
         latest_topology = db_instance.read_from_db("latest_topology")
-        if not latest_topology:
-            time.sleep(int(DOMAIN_CONTROLLER_PULL_INTERVAL))
-            continue
+        
+        if latest_topology:
+            latest_topology_exists = True
+            json_latest_topology = json.loads(latest_topology["latest_topology"])
 
-        json_latest_topology = json.loads(latest_topology["latest_topology"])
-
-        try:
-            latest_topo_version = json_latest_topology["version"]
-        except KeyError:
-            logger.debug("Error getting topo version")
-            continue
+            try:
+                latest_topo_version = json_latest_topology["version"]
+            except KeyError:
+                logger.debug("Error getting topo version")
+                continue
+        else:
+            logger.debug("Latest topology does not exist")
 
         pulled_topology = urllib.request.urlopen(DOMAIN_CONTROLLER_PULL_URL).read()
 
@@ -57,8 +59,8 @@ def process_domain_controller_topo(db_instance):
             logger.debug("Error getting topo version")
             continue
 
-        if latest_topo_version == pulled_topo_version:
-            time.sleep(5)
+        if latest_topology_exists and latest_topo_version == pulled_topo_version:
+            time.sleep(DOMAIN_CONTROLLER_PULL_INTERVAL)
             continue
 
         logger.debug("Pulled topo with different version. Adding pulled topo to db")
