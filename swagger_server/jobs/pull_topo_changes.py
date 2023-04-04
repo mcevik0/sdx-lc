@@ -14,7 +14,6 @@ sys.path.append(
 from messaging.rpc_queue_producer import *
 from utils.db_utils import *
 
-
 DOMAIN_CONTROLLER_PULL_URL = os.environ.get("DOMAIN_CONTROLLER_PULL_URL")
 DOMAIN_CONTROLLER_PULL_INTERVAL = os.environ.get("DOMAIN_CONTROLLER_PULL_INTERVAL")
 logger = logging.getLogger(__name__)
