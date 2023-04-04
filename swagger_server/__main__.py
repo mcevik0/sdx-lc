@@ -9,6 +9,7 @@ from optparse import OptionParser
 from subprocess import call
 
 import connexion
+
 from swagger_server import encoder
 from swagger_server.messaging.topic_queue_consumer import *
 from swagger_server.utils.db_utils import *
