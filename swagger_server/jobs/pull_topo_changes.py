@@ -19,6 +19,7 @@ DOMAIN_CONTROLLER_PULL_URL = os.environ.get("DOMAIN_CONTROLLER_PULL_URL")
 DOMAIN_CONTROLLER_PULL_INTERVAL = os.environ.get("DOMAIN_CONTROLLER_PULL_INTERVAL")
 logger = logging.getLogger(__name__)
 
+
 def main():
     db_instance = DbUtils()
     db_instance.initialize_db()
@@ -30,7 +31,7 @@ def process_domain_controller_topo(db_instance):
     while True:
         latest_topology_exists = False
         latest_topology = db_instance.read_from_db("latest_topology")
-        
+
         if latest_topology:
             latest_topology_exists = True
             json_latest_topology = json.loads(latest_topology["latest_topology"])
