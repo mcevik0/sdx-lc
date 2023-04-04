@@ -7,9 +7,9 @@ from typing import Dict, List  # noqa: F401
 
 from swagger_server import util
 from swagger_server.models.base_model_ import Model
-from swagger_server.models.link_measurement_period import (
+from swagger_server.models.link_measurement_period import (  # noqa: F401,E501
     LinkMeasurementPeriod,
-)  # noqa: F401,E501
+)
 from swagger_server.models.port import Port  # noqa: F401,E501
 
 
