@@ -18,7 +18,6 @@ from utils.db_utils import *
 DOMAIN_CONTROLLER_PULL_URL = os.environ.get("DOMAIN_CONTROLLER_PULL_URL")
 DOMAIN_CONTROLLER_PULL_INTERVAL = os.environ.get("DOMAIN_CONTROLLER_PULL_INTERVAL")
 logger = logging.getLogger(__name__)
-# logger.setLevel(logging.DEBUG)
 
 def main():
     db_instance = DbUtils()
@@ -44,7 +43,12 @@ def process_domain_controller_topo(db_instance):
         else:
             logger.debug("Latest topology does not exist")
 
-        pulled_topology = urllib.request.urlopen(DOMAIN_CONTROLLER_PULL_URL).read()
+        try:
+            pulled_topology = urllib.request.urlopen(DOMAIN_CONTROLLER_PULL_URL).read()
+        except urllib.request.URLError:
+            logger.debug("Error connecting to domain controller...")
+            time.sleep(int(DOMAIN_CONTROLLER_PULL_INTERVAL))
+            continue
 
         if not pulled_topology:
             time.sleep(int(DOMAIN_CONTROLLER_PULL_INTERVAL))
