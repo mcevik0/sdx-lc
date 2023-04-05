@@ -9,10 +9,10 @@ on:
       - "main"
     tags:
       - "*"
-  # Triggering the build/publish of container images on pull
-  # requests should be here only for testing, keep "pull_request"
-  # disabled.
-  pull_request:
+  # # Triggering the build/publish of container images on pull
+  # # requests should be here only for testing, keep "pull_request"
+  # # disabled.
+  # pull_request:
 
 permissions:
   contents: read
