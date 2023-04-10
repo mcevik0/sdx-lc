@@ -7,6 +7,7 @@ import threading
 import time
 import urllib.request
 
+# append abspath, so this file can import other modules from parent directory
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))
 )
@@ -56,7 +57,12 @@ def process_domain_controller_topo(db_instance):
 
         logger.debug("Pulled request from domain controller")
 
-        json_pulled_topology = json.loads(pulled_topology)
+        try:
+            json_pulled_topology = json.loads(pulled_topology)
+        except ValueError:
+            logger.debug("Cannot parse pulled topology, invalid JSON")
+            continue
+
         try:
             pulled_topo_version = json_pulled_topology["version"]
         except KeyError:
@@ -64,12 +70,12 @@ def process_domain_controller_topo(db_instance):
             continue
 
         if latest_topology_exists and latest_topo_version == pulled_topo_version:
-            time.sleep(DOMAIN_CONTROLLER_PULL_INTERVAL)
+            time.sleep(int(DOMAIN_CONTROLLER_PULL_INTERVAL))
             continue
 
         logger.debug("Pulled topo with different version. Adding pulled topo to db")
         db_instance.add_key_value_pair_to_db(
-            "topoVersion" + str(json_pulled_topology["version"]), pulled_topology
+            f"topoVersion{json_pulled_topology['version']}", pulled_topology
         )
         db_instance.add_key_value_pair_to_db("latest_topology", pulled_topology)
         logger.debug("Added pulled topo to db")
