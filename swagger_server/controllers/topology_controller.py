@@ -62,9 +62,7 @@ def add_topology(body):  # noqa: E501
     json_body = json.dumps(body)
 
     logger.debug("Adding topology. Saving to database.")
-    db_instance.add_key_value_pair_to_db(
-        f"topoVersion{body['version']}", json_body
-    )
+    db_instance.add_key_value_pair_to_db(f"topoVersion{body['version']}", json_body)
     db_instance.add_key_value_pair_to_db("latest_topology", json_body)
     logger.debug("Saving to database complete.")
 
