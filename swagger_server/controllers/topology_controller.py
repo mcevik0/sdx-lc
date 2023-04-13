@@ -176,6 +176,6 @@ def upload_file(topology_id, body=None):  # noqa: E501
 
     :rtype: ApiResponse
     """
-    if connexion.request.is_json:
-        body = Object.from_dict(connexion.request.get_json())  # noqa: E501
+    # if connexion.request.is_json:
+    #     body = Object.from_dict(connexion.request.get_json())  # noqa: E501
     return "do some magic!"
