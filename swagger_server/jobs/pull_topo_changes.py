@@ -12,8 +12,8 @@ sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))
 )
 
-from messaging.rpc_queue_producer import *
-from utils.db_utils import *
+from messaging.rpc_queue_producer import RpcProducer
+from utils.db_utils import DbUtils
 
 DOMAIN_CONTROLLER_PULL_URL = os.environ.get("DOMAIN_CONTROLLER_PULL_URL")
 DOMAIN_CONTROLLER_PULL_INTERVAL = os.environ.get("DOMAIN_CONTROLLER_PULL_INTERVAL")
@@ -34,7 +34,11 @@ def process_domain_controller_topo(db_instance):
 
         if latest_topology:
             latest_topology_exists = True
-            json_latest_topology = json.loads(latest_topology["latest_topology"])
+            try:
+                json_latest_topology = json.loads(latest_topology["latest_topology"])
+            except ValueError:
+                logger.debug("Got invalid JSON topology. Ignored.")
+                continue
 
             try:
                 latest_topo_version = json_latest_topology["version"]
@@ -81,6 +85,7 @@ def process_domain_controller_topo(db_instance):
         logger.debug("Added pulled topo to db")
         # initiate rpc producer with 5 seconds timeout
         rpc_producer = RpcProducer(5, "", "topo")
+        # publish topology to message queue for sdx-controller
         response = rpc_producer.call(pulled_topology)
         # Signal to end keep alive pings.
         rpc_producer.stop()
