@@ -36,6 +36,8 @@ def start_consumer(thread_queue, db_instance):
 
 
 def start_pull_topology_change():
+    # Run pull_topo_job as a sub process, so if sdx-lc was killed,
+    # pull_topo_job will continue to run as a independent process
     call(["python", "swagger_server/jobs/pull_topo_changes.py"])
 
 
