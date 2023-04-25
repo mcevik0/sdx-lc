@@ -35,13 +35,13 @@ class DbUtils(object):
         """Add key value pair to database"""
         obj = self.read_from_db(key)
         if obj is None:
-            self.logger.debug("Adding key value pair {}:{} to DB.".format(key, value))
+            self.logger.debug("Adding key value pair to DB.")
             return self.sdxdb[self.db_name][self.config_table_name].insert_one(
                 {key: value}
             )
 
         query = {"_id": obj["_id"]}
-        self.logger.debug("Updating DB entry {}:{}.".format(key, value))
+        self.logger.debug("Updating DB entry.")
         result = self.sdxdb[self.db_name][self.config_table_name].replace_one(
             query, {key: value}
         )

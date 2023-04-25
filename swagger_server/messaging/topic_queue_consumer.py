@@ -8,7 +8,7 @@ from queue import Queue
 import pika
 import requests
 
-from swagger_server.utils.db_utils import *
+from swagger_server.utils.db_utils import DbUtils
 
 MQ_HOST = os.environ.get("MQ_HOST")
 # subscribe to the corresponding queue
@@ -97,7 +97,7 @@ class TopicQueueConsumer(object):
                 lc_name = msg_json["name"]
                 msg_version = msg_json["version"]
                 db_msg_id = str(lc_name) + "-" + str(msg_id) + "-" + str(msg_version)
-                self.db_instance.add_key_value_pair_to_db(db_msg_id, msg)
+                self.db_instance.add_key_value_pair_to_db(db_msg_id, msg_body)
                 self.logger.info("Save to database complete.")
                 self.logger.info("message ID:" + str(db_msg_id))
             else:

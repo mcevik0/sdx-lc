@@ -6,6 +6,7 @@ import logging
 import threading
 import time
 from optparse import OptionParser
+from subprocess import call
 
 import connexion
 
@@ -34,6 +35,12 @@ def start_consumer(thread_queue, db_instance):
     t1.start()
 
 
+def start_pull_topology_change():
+    # Run pull_topo_job as a sub process, so if sdx-lc was killed,
+    # pull_topo_job will continue to run as a independent process
+    call(["python", "swagger_server/jobs/pull_topo_changes.py"])
+
+
 def main():
     logging.basicConfig(level=logging.INFO)
 
@@ -43,6 +50,11 @@ def main():
     app.add_api("swagger.yaml", arguments={"title": "SDX LC"}, pythonic_params=True)
     # Run swagger in a thread
     threading.Thread(target=lambda: app.run(port=8080)).start()
+
+    # Start pulling topology changes from domain controller in a
+    # separate subprocess
+    processThread = threading.Thread(target=start_pull_topology_change)
+    processThread.start()
 
     # Get DB connection and tables set up.
     db_instance = DbUtils()
