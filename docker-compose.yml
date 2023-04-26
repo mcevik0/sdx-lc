@@ -6,7 +6,7 @@ services:
     image: mongo:3.7
     container_name: mongodb-lc
     ports:
-      - 27117:27017
+      - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: sdx
       MONGO_INITDB_ROOT_PASSWORD: passw
