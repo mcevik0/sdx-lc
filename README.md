@@ -8,11 +8,28 @@ SDX Local Controller (sdx-lc) is a swagger-enabled Flask server server
 based on the [swagger-codegen] project.  SDX-LC uses [connexion]
 library on top of Flask.
 
+## Requirement: RabbitMQ
+
+The communication between SDX controller and Local controller rely on
+RabbitMQ. RabbitMQ can either run on the same node as SDX controller,
+or on a separate node.  The easiest way to run RabbitMQ is using
+Docker:
+
+```console
+$ docker run -it --rm --name rabbitmq \
+    -p 5672:5672 -p 15672:15672 \
+    rabbitmq:latest
+```
+
+Then in `env` and `docker-compose.yml` files, change `MQ_HOST` host to
+the corresponding IP address or hostname of the RabbitMQ server
+
+
 ## Running SDX Local Controller with Docker Compose
 
-Adjust the environment in `docker-compose.yml` (these will be
-eventually parameterized), and run Docker Compose from the top-level
-directory:
+Adjust the rest of the environment in `docker-compose.yml` according
+to your needs (these will be eventually parameterized), and run Docker
+Compose from the top-level directory:
 
 ```console
 $ docker compose up --build
@@ -25,18 +42,8 @@ $ docker build -t swagger_server .
 $ docker run -p 8080:8080 swagger_server
 ```
 
-## Prerequisite: run the RabbitMQ server
 
-The communication between SDX controller and Local controller rely on
-RabbitMQ. RabbitMQ can either run on the SDX controller, or run on a
-separate node. The easiest way to run RabbitMQ is using docker:
-
-```
-sudo docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:latest
-```
-
-Then in `env` and `docker-compose.yml` files, change `MQ_HOST` host to
-the corresponding IP address or hostname of the RabbitMQ server
+## Running SDX Local Controller with Python
 
 You also will need a MongoDB server:
 
