@@ -45,7 +45,8 @@ $ docker run -p 8080:8080 swagger_server
 
 ## Running SDX Local Controller with Python
 
-You also will need a MongoDB server:
+We will need Python 3.9.6+.  Also, in addition to RabbitMQ, we also
+need a MongoDB server:
 
 ```console
 $ docker run -it --rm --name mongo \
@@ -55,34 +56,22 @@ $ docker run -it --rm --name mongo \
     mongo:3.7
 ```
 
-## Run with Python
-
-It would be helpful to use a virtual environment:
+Now create a virtual environment, install the dependencies, and run
+the server:
 
 ```console
-$ python3 -m venv venv
+$ python3 -m venv venv --upgrade-deps
 $ source venv/bin/activate
-```
-
-To run the swagger server, please execute the following from the root
-directory:
-
-```console
 $ pip3 install -r requirements.txt
 $ python3 -m swagger_server
 ```
 
-and open your browser to here:
+Navigate to http://localhost:8080/SDX-LC/1.0.0/ui/ for testing SDX-LC
+REST API.  The OpenAPI/Swagger definition should be available at
+http://localhost:8080/SDX-LC/1.0.0/openapi.json.
 
-```
-http://localhost:8080/SDX-LC/1.0.0/ui/
-```
 
-Your Swagger definition lives here:
-
-```
-http://localhost:8080/SDX-LC/1.0.0/swagger.json
-```
+## Running tests
 
 To launch the integration tests, use tox:
 
