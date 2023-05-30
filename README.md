@@ -8,6 +8,13 @@ SDX Local Controller (sdx-lc) is a swagger-enabled Flask server server
 based on the [swagger-codegen] project.  SDX-LC uses [connexion]
 library on top of Flask.
 
+SDX-LC provides a REST API that other services can use.  Once SDX-LC
+is up and running (see below), navigate to
+http://localhost:8080/SDX-LC/1.0.0/ui/ for testing the API.  The
+OpenAPI/Swagger definition should be available at
+http://localhost:8080/SDX-LC/1.0.0/openapi.json.
+
+
 ## Requirement: RabbitMQ
 
 The communication between SDX controller and Local controller rely on
@@ -65,10 +72,6 @@ $ source venv/bin/activate
 $ pip3 install -r requirements.txt
 $ python3 -m swagger_server
 ```
-
-Navigate to http://localhost:8080/SDX-LC/1.0.0/ui/ for testing SDX-LC
-REST API.  The OpenAPI/Swagger definition should be available at
-http://localhost:8080/SDX-LC/1.0.0/openapi.json.
 
 
 ## Running tests
