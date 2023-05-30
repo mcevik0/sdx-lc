@@ -106,7 +106,7 @@ Local controller sends domain information to SDX controller:
 ![Local controller to SDX controller][sdx-lc-to-controller]
 
 
-<-- URLs -->
+<!-- URLs -->
 
 [lc-ci-badge]: https://github.com/atlanticwave-sdx/sdx-lc/actions/workflows/test.yml/badge.svg
 [lc-ci]: https://github.com/atlanticwave-sdx/sdx-lc/actions/workflows/test.yml
