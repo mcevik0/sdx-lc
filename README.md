@@ -14,13 +14,16 @@ Python 3.9.6+.
 
 ## Prerequisite: run the RabbitMQ server
 
-The communication between SDX controller and Local controller rely on RabbitMQ. RabbitMQ can either run on the SDX controller, or run on a separate node. The easiest way to run RabbitMQ is using docker:
+The communication between SDX controller and Local controller rely on
+RabbitMQ. RabbitMQ can either run on the SDX controller, or run on a
+separate node. The easiest way to run RabbitMQ is using docker:
 
 ```
 sudo docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:latest
 ```
 
-Then in `env` and `docker-compose.yml` files, change `MQ_HOST` host to the corresponding IP address or hostname of the RabbitMQ server
+Then in `env` and `docker-compose.yml` files, change `MQ_HOST` host to
+the corresponding IP address or hostname of the RabbitMQ server
 
 You also will need a MongoDB server:
 
@@ -41,7 +44,8 @@ $ python3 -m venv venv
 $ source venv/bin/activate
 ```
 
-To run the swagger server, please execute the following from the root directory:
+To run the swagger server, please execute the following from the root
+directory:
 
 ```console
 $ pip3 install -r requirements.txt
@@ -69,7 +73,8 @@ $ tox
 
 ## Running with Docker
 
-To run the server on a Docker container, please execute the following from the root directory:
+To run the server on a Docker container, please execute the following
+from the root directory:
 
 ```bash
 # building the image
@@ -84,14 +89,20 @@ docker-compose up
 
 ## Communication between SDX Controller and Local Controller
 
-The SDX controller and local controller communicate using RabbitMQ. All the topology and connectivity related messages are sent with RPC, with receiver confirmation. The monitoring related messages are sent without receiver confirmation.
+The SDX controller and local controller communicate using
+RabbitMQ. All the topology and connectivity related messages are sent
+with RPC, with receiver confirmation. The monitoring related messages
+are sent without receiver confirmation.
 
 Below are two sample scenarios for RabbitMQ implementation:
 
-SDX controller breaks down the topology and sends connectivity information to local controllers:
+SDX controller breaks down the topology and sends connectivity
+information to local controllers:
+
 ![SDX controller to local controller](https://user-images.githubusercontent.com/29924060/139590360-d6c9aaef-e9ba-4c32-a8f9-7a0644b4b35f.jpg)
 
 Local controller sends domain information to SDX controller:
+
 ![Local controller to SDX controller](https://user-images.githubusercontent.com/29924060/139590365-361b4f46-984c-4ab6-8d47-83c9c362910b.jpg)
 
 
