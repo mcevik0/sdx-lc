@@ -8,9 +8,22 @@ SDX Local Controller (sdx-lc) is a swagger-enabled Flask server server
 based on the [swagger-codegen] project.  SDX-LC uses [connexion]
 library on top of Flask.
 
-## Requirements
+## Running SDX Local Controller with Docker Compose
 
-Python 3.9.6+.
+Adjust the environment in `docker-compose.yml` (these will be
+eventually parameterized), and run Docker Compose from the top-level
+directory:
+
+```console
+$ docker-compose up --build
+```
+
+Or, to build the image and run:
+
+```console
+$ docker build -t swagger_server .
+$ docker run -p 8080:8080 swagger_server
+```
 
 ## Prerequisite: run the RabbitMQ server
 
@@ -69,22 +82,6 @@ To launch the integration tests, use tox:
 ```console
 $ pip install tox
 $ tox
-```
-
-## Running with Docker
-
-To run the server on a Docker container, please execute the following
-from the root directory:
-
-```bash
-# building the image
-docker build -t swagger_server .
-
-# starting up a container
-docker run -p 8080:8080 swagger_server
-
-# or start with docker-compose
-docker-compose up
 ```
 
 ## Communication between SDX Controller and Local Controller
