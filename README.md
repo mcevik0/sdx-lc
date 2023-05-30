@@ -4,11 +4,13 @@
 
 ## Overview
 
-SDX Local Controller (sdx-lc) is a per-OXP (Open eXchange Point)
-component responsible for interfacing the OXP network Orchestrator, or
-OXPO. The SDX-LC uses the OXPO's API to submit service requests and
-retrieve topology data and converts the output to the SDX data model
-before pushing the data to the SDX Controller.
+SDX Local Controller (SDX-LC) is a component of [AtlanticWave-SDX].
+
+SDX-LC is a per-OXP (Open eXchange Point) component responsible for
+interfacing the OXP network Orchestrator, or OXPO. The SDX-LC uses the
+OXPO's API to submit service requests and retrieve topology data and
+converts the output to the SDX data model before pushing the data to
+the SDX Controller.
 
 SDX-LC is a swagger-enabled Flask server based on the
 [swagger-codegen] project, and uses [connexion] library on top of
@@ -109,6 +111,8 @@ Local controller sends domain information to SDX controller:
 
 
 <!-- URLs -->
+
+[AtlanticWave-SDX]: https://www.atlanticwave-sdx.net/
 
 [lc-ci-badge]: https://github.com/atlanticwave-sdx/sdx-lc/actions/workflows/test.yml/badge.svg
 [lc-ci]: https://github.com/atlanticwave-sdx/sdx-lc/actions/workflows/test.yml
