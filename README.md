@@ -99,11 +99,11 @@ Below are two sample scenarios for RabbitMQ implementation:
 SDX controller breaks down the topology and sends connectivity
 information to local controllers:
 
-![SDX controller to local controller](https://user-images.githubusercontent.com/29924060/139590360-d6c9aaef-e9ba-4c32-a8f9-7a0644b4b35f.jpg)
+![SDX controller to local controller][sdx-controller-to-lc]
 
 Local controller sends domain information to SDX controller:
 
-![Local controller to SDX controller](https://user-images.githubusercontent.com/29924060/139590365-361b4f46-984c-4ab6-8d47-83c9c362910b.jpg)
+![Local controller to SDX controller][sdx-lc-to-controller]
 
 
 <-- URLs -->
@@ -116,3 +116,6 @@ Local controller sends domain information to SDX controller:
 
 [swagger-codegen]: https://github.com/swagger-api/swagger-codegen
 [connexion]: https://github.com/zalando/connexion
+
+[sdx-controller-to-lc]: https://user-images.githubusercontent.com/29924060/139590360-d6c9aaef-e9ba-4c32-a8f9-7a0644b4b35f.jpg
+[sdx-lc-to-controller]: https://user-images.githubusercontent.com/29924060/139590365-361b4f46-984c-4ab6-8d47-83c9c362910b.jpg
