@@ -4,9 +4,15 @@
 
 ## Overview
 
-SDX Local Controller (sdx-lc) is a swagger-enabled Flask server server
-based on the [swagger-codegen] project.  SDX-LC uses [connexion]
-library on top of Flask.
+SDX Local Controller (sdx-lc) is a per-OXP (Open eXchange Point)
+component responsible for interfacing the OXP network Orchestrator, or
+OXPO. The SDX-LC uses the OXPO's API to submit service requests and
+retrieve topology data and converts the output to the SDX data model
+before pushing the data to the SDX Controller.
+
+SDX-LC is a swagger-enabled Flask server based on the
+[swagger-codegen] project, and uses [connexion] library on top of
+Flask.
 
 SDX-LC provides a REST API that other services can use.  Once SDX-LC
 is up and running (see below), navigate to
