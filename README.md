@@ -15,7 +15,7 @@ eventually parameterized), and run Docker Compose from the top-level
 directory:
 
 ```console
-$ docker-compose up --build
+$ docker compose up --build
 ```
 
 Or, to build the image and run:
