@@ -92,9 +92,9 @@ class TopicQueueConsumer(object):
                 # Uncomment lines below to send connection info to Kytos
                 try:
                     r = requests.post(str(KYTOS_URL), json=msg_json)
-                    self.logger.info(f"Status from Kytos {r}")
+                    self.logger.info(f"Status from Kytos: {r}")
                 except Exception as e:
-                    self.logger.info(f"Error on POST to {KYTOS_URL}: {e}")
+                    self.logger.error(f"Error on POST to {KYTOS_URL}: {e}")
                     self.logger.info(
                         "Check your configuration and make sure kytos is running."
                     )
