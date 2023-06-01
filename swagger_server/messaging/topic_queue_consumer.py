@@ -90,8 +90,14 @@ class TopicQueueConsumer(object):
                 self.message_id += 1
                 self.logger.info("Sending connection info to Kytos.")
                 # Uncomment lines below to send connection info to Kytos
-                r = requests.post(str(KYTOS_URL), json=msg_json)
-                self.logger.info("Status code:" + str(r.status_code))
+                try:
+                    r = requests.post(str(KYTOS_URL), json=msg_json)
+                    self.logger.info(f"Status from Kytos: {r}")
+                except Exception as e:
+                    self.logger.error(f"Error on POST to {KYTOS_URL}: {e}")
+                    self.logger.info(
+                        "Check your configuration and make sure kytos is running."
+                    )
             elif "version" in msg_json:
                 msg_id = msg_json["id"]
                 lc_name = msg_json["name"]
