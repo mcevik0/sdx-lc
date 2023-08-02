@@ -14,6 +14,10 @@ from swagger_server import encoder
 from swagger_server.messaging.topic_queue_consumer import *
 from swagger_server.utils.db_utils import *
 
+logger = logging.getLogger(__name__)
+logging.getLogger("pika").setLevel(logging.WARNING)
+LOG_FILE = os.environ.get("LOG_FILE")
+
 
 def is_json(myjson):
     try:
@@ -24,9 +28,6 @@ def is_json(myjson):
 
 
 def start_consumer(thread_queue, db_instance):
-    logger = logging.getLogger(__name__)
-    logging.getLogger("pika").setLevel(logging.WARNING)
-
     MESSAGE_ID = 0
     HEARTBEAT_ID = 0
 
@@ -42,7 +43,10 @@ def start_pull_topology_change():
 
 
 def main():
-    logging.basicConfig(level=logging.INFO)
+    if LOG_FILE:
+        logging.basicConfig(filename=LOG_FILE, level=logging.INFO)
+    else:
+        logging.basicConfig(level=logging.INFO)
 
     # Run swagger service
     app = connexion.App(__name__, specification_dir="./swagger/")
