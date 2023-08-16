@@ -32,7 +32,7 @@ class TestLinkController(BaseTestCase):
             status="unknown",
             state="unknown",
             private_attributes=list(),
-            time_stamp=datetime.datetime.fromtimestamp(0),
+            timestamp=datetime.datetime.fromtimestamp(0),
             measurement_period=None,
         )
         response = self.client.open(
@@ -84,7 +84,7 @@ class TestLinkController(BaseTestCase):
             status="unknown",
             state="unknown",
             private_attributes=list(),
-            time_stamp=datetime.datetime.fromtimestamp(0),
+            timestamp=datetime.datetime.fromtimestamp(0),
             measurement_period=None,
         )
         response = self.client.open(

@@ -63,7 +63,7 @@ class TestTopologyController(BaseTestCase):
             status="unknown",
             state="unknown",
             private_attributes=list(),
-            time_stamp=datetime.datetime.fromtimestamp(0),
+            timestamp=datetime.datetime.fromtimestamp(0),
             measurement_period=None,
         )
     ]
@@ -73,7 +73,7 @@ class TestTopologyController(BaseTestCase):
         name="test_topology_name",
         domain_service=None,
         version=0,
-        time_stamp=datetime.datetime.fromtimestamp(0),
+        timestamp=datetime.datetime.fromtimestamp(0),
         nodes=__nodes,
         links=__links,
         private_attributes=None,
