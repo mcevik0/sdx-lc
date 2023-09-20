@@ -1,14 +1,11 @@
+""" topology controller """
 import json
 import logging
 import os
-import threading
 
 import connexion
-import six
 
-from swagger_server import util
 from swagger_server.messaging.rpc_queue_producer import RpcProducer
-from swagger_server.models.api_response import ApiResponse  # noqa: E501
 from swagger_server.models.topology import Topology  # noqa: E501
 from swagger_server.utils.db_utils import DbUtils
 
@@ -27,11 +24,12 @@ db_instance = DbUtils()
 db_instance.initialize_db()
 
 
-def find_between(s, first, last):
+def find_between(chain, first, last):
+    """ find function """
     try:
-        start = s.index(first) + len(first)
-        end = s.index(last, start)
-        return s[start:end]
+        start = chain.index(first) + len(first)
+        end = chain.index(last, start)
+        return chain[start:end]
     except ValueError:
         return ""
 
@@ -55,18 +53,20 @@ def add_topology(body):  # noqa: E501
 
     domain_name = find_between(msg_id, "topology:", ".net")
     if domain_name != SDXLC_DOMAIN:
-        logger.debug("Domain name not matching LC domain. Returning 400 status.")
-        return "Domain name not matching LC domain. Please check again.", 400
+        err_msg = "Domain name not matching LC domain."
+        logger.debug("%s Returning 400 status.", err_msg)
+        return f"{err_msg} Please check again.", 400
 
     body["lc_queue_name"] = os.environ.get("SUB_TOPIC")
     json_body = json.dumps(body)
 
     logger.debug("Adding topology. Saving to database.")
-    db_instance.add_key_value_pair_to_db(f"topoVersion{body['version']}", json_body)
+    db_instance.add_key_value_pair_to_db(
+            f"topoVersion{body['version']}", json_body)
     db_instance.add_key_value_pair_to_db("latest_topology", json_body)
     logger.debug("Saving to database complete.")
 
-    logger.debug("Publishing Message to MQ: {}".format(body))
+    logger.debug("Publishing Message to MQ: %s", body)
 
     # initiate rpc producer with 5 seconds timeout
     rpc = RpcProducer(5, "", "topo")
@@ -89,7 +89,7 @@ def delete_topology(topology_id, api_key=None):  # noqa: E501
 
     :rtype: None
     """
-    return "do some magic!"
+    return topology_id, api_key
 
 
 def delete_topology_version(topology_id, version, api_key=None):  # noqa: E501
@@ -106,7 +106,7 @@ def delete_topology_version(topology_id, version, api_key=None):  # noqa: E501
 
     :rtype: None
     """
-    return "do some magic!"
+    return topology_id, version, api_key
 
 
 def get_topology():  # noqa: E501
@@ -132,7 +132,7 @@ def get_topologyby_version(topology_id, version):  # noqa: E501
 
     :rtype: Topology
     """
-    return "do some magic!"
+    return topology_id, version
 
 
 def topology_version(topology_id):  # noqa: E501
@@ -145,13 +145,15 @@ def topology_version(topology_id):  # noqa: E501
 
     :rtype: Topology
     """
-    return "do some magic!"
+    return topology_id
 
 
 def update_topology(body):  # noqa: E501
     """Update an existing topology
 
-    ID of topology that needs to be updated. \\\\ The topology update only updates the addition or deletion \\\\ of node, port, link. # noqa: E501
+    ID of topology that needs to be updated.
+    \\\\ The topology update only updates the addition or deletion \\\\
+    of node, port, link. # noqa: E501
 
     :param body: topology object that needs to be sent to the SDX LC
     :type body: dict | bytes
@@ -178,4 +180,4 @@ def upload_file(topology_id, body=None):  # noqa: E501
     """
     # if connexion.request.is_json:
     #     body = Object.from_dict(connexion.request.get_json())  # noqa: E501
-    return "do some magic!"
+    return topology_id, body
