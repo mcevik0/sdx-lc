@@ -47,13 +47,13 @@ def add_topology(body):  # noqa: E501
     if connexion.request.is_json:
         body = connexion.request.get_json()
 
-    msg_id = body["id"]
-    if msg_id is None:
+    domain_name = body["id"]
+    if domain_name is None:
         return "ID is missing."
 
-    domain_name = find_between(msg_id, "topology:", ".net")
     if domain_name != SDXLC_DOMAIN:
-        err_msg = "Domain name not matching LC domain."
+        err_msg = f"Domain name: {domain_name} "
+        err_msg += f"not matching LC domain: {SDXLC_DOMAIN}"
         logger.debug("%s Returning 400 status.", err_msg)
         return f"{err_msg} Please check again.", 400
 
