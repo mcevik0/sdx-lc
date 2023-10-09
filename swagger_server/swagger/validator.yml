@@ -809,26 +809,24 @@ components:
           pattern: '^[A-Za-z0-9_.-/]*$'
         ports:
           type: array
-          additionalProperties: false
           minItems: 1
           items:
-            type: string
-            pattern: '^((urn:sdx:port:)[A-Za-z_.-\:]*$)'
+            $ref: '#/components/schemas/port'
         type:
           type: string
           enum: ['intra','inter']
         bandwidth:
           type: number
-          minimum: 125000000
-          maximum: 50000000000
+          minimum: 1250
+          maximum: 500000
         residual_bandwidth:
           type: number
           minimum: 0
           maximum: 100
         latency:
           type: number
-          minimum: 0
-          maximum: 50000000000
+          minimum: 1
+          maximum: 500000
         packet_loss:
           type: number
           minimum: 0

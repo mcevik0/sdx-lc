@@ -39,7 +39,7 @@ class DbUtils(object):
         key = str(key)
         obj = self.read_from_db(key)
         if obj is None:
-            self.logger.debug("Adding key value pair to DB.")
+            self.logger.debug(f"Adding key value pair to DB.")
             return self.sdxdb[self.topo_coll].insert_one({key: value})
 
         query = {"_id": obj["_id"]}
@@ -50,4 +50,6 @@ class DbUtils(object):
     def read_from_db(self, key):
         """Given a user specified key, return the value stored in database"""
         key = str(key)
-        return self.sdxdb[self.topo_coll].find_one({key: {"$exists": 1}})
+        self.logger.info(f"the key is {key}")
+        response = self.sdxdb[self.topo_coll].find_one({key: {"$exists": 1}})
+        return response

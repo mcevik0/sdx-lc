@@ -59,6 +59,7 @@ def add_topology(body):  # noqa: E501
 
     body["lc_queue_name"] = os.environ.get("SUB_TOPIC")
     json_body = json.dumps(body)
+    return json_body
 
     logger.debug("Adding topology. Saving to database.")
     db_instance.add_key_value_pair_to_db(
