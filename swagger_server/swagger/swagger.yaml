@@ -14,9 +14,9 @@ externalDocs:
   description: Find out more about Swagger
   url: http://swagger.io
 servers:
-  # - url: https://virtserver.swaggerhub.com/SDX-LC/1.0.0
-  # description: SwaggerHub API Auto Mocking
-- url: https://0.0.0.0:8080/sdx-lc/v2
+- url: https://virtserver.swaggerhub.com/SDX-LC/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: https://0.0.0.0:8080/v2
   description: Localhost
 tags:
 - name: topology

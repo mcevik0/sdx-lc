@@ -5,6 +5,7 @@ import os
 import threading
 from queue import Queue
 
+import time
 import pika
 import requests
 
@@ -29,9 +30,19 @@ def is_json(myjson):
 class TopicQueueConsumer(object):
     def __init__(self, thread_queue, exchange_name):
         self.logger = logging.getLogger(__name__)
+
+
+        SLEEP_TIME = 60
+        self.logger.info(' [*] Sleeping for %s seconds.', SLEEP_TIME)
+        time.sleep(SLEEP_TIME)
+
+        self.logger.info(' [*] Connecting to server ...')
+        credentials = pika.PlainCredentials('mq_user', 'mq_pwd')
         self.connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host=MQ_HOST)
-        )
+                pika.ConnectionParameters('rabbitmq3', 5672, '/', credentials))
+        # self.connection = pika.BlockingConnection(
+        #     pika.ConnectionParameters(host=MQ_HOST)
+        #  )
 
         self.channel = self.connection.channel()
         self.exchange_name = exchange_name
@@ -53,9 +64,18 @@ class TopicQueueConsumer(object):
         response = message_body
         self._thread_queue.put(message_body)
 
+        SLEEP_TIME = 60
+        self.logger.info(' [*] Sleeping for %s seconds.', SLEEP_TIME)
+        time.sleep(SLEEP_TIME)
+
+        self.logger.info(' [*] Connecting to server ...')
+        credentials = pika.PlainCredentials('mq_user', 'mq_pwd')
         self.connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host=MQ_HOST)
-        )
+                pika.ConnectionParameters('rabbitmq3', 5672, '/', credentials))
+        # self.connection = pika.BlockingConnection(
+        #     pika.ConnectionParameters(host=MQ_HOST)
+        #  )
+
         self.channel = self.connection.channel()
 
         ch.basic_publish(
