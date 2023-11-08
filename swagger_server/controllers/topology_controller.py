@@ -20,7 +20,9 @@ logger = logging.getLogger(__name__)
 logging.getLogger("pika").setLevel(logging.WARNING)
 
 MANIFEST = os.environ.get("MANIFEST")
-SDXLC_DOMAIN = os.environ.get("SDXLC_DOMAIN")
+OXPO_ID = int(os.environ.get("OXPO_ID"))
+SDX_LC_DOMAINS = os.environ.get("SDXLC_DOMAIN")
+SDXLC_DOMAIN = SDX_LC_DOMAINS.split(",")[OXPO_ID]
 
 # Get DB connection and tables set up.
 db_instance = DbUtils()
@@ -53,7 +55,10 @@ def add_topology(body):  # noqa: E501
     if msg_id is None:
         return "ID is missing."
 
+    logger.info(f"msg_id: {msg_id}")
+    logger.info(f"SDX_LC domain: {SDXLC_DOMAIN}")
     domain_name = find_between(msg_id, "topology:", ".net")
+    logger.info(f"domain name: {domain_name}")
     if domain_name != SDXLC_DOMAIN:
         logger.debug("Domain name not matching LC domain. Returning 400 status.")
         return "Domain name not matching LC domain. Please check again.", 400
@@ -66,7 +71,7 @@ def add_topology(body):  # noqa: E501
     db_instance.add_key_value_pair_to_db("latest_topology", json_body)
     logger.debug("Saving to database complete.")
 
-    logger.debug("Publishing Message to MQ: {}".format(body))
+    # logger.info("Publishing Message to MQ: {}".format(body))
 
     # initiate rpc producer with 5 seconds timeout
     rpc = RpcProducer(5, "", "topo")
@@ -74,7 +79,10 @@ def add_topology(body):  # noqa: E501
     # Signal to end keep alive pings.
     rpc.stop()
 
-    return str(response)
+    logger.info(f"sdx lc response: {response}")
+    logger.info(f"json_body: {json_body}")
+    # return str(response)
+    return json_body
 
 
 def delete_topology(topology_id, api_key=None):  # noqa: E501

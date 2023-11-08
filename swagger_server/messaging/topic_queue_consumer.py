@@ -12,11 +12,14 @@ import requests
 from swagger_server.utils.db_utils import DbUtils
 
 MQ_HOST = os.environ.get("MQ_HOST")
+MQ_SRVC = os.environ.get("MQ_SRVC")
+MQ_USER = os.environ.get("MQ_USER")
+MQ_PASS = os.environ.get("MQ_PASS")
 # subscribe to the corresponding queue
 SUB_QUEUE = os.environ.get("SUB_QUEUE")
 SUB_TOPIC = os.environ.get("SUB_TOPIC")
 SUB_EXCHANGE = os.environ.get("SUB_EXCHANGE")
-KYTOS_URL = os.environ.get("KYTOS_URL")
+KYTOS_PROVISION = os.environ.get("KYTOS_PROVISION")
 
 
 def is_json(myjson):
@@ -32,17 +35,14 @@ class TopicQueueConsumer(object):
         self.logger = logging.getLogger(__name__)
 
 
-        SLEEP_TIME = 60
+        SLEEP_TIME = 30
         self.logger.info(' [*] Sleeping for %s seconds.', SLEEP_TIME)
         time.sleep(SLEEP_TIME)
 
         self.logger.info(' [*] Connecting to server ...')
-        credentials = pika.PlainCredentials('mq_user', 'mq_pwd')
+        credentials = pika.PlainCredentials(MQ_USER, MQ_PASS)
         self.connection = pika.BlockingConnection(
-                pika.ConnectionParameters('rabbitmq3', 5672, '/', credentials))
-        # self.connection = pika.BlockingConnection(
-        #     pika.ConnectionParameters(host=MQ_HOST)
-        #  )
+                pika.ConnectionParameters(MQ_SRVC, 5672, '/', credentials))
 
         self.channel = self.connection.channel()
         self.exchange_name = exchange_name
@@ -64,17 +64,14 @@ class TopicQueueConsumer(object):
         response = message_body
         self._thread_queue.put(message_body)
 
-        SLEEP_TIME = 60
+        SLEEP_TIME = 30
         self.logger.info(' [*] Sleeping for %s seconds.', SLEEP_TIME)
         time.sleep(SLEEP_TIME)
 
         self.logger.info(' [*] Connecting to server ...')
-        credentials = pika.PlainCredentials('mq_user', 'mq_pwd')
+        credentials = pika.PlainCredentials(MQ_USER, MQ_PASS)
         self.connection = pika.BlockingConnection(
-                pika.ConnectionParameters('rabbitmq3', 5672, '/', credentials))
-        # self.connection = pika.BlockingConnection(
-        #     pika.ConnectionParameters(host=MQ_HOST)
-        #  )
+                pika.ConnectionParameters(MQ_SRVC, 5672, '/', credentials))
 
         self.channel = self.connection.channel()
 
@@ -111,10 +108,10 @@ class TopicQueueConsumer(object):
                 self.logger.info("Sending connection info to Kytos.")
                 # Uncomment lines below to send connection info to Kytos
                 try:
-                    r = requests.post(str(KYTOS_URL), json=msg_json)
+                    r = requests.post(str(KYTOS_PROVISION), json=msg_json)
                     self.logger.info(f"Status from Kytos: {r}")
                 except Exception as e:
-                    self.logger.error(f"Error on POST to {KYTOS_URL}: {e}")
+                    self.logger.error(f"Error on POST to {KYTOS_PROVISION}: {e}")
                     self.logger.info(
                         "Check your configuration and make sure kytos is running."
                     )

@@ -11,14 +11,21 @@ MQ_HOST = os.environ.get("MQ_HOST")
 
 # hardcode for testing
 MQ_HOST = "aw-sdx-monitor.renci.org"
-
+MQ_SRVC = os.environ.get("MQ_SRVC")
+MQ_USER = os.environ.get("MQ_USER")
+MQ_PASS = os.environ.get("MQ_PASS")
 
 class TopicQueueProducer(object):
     def __init__(self, timeout, exchange_name, routing_key):
         self.logger = logging.getLogger(__name__)
+        SLEEP_TIME = 30
+        self.logger.info(' [*] Sleeping for %s seconds.', SLEEP_TIME)
+        time.sleep(SLEEP_TIME)
+
+        self.logger.info(' [*] Connecting to server ...')
+        credentials = pika.PlainCredentials(MQ_USER, MQ_PASS)
         self.connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host=MQ_HOST)
-        )
+                pika.ConnectionParameters(MQ_SRVC, 5672, '/', credentials))
 
         self.channel = self.connection.channel()
         self.timeout = timeout

@@ -15,6 +15,9 @@ SUB_EXCHANGE = os.environ.get("SUB_EXCHANGE")
 
 # hardcode for testing
 MQ_HOST = "aw-sdx-monitor.renci.org"
+MQ_SRVC = os.environ.get("MQ_SRVC")
+MQ_USER = os.environ.get("MQ_USER")
+MQ_PASS = os.environ.get("MQ_PASS")
 SUB_QUEUE = "connection"
 SUB_TOPIC = "lc1_q1"
 SUB_EXCHANGE = "connection"
@@ -23,17 +26,14 @@ SUB_EXCHANGE = "connection"
 class RpcConsumer(object):
     def __init__(self, thread_queue, exchange_name):
         self.logger = logging.getLogger(__name__)
-        SLEEP_TIME = 60
+        SLEEP_TIME = 30
         self.logger.info(' [*] Sleeping for %s seconds.', SLEEP_TIME)
         time.sleep(SLEEP_TIME)
 
         self.logger.info(' [*] Connecting to server ...')
-        credentials = pika.PlainCredentials('mq_user', 'mq_pwd')
+        credentials = pika.PlainCredentials(MQ_USER, MQ_PASS)
         self.connection = pika.BlockingConnection(
-                pika.ConnectionParameters('rabbitmq3', 5672, '/', credentials))
-        # self.connection = pika.BlockingConnection(
-        #    pika.ConnectionParameters(host=MQ_HOST)
-        # )
+                pika.ConnectionParameters(MQ_SRVC, 5672, '/', credentials))
 
         self.channel = self.connection.channel()
         self.exchange_name = exchange_name
@@ -52,7 +52,7 @@ class RpcConsumer(object):
         response = message_body
         self._thread_queue.put(message_body)
 
-        SLEEP_TIME = 60
+        SLEEP_TIME = 30
         self.logger.info(' [*] Sleeping for %s seconds.', SLEEP_TIME)
         time.sleep(SLEEP_TIME)
 
@@ -60,9 +60,6 @@ class RpcConsumer(object):
         credentials = pika.PlainCredentials('mq_user', 'mq_pwd')
         self.connection = pika.BlockingConnection(
                 pika.ConnectionParameters('rabbitmq3', 5672, '/', credentials))
-        # self.connection = pika.BlockingConnection(
-        #     pika.ConnectionParameters(host=MQ_HOST)
-        #  )
         self.channel = self.connection.channel()
 
         ch.basic_publish(
