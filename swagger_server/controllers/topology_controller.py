@@ -21,7 +21,7 @@ logging.getLogger("pika").setLevel(logging.WARNING)
 
 MANIFEST = os.environ.get("MANIFEST")
 OXPO_ID = int(os.environ.get("OXPO_ID"))
-SDX_LC_DOMAINS = os.environ.get("SDXLC_DOMAIN")
+SDX_LC_DOMAINS = os.environ.get("SDXLC_DOMAINS")
 SDXLC_DOMAIN = SDX_LC_DOMAINS.split(",")[OXPO_ID]
 
 # Get DB connection and tables set up.
@@ -59,7 +59,7 @@ def add_topology(body):  # noqa: E501
     logger.info(f"SDX_LC domain: {SDXLC_DOMAIN}")
     domain_name = find_between(msg_id, "topology:", ".net")
     logger.info(f"domain name: {domain_name}")
-    if domain_name != SDXLC_DOMAIN:
+    if msg_id != SDXLC_DOMAIN:
         logger.debug("Domain name not matching LC domain. Returning 400 status.")
         return "Domain name not matching LC domain. Please check again.", 400
 
