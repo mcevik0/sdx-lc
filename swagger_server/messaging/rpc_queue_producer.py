@@ -20,11 +20,12 @@ class RpcProducer(object):
         self.logger.info(' [*] Sleeping for %s seconds.', SLEEP_TIME)
         time.sleep(SLEEP_TIME)
 
-        self.logger.info(' [*] Connecting to server ...')
+        self.logger.info(' [*] Connecting to server with credentials %s %s ...', MQ_USER, MQ_PASS, MQ_HOST)
         credentials = pika.PlainCredentials(MQ_USER, MQ_PASS)
         self.connection = pika.BlockingConnection(
-                pika.ConnectionParameters(MQ_SRVC, 5672, '/', credentials))
+                pika.ConnectionParameters(MQ_HOST, 5672, '/', credentials, heartbeat=60))
 
+        self.logger.info(' Creating a channel...')
 
         self.channel = self.connection.channel()
         self.timeout = timeout
@@ -37,9 +38,11 @@ class RpcProducer(object):
         t1.start()
 
         # set up callback queue
+        self.logger.info(' set up a call back queue...')
         result = self.channel.queue_declare(queue="", exclusive=True)
         self.callback_queue = result.method.queue
 
+        self.logger.info(' set up a channel basic consume...')
         self.channel.basic_consume(
             queue=self.callback_queue,
             on_message_callback=self.on_response,
@@ -55,7 +58,7 @@ class RpcProducer(object):
 
     def keep_live(self):
         while self.stop_keep_live != True:
-            time.sleep(30)
+            time.sleep(10)
             msg = "[MQ]: Heart Beat"
             self.logger.debug("Sending heart beat msg.")
             self.call(msg)

@@ -48,6 +48,7 @@ def add_topology(body):  # noqa: E501
 
     :rtype: None
     """
+    logger.info(f"######## add topology #######")
     if connexion.request.is_json:
         body = connexion.request.get_json()
 
@@ -80,7 +81,7 @@ def add_topology(body):  # noqa: E501
     rpc.stop()
 
     logger.info(f"sdx lc response: {response}")
-    logger.info(f"json_body: {json_body}")
+    # logger.info(f"json_body: {json_body}")
     # return str(response)
     return json_body
 

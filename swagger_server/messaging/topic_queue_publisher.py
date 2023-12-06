@@ -10,7 +10,7 @@ import pika
 MQ_HOST = os.environ.get("MQ_HOST")
 
 # hardcode for testing
-MQ_HOST = "aw-sdx-monitor.renci.org"
+# MQ_HOST = "aw-sdx-monitor.renci.org"
 MQ_SRVC = os.environ.get("MQ_SRVC")
 MQ_USER = os.environ.get("MQ_USER")
 MQ_PASS = os.environ.get("MQ_PASS")

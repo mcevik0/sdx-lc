@@ -14,7 +14,7 @@ SUB_TOPIC = os.environ.get("SUB_TOPIC")
 SUB_EXCHANGE = os.environ.get("SUB_EXCHANGE")
 
 # hardcode for testing
-MQ_HOST = "aw-sdx-monitor.renci.org"
+# MQ_HOST = "aw-sdx-monitor.renci.org"
 MQ_SRVC = os.environ.get("MQ_SRVC")
 MQ_USER = os.environ.get("MQ_USER")
 MQ_PASS = os.environ.get("MQ_PASS")
@@ -26,7 +26,7 @@ SUB_EXCHANGE = "connection"
 class RpcConsumer(object):
     def __init__(self, thread_queue, exchange_name):
         self.logger = logging.getLogger(__name__)
-        SLEEP_TIME = 30
+        SLEEP_TIME = 5
         self.logger.info(' [*] Sleeping for %s seconds.', SLEEP_TIME)
         time.sleep(SLEEP_TIME)
 
