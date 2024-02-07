@@ -2,9 +2,9 @@
 import logging
 import os
 import threading
+import time
 from queue import Queue
 
-import time
 import pika
 
 MQ_HOST = os.environ.get("MQ_HOST")
@@ -27,13 +27,14 @@ class RpcConsumer(object):
     def __init__(self, thread_queue, exchange_name):
         self.logger = logging.getLogger(__name__)
         SLEEP_TIME = 5
-        self.logger.info(' [*] Sleeping for %s seconds.', SLEEP_TIME)
+        self.logger.info(" [*] Sleeping for %s seconds.", SLEEP_TIME)
         time.sleep(SLEEP_TIME)
 
-        self.logger.info(' [*] Connecting to server ...')
+        self.logger.info(" [*] Connecting to server ...")
         credentials = pika.PlainCredentials(MQ_USER, MQ_PASS)
         self.connection = pika.BlockingConnection(
-                pika.ConnectionParameters(MQ_SRVC, 5672, '/', credentials))
+            pika.ConnectionParameters(MQ_SRVC, 5672, "/", credentials)
+        )
 
         self.channel = self.connection.channel()
         self.exchange_name = exchange_name
@@ -53,13 +54,14 @@ class RpcConsumer(object):
         self._thread_queue.put(message_body)
 
         SLEEP_TIME = 30
-        self.logger.info(' [*] Sleeping for %s seconds.', SLEEP_TIME)
+        self.logger.info(" [*] Sleeping for %s seconds.", SLEEP_TIME)
         time.sleep(SLEEP_TIME)
 
-        self.logger.info(' [*] Connecting to server ...')
-        credentials = pika.PlainCredentials('mq_user', 'mq_pwd')
+        self.logger.info(" [*] Connecting to server ...")
+        credentials = pika.PlainCredentials("mq_user", "mq_pwd")
         self.connection = pika.BlockingConnection(
-                pika.ConnectionParameters('rabbitmq3', 5672, '/', credentials))
+            pika.ConnectionParameters("rabbitmq3", 5672, "/", credentials)
+        )
         self.channel = self.connection.channel()
 
         ch.basic_publish(

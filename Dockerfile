@@ -1,10 +1,16 @@
-# pull os base image
-FROM flask-base
+FROM python:3.9-slim-bullseye
 
-# set work directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-WORKDIR /
-RUN mkdir -p /swagger_server
-COPY ./container-sdx-lc/swagger_server /swagger_server
-COPY ./container-sdx-lc/curl /curl
-COPY ./container-sdx-lc/curl/gunicorn.sh .
+COPY requirements.txt /usr/src/app/
+
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+COPY . /usr/src/app
+
+EXPOSE 8080
+
+ENTRYPOINT ["python3"]
+
+CMD ["-m", "swagger_server"]

@@ -8,24 +8,31 @@ import uuid
 import pika
 
 MQ_HOST = os.environ.get("MQ_HOST")
-MQ_SRVC = os.environ.get("MQ_SRVC")
+MQ_PORT = int(os.environ.get("MQ_PORT"))
 MQ_USER = os.environ.get("MQ_USER")
 MQ_PASS = os.environ.get("MQ_PASS")
+SLEEP_TIME = 5
+
 
 class RpcProducer(object):
     def __init__(self, timeout, exchange_name, routing_key):
         self.logger = logging.getLogger(__name__)
 
-        SLEEP_TIME = 5
-        self.logger.info(' [*] Sleeping for %s seconds.', SLEEP_TIME)
+        self.logger.info(" [*] Sleeping for %s seconds.", SLEEP_TIME)
         time.sleep(SLEEP_TIME)
 
-        self.logger.info(' [*] Connecting to server with credentials %s %s ...', MQ_USER, MQ_PASS, MQ_HOST)
+        self.logger.info(
+            " [*] Connecting to server with credentials %s %s %s ...",
+            MQ_USER,
+            MQ_PASS,
+            MQ_HOST,
+        )
         credentials = pika.PlainCredentials(MQ_USER, MQ_PASS)
         self.connection = pika.BlockingConnection(
-                pika.ConnectionParameters(MQ_HOST, 5672, '/', credentials, heartbeat=60))
+            pika.ConnectionParameters(MQ_HOST, MQ_PORT, "/", credentials, heartbeat=60)
+        )
 
-        self.logger.info(' Creating a channel...')
+        self.logger.info(" Creating a channel...")
 
         self.channel = self.connection.channel()
         self.timeout = timeout
@@ -38,11 +45,11 @@ class RpcProducer(object):
         t1.start()
 
         # set up callback queue
-        self.logger.info(' set up a call back queue...')
+        self.logger.info(" set up a call back queue...")
         result = self.channel.queue_declare(queue="", exclusive=True)
         self.callback_queue = result.method.queue
 
-        self.logger.info(' set up a channel basic consume...')
+        self.logger.info(" set up a channel basic consume...")
         self.channel.basic_consume(
             queue=self.callback_queue,
             on_message_callback=self.on_response,
