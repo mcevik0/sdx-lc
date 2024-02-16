@@ -27,7 +27,6 @@ services:
     image: sdx-lc
     container_name: sdx-lc
     tty: true
-    build: ./
     ports:
       - 8080:8080
     env_file:
