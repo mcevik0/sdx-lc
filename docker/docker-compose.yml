@@ -3,10 +3,15 @@ version: '3.8'
 services:
 
   my-mongodb:
+    build:
+      context: ..
+      dockerfile: Dockerfile
     image: mongo:3.7
     container_name: mongodb-lc
     ports:
       - 27017:27017
+    env_file:
+      - env
     environment:
       MONGO_INITDB_ROOT_USERNAME: sdx
       MONGO_INITDB_ROOT_PASSWORD: passw
@@ -16,12 +21,17 @@ services:
       - ~/mongodb:/data/db
 
   sdx-lc:
+    build:
+      context: ..
+      dockerfile: Dockerfile
     image: sdx-lc
     container_name: sdx-lc
     tty: true
     build: ./
     ports:
       - 8080:8080
+    env_file:
+      - env
     environment:
       - MONGODB_CONNSTRING=mongodb://sdx:passw@192.168.201.205:27017/
       - SDX_MQ_IP=152.54.3.143
